@@ -8,7 +8,7 @@ export const RequireAuth = () => {
   // const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
   const isLoggedIn = false
 
-  if (!isLoggedIn) return <Navigate to={PATH.signIn} />
+  if (!isLoggedIn) return <Navigate to={PATH.signIn} replace />
 
   return <Outlet />
 }
