@@ -9,7 +9,7 @@ export const Header = () => {
     <SHeader>
       <SContainer>
         <SHeaderInner>
-          <h1>Social Network</h1>
+          <h1>lightels</h1>
           <div>
             <button>Sign in</button>
             <button>Registration</button>
