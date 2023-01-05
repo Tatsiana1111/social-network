@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { SButton, SButtonGreen } from '../../components/Button/SButton'
+import { SForm, SInput, SInputWrapper } from '../../components/Input/Input'
 import { SContainer } from '../../styles/global'
 
 import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
@@ -15,12 +17,16 @@ export const SignIn = () => {
             <p>Social Network</p>
           </SSignInLeft>
           <SSignInRight>
-            <form>
-              <input type="email" />
-              <input type="password" />
-              <button>Sign In</button>
-            </form>
-            <button>Create new account</button>
+            <SForm>
+              <SInputWrapper>
+                <SInput type="email" />
+              </SInputWrapper>
+              <SInputWrapper>
+                <SInput type="password" />
+              </SInputWrapper>
+              <SButton>Sign In</SButton>
+            </SForm>
+            <SButtonGreen>Create new account</SButtonGreen>
           </SSignInRight>
         </SSignInWrapper>
       </SContainer>

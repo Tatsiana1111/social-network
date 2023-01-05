@@ -25,25 +25,9 @@ export const SSignInRight = styled.div`
   gap: 20px;
   padding: 20px;
   background-color: white;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   form {
     display: flex;
     flex-direction: column;
-    button {
-      cursor: pointer;
-      background-color: #1877f2;
-      color: white;
-      padding: 12px 0;
-      width: 100%;
-      border-radius: 10px;
-      border: none;
-    }
-  }
-  button {
-    cursor: pointer;
-    background-color: #42b72a;
-    color: white;
-    padding: 13px 10px;
-    border-radius: 10px;
-    border: none;
   }
 `
