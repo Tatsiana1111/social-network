@@ -1,4 +1,7 @@
 export const LightTheme = {
+  colors: {
+    primary: '#7398CE',
+  },
   button: {
     default: {
       bg: '#1877F2',

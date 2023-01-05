@@ -24,10 +24,13 @@ export const SSignInRight = styled.div`
   align-items: center;
   gap: 20px;
   padding: 20px;
+  min-width: 350px;
   background-color: white;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
   form {
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 `

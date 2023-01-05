@@ -1,4 +1,7 @@
 export const DarkTheme = {
+  colors: {
+    primary: '#314272',
+  },
   button: {
     default: {
       bg: '#4ad',

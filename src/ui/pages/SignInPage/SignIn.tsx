@@ -19,10 +19,10 @@ export const SignIn = () => {
           <SSignInRight>
             <SForm>
               <SInputWrapper>
-                <SInput type="email" />
+                <SInput type="email" placeholder={'Email'} />
               </SInputWrapper>
               <SInputWrapper>
-                <SInput type="password" />
+                <SInput type="password" placeholder={'Password'} />
               </SInputWrapper>
               <SButton>Sign In</SButton>
             </SForm>

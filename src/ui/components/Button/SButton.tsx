@@ -8,8 +8,8 @@ export const SButton = styled.button<ButtonProps>`
   cursor: pointer;
   background-color: ${({ theme }) => theme.button.default.bg};
   color: ${({ theme }) => theme.button.default.text};
-  padding: 12px 0;
-  width: 100%;
+  padding: 12px 20px;
+  //width: 100%;
   border-radius: 10px;
   border: none;
   transition: 0.2s;
