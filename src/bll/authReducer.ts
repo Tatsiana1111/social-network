@@ -5,7 +5,7 @@ interface AuthReducerStateType {
 }
 
 const initialState: AuthReducerStateType = {
-  isLoggedIn: false,
+  isLoggedIn: true,
 }
 
 export const authSlice = createSlice({

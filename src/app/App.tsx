@@ -11,7 +11,6 @@ import { Registration } from '../ui/pages/RegistrationPage/Registration'
 import { RequireAuth } from '../ui/pages/RequireAuth/RequireAuth'
 import { SignIn } from '../ui/pages/SignInPage/SignIn'
 import { GlobalStyle } from '../ui/styles/global'
-import { DarkTheme } from '../ui/styles/Themes/DarkTheme'
 import { LightTheme } from '../ui/styles/Themes/LightTheme'
 
 export const PATH = {
