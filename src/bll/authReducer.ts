@@ -38,6 +38,19 @@ export const LoginTC = createAsyncThunk(
     }
   }
 )
+
+export const LogOutTC = createAsyncThunk('auth/logOut', async (arg, thunkAPI) => {
+  try {
+    const res = await authAPI.logOut()
+
+    if (res.data.resultCode === 0) {
+      thunkAPI.dispatch(setLoggedIn({ value: false }))
+    }
+  } catch (e) {
+    console.log(e)
+  }
+})
+
 export const MeTC = createAsyncThunk('auth/me', async (arg, thunkAPI) => {
   try {
     const res = await authAPI.me()

@@ -15,7 +15,12 @@ export const SHeaderInner = styled.div`
     background-color: inherit;
     font-family: 'Caveat', cursive;
   }
-
+  img {
+    background-color: inherit;
+    :hover {
+      transform: scale(1.2);
+    }
+  }
   div {
     display: flex;
     justify-content: space-between;

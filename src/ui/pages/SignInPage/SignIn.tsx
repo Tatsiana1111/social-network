@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../../app/hooks'
 import { LoginTC } from '../../../bll/authReducer'
 import { SButton, SButtonGreen } from '../../components/Button/SButton'
 import { SForm, SInput, SInputWrapper } from '../../components/Input/Input'
-import { SContainer } from '../../styles/global'
+import { Container } from '../../styles/global'
 
 import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
 
@@ -18,7 +18,7 @@ export const SignIn = () => {
   return (
     <section>
       SignInPage
-      <SContainer>
+      <Container>
         <SSignInWrapper>
           <SSignInLeft>
             <h1>Lightels</h1>
@@ -42,7 +42,7 @@ export const SignIn = () => {
             <SButtonGreen>Create new account</SButtonGreen>
           </SSignInRight>
         </SSignInWrapper>
-      </SContainer>
+      </Container>
     </section>
   )
 }
