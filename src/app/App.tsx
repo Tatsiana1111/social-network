@@ -13,25 +13,25 @@ import { LightTheme } from '../ui/styles/Themes/LightTheme'
 import { useAppDispatch, useAppSelector } from './hooks'
 
 export const App = () => {
-  const isInitialized = useAppSelector(state => state.app.isInitialized)
-  const dispatch = useAppDispatch()
+   const isInitialized = useAppSelector(state => state.app.isInitialized)
+   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    dispatch(initializeAppTC())
-  }, [])
+   useEffect(() => {
+      dispatch(initializeAppTC())
+   }, [])
 
-  if (!isInitialized) {
-    return <Loader />
-  }
+   if (!isInitialized) {
+      return <Loader />
+   }
 
-  return (
-    <>
-      <ThemeProvider theme={LightTheme}>
-        <NavigationForUs />
-        <GlobalStyle />
-        <Header />
-        <Pages />
-      </ThemeProvider>
-    </>
-  )
+   return (
+      <>
+         <ThemeProvider theme={LightTheme}>
+            <NavigationForUs />
+            <GlobalStyle />
+            <Header />
+            <Pages />
+         </ThemeProvider>
+      </>
+   )
 }

@@ -11,8 +11,8 @@ export const GlobalStyle = createGlobalStyle`
     }
  `
 export const Container = styled.div`
-  margin: 0 auto;
-  padding: 0 10px;
-  max-width: 1200px;
-  background-color: inherit;
+   margin: 0 auto;
+   padding: 0 10px;
+   max-width: 1200px;
+   background-color: inherit;
 `

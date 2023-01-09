@@ -12,37 +12,46 @@ import { Container } from '../../styles/global'
 import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
 
 export const SignIn = () => {
-  const dispatch = useAppDispatch()
-  const { register, handleSubmit } = useForm()
+   const dispatch = useAppDispatch()
+   const { register, handleSubmit } = useForm()
 
-  return (
-    <section>
-      SignInPage
-      <Container>
-        <SSignInWrapper>
-          <SSignInLeft>
-            <h1>Lightels</h1>
-            <p>Social Network</p>
-          </SSignInLeft>
-          <SSignInRight>
-            <SForm onSubmit={handleSubmit(data => dispatch(LoginTC(data as LoginRequestDataType)))}>
-              <SInputWrapper>
-                <SInput {...register('email')} required type="email" placeholder={'Email'} />
-              </SInputWrapper>
-              <SInputWrapper>
-                <SInput
-                  {...register('password')}
-                  required
-                  type="password"
-                  placeholder={'Password'}
-                />
-              </SInputWrapper>
-              <SButton type="submit">Sign In</SButton>
-            </SForm>
-            <SButtonGreen>Create new account</SButtonGreen>
-          </SSignInRight>
-        </SSignInWrapper>
-      </Container>
-    </section>
-  )
+   return (
+      <section>
+         SignInPage
+         <Container>
+            <SSignInWrapper>
+               <SSignInLeft>
+                  <h1>Lightels</h1>
+                  <p>Social Network</p>
+               </SSignInLeft>
+               <SSignInRight>
+                  <SForm
+                     onSubmit={handleSubmit(data =>
+                        dispatch(LoginTC(data as LoginRequestDataType))
+                     )}
+                  >
+                     <SInputWrapper>
+                        <SInput
+                           {...register('email')}
+                           required
+                           type="email"
+                           placeholder={'Email'}
+                        />
+                     </SInputWrapper>
+                     <SInputWrapper>
+                        <SInput
+                           {...register('password')}
+                           required
+                           type="password"
+                           placeholder={'Password'}
+                        />
+                     </SInputWrapper>
+                     <SButton type="submit">Sign In</SButton>
+                  </SForm>
+                  <SButtonGreen>Create new account</SButtonGreen>
+               </SSignInRight>
+            </SSignInWrapper>
+         </Container>
+      </section>
+   )
 }
