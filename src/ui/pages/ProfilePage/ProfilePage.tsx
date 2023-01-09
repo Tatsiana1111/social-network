@@ -1,62 +1,44 @@
 import React from 'react'
 
-import community from '../../../common/assets/icons/community.svg'
-import message from '../../../common/assets/icons/message.svg'
-import music from '../../../common/assets/icons/music.svg'
-import profile from '../../../common/assets/icons/profile.svg'
-import users from '../../../common/assets/icons/users.svg'
 import avatar from '../../../common/assets/images/avatar.svg'
 import miniAvatar from '../../../common/assets/images/miniAvatar.svg'
 import postPhoto from '../../../common/assets/images/postPhoto.svg'
+import { Sidebar } from '../../components/Sidebar/Sidebar'
 
-import { AboutProfileDiv, AvatarDiv, MenuDiv, PostDiv } from './styled'
+import {
+  AboutProfileDiv,
+  AvatarDiv,
+  BlockDiv,
+  BlockWithAvatar,
+  PostDiv,
+  PostImage,
+  WrapperDiv,
+} from './styled'
 
 export const ProfilePage = () => {
-  const onClickProfileHandler = () => {
-    console.log('hi')
-  }
-
   return (
-    <div>
-      <div>
-        <MenuDiv onClick={onClickProfileHandler}>
-          <img alt="profile icon" src={profile} /> Профиль
-        </MenuDiv>
-        <MenuDiv>
-          <img alt="profile icon" src={message} />
-          Сообщения
-        </MenuDiv>
-        <MenuDiv>
-          <img alt="profile icon" src={users} />
-          Найти друзей
-        </MenuDiv>
-        <MenuDiv>
-          <img alt="profile icon" src={music} />
-          Музыка
-        </MenuDiv>
-        <MenuDiv>
-          <img alt="profile icon" src={community} />
-          Сообщества
-        </MenuDiv>
-      </div>
-      <AvatarDiv>
-        <img alt="user avatar" src={avatar} />
-      </AvatarDiv>
-      <AboutProfileDiv>
-        <span>Profile name</span>
-        <span>Status</span>
-      </AboutProfileDiv>
+    <WrapperDiv>
+      <BlockDiv>
+        <Sidebar></Sidebar>
+        <AvatarDiv>
+          <img alt="user avatar" src={avatar} />
+        </AvatarDiv>
+        <AboutProfileDiv>
+          <span>Profile name</span>
+          <span>Status</span>
+        </AboutProfileDiv>
+      </BlockDiv>
       <PostDiv>
-        <div>
+        <BlockWithAvatar>
           <img src={miniAvatar} alt="user mini-avatar" />
           <span>Profile name</span>
-        </div>
-        <img src={postPhoto} alt="post photo" />
-        <div>
+        </BlockWithAvatar>
+        <PostImage src={postPhoto} alt="post photo" />
+        <BlockWithAvatar>
           <img src={miniAvatar} alt="user mini-avatar" />
           <textarea name="" id="" placeholder="Напишите свой комментарий"></textarea>
-        </div>
+        </BlockWithAvatar>
       </PostDiv>
-    </div>
+    </WrapperDiv>
   )
 }
