@@ -2,12 +2,10 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { authAPI, LoginRequestDataType } from '../api/authAPI'
 
-interface AuthReducerStateType {
-  isLoggedIn: boolean
-}
+import { setInitializationAC } from './appReducer'
 
-const initialState: AuthReducerStateType = {
-  isLoggedIn: false,
+const initialState = {
+  isLoggedIn: false as boolean,
 }
 
 export const authSlice = createSlice({
@@ -51,7 +49,7 @@ export const LogOutTC = createAsyncThunk('auth/logOut', async (arg, thunkAPI) =>
   }
 })
 
-export const MeTC = createAsyncThunk('auth/me', async (arg, thunkAPI) => {
+export const initializeAppTC = createAsyncThunk('auth/me', async (arg, thunkAPI) => {
   try {
     const res = await authAPI.me()
 
@@ -60,5 +58,7 @@ export const MeTC = createAsyncThunk('auth/me', async (arg, thunkAPI) => {
     }
   } catch (e) {
     console.log(e)
+  } finally {
+    thunkAPI.dispatch(setInitializationAC({ value: true }))
   }
 })

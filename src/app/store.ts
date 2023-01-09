@@ -1,10 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { appReducer } from '../bll/appReducer'
 import { authReducer } from '../bll/authReducer'
 
 export const store = configureStore({
   reducer: {
-    //app: appReducer,
+    app: appReducer,
     //dialogs: dialogsReducer,
     // users: usersReducer,
     //profile: profileReducer,

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Container } from '../../styles/global'
+
 export const Registration = () => {
-  return <div>Registration</div>
+  return <Container>Registration</Container>
 }
