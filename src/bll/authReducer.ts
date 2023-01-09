@@ -1,4 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+import { authAPI, LoginResponseType } from '../api/authAPI'
 
 interface AuthReducerStateType {
   isLoggedIn: boolean
@@ -21,3 +23,13 @@ export const authSlice = createSlice({
 export const { setLoggedIn } = authSlice.actions
 
 export const authReducer = authSlice.reducer
+
+// Thunk
+
+export const LoginTC = createAsyncThunk('/auth/login', async (data: LoginResponseType) => {
+  try {
+    return authAPI.login(data)
+  } catch (e) {
+    console.log(e)
+  }
+})

@@ -14,6 +14,7 @@ export const SInputWrapper = styled.div`
   align-items: center;
   gap: 15px;
   position: relative;
+  background-color: inherit;
 `
 
 export const SInput = styled.input`
