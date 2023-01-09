@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { authAPI, LoginResponseType } from '../api/authAPI'
+import { authAPI, LoginRequestDataType } from '../api/authAPI'
 
 interface AuthReducerStateType {
   isLoggedIn: boolean
 }
 
 const initialState: AuthReducerStateType = {
-  isLoggedIn: true,
+  isLoggedIn: false,
 }
 
 export const authSlice = createSlice({
@@ -21,14 +21,30 @@ export const authSlice = createSlice({
 })
 
 export const { setLoggedIn } = authSlice.actions
-
 export const authReducer = authSlice.reducer
 
 // Thunk
+export const LoginTC = createAsyncThunk(
+  'auth/login',
+  async (data: LoginRequestDataType, thunkAPI) => {
+    try {
+      const res = await authAPI.login(data)
 
-export const LoginTC = createAsyncThunk('/auth/login', async (data: LoginResponseType) => {
+      if (res.data.resultCode === 0) {
+        thunkAPI.dispatch(setLoggedIn({ value: true }))
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+)
+export const MeTC = createAsyncThunk('auth/me', async (arg, thunkAPI) => {
   try {
-    return authAPI.login(data)
+    const res = await authAPI.me()
+
+    if (res.data.resultCode === 0) {
+      thunkAPI.dispatch(setLoggedIn({ value: true }))
+    }
   } catch (e) {
     console.log(e)
   }

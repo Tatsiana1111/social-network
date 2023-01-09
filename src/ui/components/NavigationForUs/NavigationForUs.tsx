@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Link } from 'react-router-dom'
 
-import { PATH } from '../../../app/App'
+import { PATH } from '../../pages/Pages'
 
 import { NavigationForUsWrapper } from './styled'
 

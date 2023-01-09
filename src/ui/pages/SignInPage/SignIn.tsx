@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import { LoginResponseType } from '../../../api/authAPI'
+import { LoginRequestDataType } from '../../../api/authAPI'
 import { useAppDispatch } from '../../../app/hooks'
 import { LoginTC } from '../../../bll/authReducer'
 import { SButton, SButtonGreen } from '../../components/Button/SButton'
@@ -25,12 +25,17 @@ export const SignIn = () => {
             <p>Social Network</p>
           </SSignInLeft>
           <SSignInRight>
-            <SForm onSubmit={handleSubmit(data => dispatch(LoginTC(data as LoginResponseType)))}>
+            <SForm onSubmit={handleSubmit(data => dispatch(LoginTC(data as LoginRequestDataType)))}>
               <SInputWrapper>
-                <SInput {...register('email')} type="email" placeholder={'Email'} />
+                <SInput {...register('email')} required type="email" placeholder={'Email'} />
               </SInputWrapper>
               <SInputWrapper>
-                <SInput {...register('password')} type="password" placeholder={'Password'} />
+                <SInput
+                  {...register('password')}
+                  required
+                  type="password"
+                  placeholder={'Password'}
+                />
               </SInputWrapper>
               <SButton type="submit">Sign In</SButton>
             </SForm>

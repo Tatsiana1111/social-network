@@ -1,24 +1,23 @@
 import { instance } from './instance'
 
 export const authAPI = {
-  login(data: LoginResponseType) {
-    return instance.post('/auth/login', data)
+  login(data: LoginRequestDataType) {
+    return instance.post<AuthResponseType<{ userId: number }>>('/auth/login', data)
   },
   me() {
-    instance.get('/auth/me')
+    return instance.get<AuthResponseType<{ id: string; email: string; login: string }>>('/auth/me')
   },
 }
 
-export type LoginResponseType = {
+export type LoginRequestDataType = {
   email: string
   password: string
   rememberMe?: boolean
   captcha?: string
 }
-export type RequestType = {
+export type AuthResponseType<D> = {
   resultCode: number
   messages: []
-  data: {
-    userId: number
-  }
+  fieldsErrors: []
+  data: D
 }
