@@ -15,19 +15,20 @@ import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
 export const SignIn = () => {
    const dispatch = useAppDispatch()
    const { register, handleSubmit } = useForm()
-   const [isModal, setModal] = useState(false)
+   const [isModalOpen, setModalOpen] = useState(false)
 
    const handleModalOpen = () => {
-      setModal(true)
+      setModalOpen(true)
+   }
+   const handleModalClose = () => {
+      setModalOpen(false)
    }
 
    return (
       <section>
-         {isModal && (
-            <Modal toggleOpenMode={() => setModal(false)} title={'Registration'} open={isModal}>
-               <span>some text</span>
-            </Modal>
-         )}
+         <Modal closeModal={handleModalClose} title={'Registration'} isOpen={isModalOpen}>
+            <span>some text</span>
+         </Modal>
          SignInPage
          <Container>
             <SSignInWrapper>
@@ -37,9 +38,9 @@ export const SignIn = () => {
                </SSignInLeft>
                <SSignInRight>
                   <SForm
-                     onSubmit={handleSubmit(data =>
-                        dispatch(LoginTC(data as LoginRequestDataType))
-                     )}
+                     onSubmit={() =>
+                        handleSubmit(data => dispatch(LoginTC(data as LoginRequestDataType)))
+                     }
                   >
                      <SInputWrapper>
                         <SInput
