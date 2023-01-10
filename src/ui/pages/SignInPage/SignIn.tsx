@@ -15,19 +15,23 @@ import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
 export const SignIn = () => {
    const dispatch = useAppDispatch()
    const { register, handleSubmit } = useForm()
-   const [isModal, setModal] = useState(false)
+   const [isModalOpen, setModalOpen] = useState(false)
 
    const handleModalOpen = () => {
-      setModal(true)
+      setModalOpen(true)
+   }
+   const handleModalClose = () => {
+      setModalOpen(false)
+   }
+   const handleSubmitButton = () => {
+      handleSubmit(data => dispatch(LoginTC(data as LoginRequestDataType)))
    }
 
    return (
       <section>
-         {isModal && (
-            <Modal toggleOpenMode={() => setModal(false)} title={'Registration'} open={isModal}>
-               <span>some text</span>
-            </Modal>
-         )}
+         <Modal closeModal={handleModalClose} title={'Registration'} isOpen={isModalOpen}>
+            <span>some text</span>
+         </Modal>
          SignInPage
          <Container>
             <SSignInWrapper>
@@ -36,11 +40,7 @@ export const SignIn = () => {
                   <p>Social Network</p>
                </SSignInLeft>
                <SSignInRight>
-                  <SForm
-                     onSubmit={handleSubmit(data =>
-                        dispatch(LoginTC(data as LoginRequestDataType))
-                     )}
-                  >
+                  <SForm onSubmit={handleSubmitButton}>
                      <SInputWrapper>
                         <SInput
                            {...register('email')}

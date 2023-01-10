@@ -2,11 +2,8 @@ import React, { ReactNode } from 'react'
 
 import styled from 'styled-components'
 
-const ModalWrapper = styled.div.attrs({ className: 'active' })`
-   display: flex;
-
-   justify-content: center;
-   align-items: center;
+const ModalWrapper = styled.div`
+   display: none;
    position: fixed;
    top: 0;
    left: 0;
@@ -15,7 +12,10 @@ const ModalWrapper = styled.div.attrs({ className: 'active' })`
    z-index: 999;
    opacity: 0;
    transition: 0.5s;
-   :active {
+   &.open {
+      display: flex;
+      justify-content: center;
+      align-items: center;
       opacity: 1;
    }
 `
@@ -30,7 +30,7 @@ const ModalContent = styled.div`
    border: 8px solid #fff;
    transform: scale(0.5);
    transition: 0.4s all;
-   :active {
+   &.open {
       transform: scale(1);
    }
 `
@@ -38,21 +38,21 @@ const ModalContent = styled.div`
 type ModalPropsType = {
    children: ReactNode
    title: string
-   open: boolean
-   toggleOpenMode: (value: boolean) => void
-   onCloseModal?: () => void
+   isOpen: boolean
+   // toggleOpenMode: (value: boolean) => void
+   closeModal: () => void
 }
 export const Modal = (props: ModalPropsType) => {
    const modalClickHandler = (event: React.MouseEvent<HTMLElement>) => {
       event.stopPropagation()
    }
    const handleClose = () => {
-      props.toggleOpenMode(false)
+      props.closeModal()
    }
 
    return (
-      <ModalWrapper className={props.open ? 'active' : undefined} onClick={handleClose}>
-         <ModalContent className={props.open ? 'active' : undefined} onClick={modalClickHandler}>
+      <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>
+         <ModalContent className={props.isOpen ? 'open' : ''} onClick={modalClickHandler}>
             <h2>{props.title}</h2>
             <button onClick={handleClose}>close</button>
             <hr />
