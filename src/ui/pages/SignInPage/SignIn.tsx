@@ -7,7 +7,8 @@ import { useAppDispatch } from '../../../app/hooks'
 import { LoginTC } from '../../../bll/authReducer'
 import { SButton, SButtonGreen } from '../../components/Button/SButton'
 import { SForm, SInput, SInputWrapper } from '../../components/Input/Input'
-import { Modal } from '../../components/Modal/Modal'
+import { Modal } from '../../components/Modal/BaseModal/Modal'
+import { RegistrationModal } from '../../components/Modal/RegistrationModal/RegistrationModal'
 import { Container } from '../../styles/global'
 
 import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
@@ -27,7 +28,7 @@ export const SignIn = () => {
    return (
       <section>
          <Modal closeModal={handleModalClose} title={'Registration'} isOpen={isModalOpen}>
-            <span>some text</span>
+            <RegistrationModal />
          </Modal>
          SignInPage
          <Container>

@@ -1,13 +1,15 @@
 import styled, { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
-    *{
+    * {
         margin: 0;
         padding: 0;
         outline:0;
         box-sizing: border-box;
         font-family: 'Open Sans', sans-serif;
-        background-color: #E5E5E5;
+    }
+    body {
+     background-color: #E5E5E5;
     }
  `
 export const Container = styled.div`
