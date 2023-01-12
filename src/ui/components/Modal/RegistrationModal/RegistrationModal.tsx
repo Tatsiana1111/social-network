@@ -5,14 +5,16 @@ import styled from 'styled-components'
 
 import { SButtonGreen } from '../../Button/SButton'
 import { SInput } from '../../Input/Input'
+import { RadioInput } from '../../Input/RadioInput'
 const RegistrationModalWrapper = styled.form`
    display: flex;
    flex-direction: column;
    align-items: center;
    gap: 8px;
    div,
-   label {
+   .wrapp {
       display: flex;
+      justify-content: space-between;
       gap: 5px;
       width: 100%;
    }
@@ -31,7 +33,7 @@ export const RegistrationModal = () => {
          email: '' as string,
          password: '' as string,
          date: { day: 0 as number, month: 0 as number, year: 0 as number },
-         gender: 'mail' as 'mail' | 'female',
+         gender: 'male' as 'male' | 'female',
       },
    })
 
@@ -41,7 +43,7 @@ export const RegistrationModal = () => {
             alert(JSON.stringify(data, null, 2))
          })}
       >
-         <div>
+         <div className={'wrapp'}>
             <SInput
                type={'text'}
                placeholder={'Name'}
@@ -63,7 +65,7 @@ export const RegistrationModal = () => {
             placeholder={'Password'}
             {...register('password', { required: 'Password is required' })}
          />
-         <label htmlFor="date">
+         <div>
             <SInput
                type={'number'}
                min={1}
@@ -85,19 +87,18 @@ export const RegistrationModal = () => {
                placeholder={'Year'}
                {...register('date.year', { required: 'Please enter the year when you born' })}
             />
-         </label>
-         <label>
-            <SInput
-               type={'radio'}
-               value="male"
-               {...register('gender', { required: 'Please enter the year when you born' })}
+         </div>
+         <div className={'wrapp'}>
+            <RadioInput
+               value={'male'}
+               {...register('gender', { required: 'Please enter your gender' })}
             />
-            <SInput
-               type={'radio'}
-               value="female"
-               {...register('gender', { required: 'Please enter the year when you born' })}
+            <RadioInput
+               value={'female'}
+               {...register('gender', { required: 'Please enter your gender' })}
             />
-         </label>
+         </div>
+
          <SButtonGreen type="submit">Register Me</SButtonGreen>
       </RegistrationModalWrapper>
    )
