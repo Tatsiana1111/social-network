@@ -16,6 +16,7 @@ export const SHeaderInner = styled.div`
       font-family: 'Caveat', cursive;
    }
    img {
+      cursor: pointer;
       background-color: inherit;
       :hover {
          transform: scale(1.2);

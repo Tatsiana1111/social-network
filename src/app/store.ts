@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import { appReducer } from '../bll/appReducer'
 import { authReducer } from '../bll/authReducer'
+import { profileReducer } from '../bll/profileReducer'
 
 export const store = configureStore({
    reducer: {
@@ -9,7 +10,7 @@ export const store = configureStore({
       //dialogs: dialogsReducer,
       // users: usersReducer,
 
-      //profile: profileReducer,
+      profile: profileReducer,
       auth: authReducer,
    },
 })

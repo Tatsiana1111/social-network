@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { ThemeProvider } from 'styled-components'
 
-import { initializeAppTC } from '../bll/authReducer'
+import { initializeAppTC } from '../bll/appReducer'
 import { Header } from '../ui/components/Header/Header'
 import { Loader } from '../ui/components/Loader/Loader'
 import { NavigationForUs } from '../ui/components/NavigationForUs/NavigationForUs'
