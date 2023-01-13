@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components'
 
 import { initializeAppTC } from '../bll/appReducer'
 import { Header } from '../ui/components/Header/Header'
+import { Initialization } from '../ui/components/Loader/Initialization'
 import { Loader } from '../ui/components/Loader/Loader'
 import { NavigationForUs } from '../ui/components/NavigationForUs/NavigationForUs'
 import { Pages } from '../ui/pages/Pages'
@@ -21,7 +22,7 @@ export const App = () => {
    }, [])
 
    if (!isInitialized) {
-      return <Loader />
+      return <Initialization />
    }
 
    return (
@@ -30,6 +31,7 @@ export const App = () => {
             <NavigationForUs />
             <GlobalStyle />
             <Header />
+            <Loader start={false} />
             <Pages />
          </ThemeProvider>
       </>

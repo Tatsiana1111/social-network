@@ -1,33 +1,31 @@
+import React from 'react'
+
 import styled, { keyframes } from 'styled-components'
 
-const rotate = keyframes`
-  from{
-    background-position: 1em 0;
+const animFw = keyframes`
+  from {
+    width: 0;
   }
+  
   to {
-    background-position: 0 0;
+    width: 100%;
   }
 `
 
-const LoaderWrapper = styled.div`
-   position: absolute;
+const LoaderStyle = styled.div.attrs({
+   start: false,
+})`
+   display: ${props => (props.start ? 'block' : 'none')};
    width: 100%;
-   height: 100%;
-   top: 0;
-   left: 0;
-   display: flex;
-   align-items: center;
-   align-content: center;
-   justify-content: center;
-   overflow: auto;
-   span {
-      position: relative;
-      width: 400px;
-      height: 16px;
-      display: inline-block;
+   height: 6px;
+   background: rgba(255, 255, 255, 0.15);
+   position: relative;
+   overflow: hidden;
+   &:after {
+      content: '';
+      width: 100%;
+      height: 6px;
       background-color: #fff;
-      border: 1px solid #fff;
-      border-radius: 4px;
       background-image: linear-gradient(
          45deg,
          rgba(0, 0, 0, 0.25) 25%,
@@ -38,17 +36,25 @@ const LoaderWrapper = styled.div`
          transparent 75%,
          transparent
       );
-      font-size: 30px;
-      background-size: 1em 1em;
-      box-sizing: border-box;
-      animation: ${rotate} 1s linear infinite;
+      background-size: 15px 15px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: ${animFw} 2s ease-in infinite;
    }
 `
+const LoaderWrapper = styled.div`
+   height: 6px;
+   width: 100vw;
+`
 
-export const Loader = () => {
+type LoaderType = {
+   start: boolean
+}
+export const Loader = (props: LoaderType) => {
    return (
       <LoaderWrapper>
-         <span></span>
+         <LoaderStyle start={props.start} />
       </LoaderWrapper>
    )
 }
