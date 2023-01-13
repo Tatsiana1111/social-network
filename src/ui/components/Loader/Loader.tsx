@@ -11,11 +11,12 @@ const animFw = keyframes`
     width: 100%;
   }
 `
-
-const LoaderStyle = styled.div.attrs({
-   start: false,
-})`
-   display: ${props => (props.start ? 'block' : 'none')};
+const LoaderWrapper = styled.div`
+   height: 6px;
+   width: 100vw;
+`
+const LoaderStyle = styled.div<{ start: boolean }>`
+   display: ${({ start }) => (start ? 'block' : 'none')};
    width: 100%;
    height: 6px;
    background: rgba(255, 255, 255, 0.15);
@@ -42,10 +43,6 @@ const LoaderStyle = styled.div.attrs({
       left: 0;
       animation: ${animFw} 2s ease-in infinite;
    }
-`
-const LoaderWrapper = styled.div`
-   height: 6px;
-   width: 100vw;
 `
 
 type LoaderType = {
