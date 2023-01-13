@@ -2,6 +2,8 @@ import React from 'react'
 
 import styled, { keyframes } from 'styled-components'
 
+import { useAppSelector } from '../../../app/hooks'
+
 const animFw = keyframes`
   from {
     width: 0;
@@ -15,8 +17,8 @@ const LoaderWrapper = styled.div`
    height: 6px;
    width: 100vw;
 `
-const LoaderStyle = styled.div<{ start: boolean }>`
-   display: ${({ start }) => (start ? 'block' : 'none')};
+const LoaderStyle = styled.div<{ start: string }>`
+   display: ${({ start }) => (start === 'load' ? 'block' : 'none')};
    width: 100%;
    height: 6px;
    background: rgba(255, 255, 255, 0.15);
@@ -45,13 +47,12 @@ const LoaderStyle = styled.div<{ start: boolean }>`
    }
 `
 
-type LoaderType = {
-   start: boolean
-}
-export const Loader = (props: LoaderType) => {
+export const Loader = () => {
+   const appStatus = useAppSelector(state => state.app.status)
+
    return (
       <LoaderWrapper>
-         <LoaderStyle start={props.start} />
+         <LoaderStyle start={appStatus} />
       </LoaderWrapper>
    )
 }

@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { authAPI, LoginRequestDataType } from '../api/authAPI'
 
+import { setAppStatusAC } from './appReducer'
+
 const initialState = {
    isLoggedIn: false as boolean,
 }

@@ -31,7 +31,7 @@ export const App = () => {
             <NavigationForUs />
             <GlobalStyle />
             <Header />
-            <Loader start={false} />
+            <Loader />
             <Pages />
          </ThemeProvider>
       </>

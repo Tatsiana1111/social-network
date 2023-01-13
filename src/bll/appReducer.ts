@@ -3,9 +3,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { authAPI } from '../api/authAPI'
 
 import { setLoggedIn } from './authReducer'
+type AppStatusType = 'idle' | 'load' | 'success' | 'error'
+
 const initialState = {
    isInitialized: false as boolean,
    profileID: 0 as number,
+   status: 'idle' as AppStatusType,
 }
 const appSlice = createSlice({
    name: 'app',
@@ -17,10 +20,13 @@ const appSlice = createSlice({
       setProfileID: (state, action: PayloadAction<{ profileID: number }>) => {
          state.profileID = action.payload.profileID
       },
+      setAppStatusAC: (state, action: PayloadAction<{ status: AppStatusType }>) => {
+         state.status = action.payload.status
+      },
    },
 })
 
-export const { setInitializationAC, setProfileID } = appSlice.actions
+export const { setInitializationAC, setProfileID, setAppStatusAC } = appSlice.actions
 
 export const appReducer = appSlice.reducer
 

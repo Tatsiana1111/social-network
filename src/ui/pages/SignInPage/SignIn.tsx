@@ -39,9 +39,9 @@ export const SignIn = () => {
                </SSignInLeft>
                <SSignInRight>
                   <SForm
-                     onSubmit={() => {
-                        handleSubmit(data => dispatch(LoginTC(data as LoginRequestDataType)))
-                     }}
+                     onSubmit={handleSubmit(data =>
+                        dispatch(LoginTC(data as LoginRequestDataType))
+                     )}
                   >
                      <SInputWrapper>
                         <SInput
