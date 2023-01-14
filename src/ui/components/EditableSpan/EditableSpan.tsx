@@ -8,6 +8,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
    const [editMode, setEditMode] = useState(false)
    const [text, setText] = useState(props.text)
 
+   useEffect(() => {}, [props.text])
    const activateEditMode = () => {
       setEditMode(true)
    }
@@ -19,15 +20,9 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
       return setText(event.currentTarget.value)
    }
 
-   useEffect(() => {}, [props.text])
-
    return (
       <div>
-         {!editMode && (
-            <span>
-               <span onDoubleClick={activateEditMode}>{props.text || 'no status'}</span>
-            </span>
-         )}
+         {!editMode && <span onDoubleClick={activateEditMode}>{props.text || 'no status'}</span>}
          {editMode && (
             <div>
                <input
