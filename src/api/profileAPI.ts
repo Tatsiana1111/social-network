@@ -4,6 +4,12 @@ export const profileAPI = {
    getProfileData(userId: number) {
       return instance.get<ProfileDataType>(`/profile/${userId}`)
    },
+   getStatus(userId: number) {
+      return instance.get(`/profile/status/${userId}`)
+   },
+   updateStatus(status: string) {
+      return instance.put(`/profile/status`, { status })
+   },
 }
 
 export type ProfileDataType = {

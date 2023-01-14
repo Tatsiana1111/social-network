@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 
-const boxWithShadow = {}
-
 export const AvatarDiv = styled.div`
    img {
       width: 250px;
@@ -28,11 +26,16 @@ export const AboutProfileDiv = styled.div`
    border-radius: 10px;
    margin: 10px;
 
+   #profileName {
+      font-weight: bolder;
+      font-size: 24px;
+   }
+
    span {
       margin: 20px;
       border-radius: 10px;
       font-family: 'Roboto Light', sans-serif;
-      font-size: 24px;
+      font-size: 18px;
       background-color: white;
    }
 `
@@ -74,13 +77,19 @@ export const PostDiv = styled.div`
    }
 `
 export const PostImage = styled.img`
-   width: 525px;
+   max-width: 525px;
    height: 351px;
 `
 export const BlockWithAvatar = styled.div`
    margin-left: 20px;
    display: flex;
    align-self: self-start;
+
+   #smallAvatar {
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
+   }
 `
 export const BlockDiv = styled.div`
    position: absolute;
