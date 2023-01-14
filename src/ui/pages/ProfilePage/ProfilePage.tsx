@@ -38,7 +38,6 @@ export const ProfilePage = () => {
    return (
       <WrapperDiv>
          <BlockDiv>
-            <Sidebar />
             <AvatarDiv>
                <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />
             </AvatarDiv>
