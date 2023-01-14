@@ -12,6 +12,7 @@ export const NavigationForUs = () => {
          <Link to={PATH.signIn}>SignIn</Link>
          <Link to={PATH.profile}>Profile</Link>
          <Link to={PATH.registration}>Registration</Link>
+         <Link to={PATH.users}>Users</Link>
       </NavigationForUsWrapper>
    )
 }

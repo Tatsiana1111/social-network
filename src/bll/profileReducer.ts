@@ -10,6 +10,7 @@ const profileSlice = createSlice({
    reducers: {
       setProfileDataAC: (state, action: PayloadAction<ProfileDataType>) => {
          state.data = { ...action.payload }
+         //TODO check spreed operator
       },
       setProfileStatus: (state, action: PayloadAction<string>) => {
          state.status = action.payload
