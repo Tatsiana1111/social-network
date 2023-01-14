@@ -12,8 +12,8 @@ export const AvatarDiv = styled.div`
    align-items: center;
    justify-content: center;
    background-color: white;
-   width: 292px;
-   height: 292px;
+   //width: 292px;
+   //height: 292px;
    border-radius: 10px;
 `
 export const AboutProfileDiv = styled.div`
@@ -21,8 +21,8 @@ export const AboutProfileDiv = styled.div`
    display: flex;
    flex-direction: column;
    background-color: white;
-   width: 572px;
-   height: 292px;
+   //width: 572px;
+   //height: 292px;
    border-radius: 10px;
    margin: 10px;
 
@@ -40,9 +40,9 @@ export const AboutProfileDiv = styled.div`
    }
 `
 export const PostDiv = styled.div`
-   position: relative;
-   top: 310px;
-   left: 255px;
+   //position: relative;
+   //top: 310px;
+   //left: 255px;
    margin: 10px;
    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
    display: flex;
@@ -50,8 +50,8 @@ export const PostDiv = styled.div`
    justify-content: space-around;
    flex-direction: column;
    background-color: white;
-   width: 572px;
-   height: 564px;
+   //width: 572px;
+   //height: 564px;
    border-radius: 10px;
 
    div {
@@ -92,13 +92,16 @@ export const BlockWithAvatar = styled.div`
    }
 `
 export const BlockDiv = styled.div`
-   position: absolute;
    display: flex;
-   flex-direction: row;
-   justify-content: center;
+   width: 100%;
 `
 export const WrapperDiv = styled.div`
    display: flex;
    flex-direction: column;
-   align-items: center;
+   align-items: flex-end;
+   width: 100%;
+   overflow: scroll;
+   &::-webkit-scrollbar {
+      display: none;
+   }
 `

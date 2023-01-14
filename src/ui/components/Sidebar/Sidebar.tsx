@@ -10,6 +10,10 @@ import profile from '../../../common/assets/icons/profile.svg'
 import users from '../../../common/assets/icons/users.svg'
 import { PATH } from '../../pages/Pages'
 
+export const SidebarWrapper = styled.aside`
+   max-width: 100%;
+   min-width: fit-content;
+`
 export const NavLinkStyled = styled(NavLink)`
    img {
       margin-right: 10px;
@@ -33,7 +37,7 @@ export const NavLinkStyled = styled(NavLink)`
 
 export const Sidebar = () => {
    return (
-      <aside>
+      <SidebarWrapper>
          <nav>
             <NavLinkStyled to={PATH.profile}>
                <img alt="profile icon" src={profile} />
@@ -56,6 +60,6 @@ export const Sidebar = () => {
             {/*   Сообщества*/}
             {/*</NavLink>*/}
          </nav>
-      </aside>
+      </SidebarWrapper>
    )
 }

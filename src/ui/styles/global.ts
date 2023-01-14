@@ -7,9 +7,14 @@ export const GlobalStyle = createGlobalStyle`
         outline:0;
         box-sizing: border-box;
         font-family: 'Open Sans', sans-serif;
+        //border: 1px solid red;
     }
     body {
      background-color: #E5E5E5;
+     overflow: scroll;
+     &::-webkit-scrollbar {
+      display: none;
+     }
     }
  `
 export const Container = styled.div`

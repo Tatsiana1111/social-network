@@ -14,7 +14,7 @@ const animFw = keyframes`
 `
 const LoaderWrapper = styled.div`
    height: 6px;
-   width: 100vw;
+   width: 100%;
 `
 const LoaderStyle = styled.div<{ start: string }>`
    display: ${({ start }) => (start === 'load' ? 'block' : 'none')};
