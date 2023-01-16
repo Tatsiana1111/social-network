@@ -9,7 +9,7 @@ import { SButton, SButtonGreen } from '../../components/Button/SButton'
 import { SForm, SInput, SInputWrapper } from '../../components/Input/Input'
 import { Modal } from '../../components/Modal/BaseModal/Modal'
 import { RegistrationModal } from '../../components/Modal/RegistrationModal/RegistrationModal'
-import { Container } from '../../styles/global'
+import { Container } from '../../theme/global'
 
 import { SSignInLeft, SSignInRight, SSignInWrapper } from './styled'
 

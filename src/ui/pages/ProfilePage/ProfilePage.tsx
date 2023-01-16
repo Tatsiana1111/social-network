@@ -1,21 +1,13 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
-import avatar from '../../../common/assets/images/avatar.svg'
-import miniAvatar from '../../../common/assets/images/miniAvatar.svg'
+import avatar from '../../../common/images/avatar.svg'
+import miniAvatar from '../../../common/images/miniAvatar.svg'
+import { Box } from '../../components/Box/Box'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
-import { Sidebar } from '../../components/Sidebar/Sidebar'
 
-import {
-   AboutProfileDiv,
-   AvatarDiv,
-   BlockDiv,
-   BlockWithAvatar,
-   PostDiv,
-   PostImage,
-   WrapperDiv,
-} from './styled'
+import { PostWrapper, WrapperDiv } from './styled'
 
 export const ProfilePage = () => {
    const profileID = useAppSelector(state => state.app.profileID)
@@ -37,35 +29,63 @@ export const ProfilePage = () => {
 
    return (
       <WrapperDiv>
-         <BlockDiv>
-            <AvatarDiv>
-               <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />
-            </AvatarDiv>
-            <AboutProfileDiv>
-               <span id="profileName">{profileName}</span>
-               <EditableSpan text={userStatus} updateText={updateUserStatus} />
-               <span>{userAboutMeInfo}</span>
-            </AboutProfileDiv>
-         </BlockDiv>
-         <PostDiv>
-            <BlockWithAvatar>
-               <img
-                  id="smallAvatar"
-                  src={userSmallAvatar ? userSmallAvatar : miniAvatar}
-                  alt="user mini-avatar"
-               />
-               <span>{profileName}</span>
-            </BlockWithAvatar>
-            <PostImage src={userLargeAvatar} alt="post photo" />
-            <BlockWithAvatar>
-               <img
-                  id="smallAvatar"
-                  src={userSmallAvatar ? userSmallAvatar : miniAvatar}
-                  alt="user mini-avatar"
-               />
-               <textarea name="" id="" placeholder="Напишите свой комментарий"></textarea>
-            </BlockWithAvatar>
-         </PostDiv>
+         <Box className={'profilePhoto'}>
+            <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />
+         </Box>
+
+         <Box className={'profileData'}>
+            <span>{profileName}</span>
+            <EditableSpan text={userStatus} updateText={updateUserStatus} />
+            <span>{userAboutMeInfo}</span>
+         </Box>
+         <Box className={'profilePosts'}>
+            <PostWrapper>
+               <div className={'PostHeader'}>
+                  <img
+                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
+                     alt="user mini-avatar"
+                  />
+                  <span>{profileName}</span>
+               </div>
+               <div className={'comment'}>
+                  <img
+                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
+                     alt="user mini-avatar"
+                  />
+                  <textarea placeholder="Напишите свой комментарий" />
+               </div>
+            </PostWrapper>
+         </Box>
+
+         {/*<BlockDiv>*/}
+         {/*   <AvatarDiv>*/}
+         {/*      <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />*/}
+         {/*   </AvatarDiv>*/}
+         {/*   <AboutProfileDiv>*/}
+         {/*      <span id="profileName">{profileName}</span>*/}
+         {/*      <EditableSpan text={userStatus} updateText={updateUserStatus} />*/}
+         {/*      <span>{userAboutMeInfo}</span>*/}
+         {/*   </AboutProfileDiv>*/}
+         {/*</BlockDiv>*/}
+         {/*<PostDiv>*/}
+         {/*   <BlockWithAvatar>*/}
+         {/*      <img*/}
+         {/*         id="smallAvatar"*/}
+         {/*         src={userSmallAvatar ? userSmallAvatar : miniAvatar}*/}
+         {/*         alt="user mini-avatar"*/}
+         {/*      />*/}
+         {/*      <span>{profileName}</span>*/}
+         {/*   </BlockWithAvatar>*/}
+         {/*   <PostImage src={userLargeAvatar} alt="post photo" />*/}
+         {/*   <BlockWithAvatar>*/}
+         {/*      <img*/}
+         {/*         id="smallAvatar"*/}
+         {/*         src={userSmallAvatar ? userSmallAvatar : miniAvatar}*/}
+         {/*         alt="user mini-avatar"*/}
+         {/*      />*/}
+         {/*      <textarea name="" id="" placeholder="Напишите свой комментарий"></textarea>*/}
+         {/*   </BlockWithAvatar>*/}
+         {/*</PostDiv>*/}
       </WrapperDiv>
    )
 }

@@ -3,11 +3,11 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-import community from '../../../common/assets/icons/community.svg'
-import message from '../../../common/assets/icons/message.svg'
-import music from '../../../common/assets/icons/music.svg'
-import profile from '../../../common/assets/icons/profile.svg'
-import users from '../../../common/assets/icons/users.svg'
+import community from '../../../common/icons/community.svg'
+import message from '../../../common/icons/message.svg'
+import music from '../../../common/icons/music.svg'
+import profile from '../../../common/icons/profile.svg'
+import users from '../../../common/icons/users.svg'
 import { PATH } from '../../pages/Pages'
 
 export const SidebarWrapper = styled.aside`

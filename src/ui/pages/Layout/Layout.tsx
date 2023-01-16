@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { Sidebar } from '../../components/Sidebar/Sidebar'
-import { Container } from '../../styles/global'
+import { Container } from '../../theme/global'
 
 const ContentWrapper = styled.div`
    display: flex;

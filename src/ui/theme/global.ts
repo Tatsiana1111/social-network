@@ -1,6 +1,6 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled, { createGlobalStyle, DefaultTheme } from 'styled-components'
 
-export const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
     * {
         margin: 0;
         padding: 0;
@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
         //border: 1px solid red;
     }
     body {
-     background-color: #E5E5E5;
+     background-color: ${props => props.theme.colors.backGroundColor};
      overflow: scroll;
      &::-webkit-scrollbar {
       display: none;
