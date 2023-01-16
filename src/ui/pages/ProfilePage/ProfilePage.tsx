@@ -1,10 +1,15 @@
 import React, { useEffect } from 'react'
 
+import { ProfileDataType } from '../../../api/profileAPI'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
 import avatar from '../../../common/images/avatar.svg'
 import miniAvatar from '../../../common/images/miniAvatar.svg'
 import { Box } from '../../components/Box/Box'
+import falseCheckbox from '../../../common/assets/icons/false.png'
+import trueCheckbox from '../../../common/assets/icons/true.png'
+import avatar from '../../../common/assets/images/avatar.svg'
+import miniAvatar from '../../../common/assets/images/miniAvatar.svg'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 
 import { PostWrapper, WrapperDiv } from './styled'
@@ -16,6 +21,8 @@ export const ProfilePage = () => {
    const userSmallAvatar = useAppSelector(state => state.profile.data.photos?.small)
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
+   const contacts = useAppSelector(state => state.profile.data.contacts)
+   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    // const { profileID } = useParams()
    const dispatch = useAppDispatch()
 
@@ -23,9 +30,13 @@ export const ProfilePage = () => {
       dispatch(getProfileData(profileID))
       dispatch(getStatus(profileID))
    }, [])
+
    const updateUserStatus = (status: string) => {
       dispatch(updateStatus(status))
    }
+   // const updateProfileHandler = (profile: ProfileDataType) => {
+   //    dispatch(updateProfile(profile))
+   // }
 
    return (
       <WrapperDiv>

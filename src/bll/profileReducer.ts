@@ -60,3 +60,17 @@ export const updateStatus = createAsyncThunk(
       }
    }
 )
+// export const updateProfile = createAsyncThunk(
+//    'profile/updateAboutMe',
+//    async (profile: ProfileDataType, thunkAPI) => {
+//       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+//       try {
+//          const res = await profileAPI.updateProfile(profile)
+//
+//          thunkAPI.dispatch(setProfileDataAC(res.data))
+//          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+//       } catch (e) {
+//          console.log(e)
+//       }
+//    }
+// )
