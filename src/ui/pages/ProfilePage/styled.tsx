@@ -99,9 +99,11 @@ import styled from 'styled-components'
 export const WrapperDiv = styled.div`
    display: grid;
    grid-template-columns: 1fr 2fr;
-   grid-template-rows: repeat(2, 1fr);
+   grid-template-rows: 1fr auto;
    grid-column-gap: 20px;
    grid-row-gap: 20px;
+   margin-bottom: 20px;
+
    .profilePhoto {
       grid-area: 1 / 1 / 2 / 2;
    }
@@ -110,30 +112,8 @@ export const WrapperDiv = styled.div`
    }
    .profilePosts {
       grid-area: 2 / 2 / 3 / 3;
-   }
-`
-export const PostWrapper = styled.div`
-   display: flex;
-   flex-direction: column;
-   min-width: 100%;
-
-   .PostHeader {
       display: flex;
-      gap: 10px;
-      align-items: center;
-   }
-
-   .comment {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      textarea {
-         resize: none;
-         padding: 10px;
-         border-radius: 10px;
-         border: 1px solid red;
-         background-color: ${props => props.theme.colors.backGroundColor};
-         color: ${props => props.theme.colors.primary};
-      }
+      flex-direction: column;
+      gap: 15px;
    }
 `
