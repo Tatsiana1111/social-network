@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
+
+import { useAppDispatch } from '../../../app/hooks'
+import { getUsersTC } from '../../../bll/usersReducer'
 
 import { User } from './User'
 
@@ -18,6 +21,13 @@ const UsersWrapper = styled.section`
 `
 
 export const UsersPage = () => {
+   const dispatch = useAppDispatch()
+
+   useEffect(() => {
+      alert('yo')
+      dispatch(getUsersTC())
+   }, [dispatch])
+
    return (
       <UsersWrapper>
          <h1>People You May Know</h1>
