@@ -10,6 +10,9 @@ export const profileAPI = {
    updateStatus(status: string) {
       return instance.put(`/profile/status`, { status })
    },
+   updateProfile(profile: ProfileDataType) {
+      return instance.put(`/profile`, profile)
+   },
 }
 
 export type ProfileDataType = {

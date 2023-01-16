@@ -31,8 +31,24 @@ export const AboutProfileDiv = styled.div`
       font-size: 24px;
    }
 
+   #status {
+      font-size: 16px;
+      font-style: italic;
+   }
+
+   #lookingForAJob {
+      font-size: 20px;
+      display: flex;
+      margin: 0px 20px;
+      align-items: center;
+   }
+
+   #aboutMeInfo {
+      font-size: 16px;
+   }
+
    span {
-      margin: 20px;
+      margin: 10px 20px;
       border-radius: 10px;
       font-family: 'Roboto Light', sans-serif;
       font-size: 18px;
