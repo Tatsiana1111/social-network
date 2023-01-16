@@ -1,7 +1,10 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { useEffect } from 'react'
 
+import { ProfileDataType } from '../../../api/profileAPI'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
+import falseCheckbox from '../../../common/assets/icons/false.png'
+import trueCheckbox from '../../../common/assets/icons/true.png'
 import avatar from '../../../common/assets/images/avatar.svg'
 import miniAvatar from '../../../common/assets/images/miniAvatar.svg'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
@@ -24,6 +27,8 @@ export const ProfilePage = () => {
    const userSmallAvatar = useAppSelector(state => state.profile.data.photos?.small)
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
+   const contacts = useAppSelector(state => state.profile.data.contacts)
+   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    // const { profileID } = useParams()
    const dispatch = useAppDispatch()
 
@@ -31,9 +36,13 @@ export const ProfilePage = () => {
       dispatch(getProfileData(profileID))
       dispatch(getStatus(profileID))
    }, [])
+
    const updateUserStatus = (status: string) => {
       dispatch(updateStatus(status))
    }
+   // const updateProfileHandler = (profile: ProfileDataType) => {
+   //    dispatch(updateProfile(profile))
+   // }
 
    return (
       <WrapperDiv>
@@ -44,8 +53,23 @@ export const ProfilePage = () => {
             </AvatarDiv>
             <AboutProfileDiv>
                <span id="profileName">{profileName}</span>
-               <EditableSpan text={userStatus} updateText={updateUserStatus} />
-               <span>{userAboutMeInfo}</span>
+               <EditableSpan id="status" text={userStatus} updateText={updateUserStatus} />
+               <span>
+                  About me: <span>{userAboutMeInfo}</span>
+                  {/*<EditableSpan*/}
+                  {/*   id="status"*/}
+                  {/*   text={userAboutMeInfo}*/}
+                  {/*   updateText={updateProfileHandler}*/}
+                  {/*/>{' '}*/}
+               </span>
+               <div id="lookingForAJob">
+                  Looking for a job:
+                  {lookingForAJob ? (
+                     <img alt="img" src={trueCheckbox} />
+                  ) : (
+                     <img alt="img" src={falseCheckbox} />
+                  )}
+               </div>
             </AboutProfileDiv>
          </BlockDiv>
          <PostDiv>

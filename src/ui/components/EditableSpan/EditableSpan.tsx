@@ -2,7 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 
 type EditableSpanPropsType = {
    text: string
-   updateText: (text: string) => void
+   updateText: (args: any) => void
+   id?: string
 }
 export const EditableSpan = (props: EditableSpanPropsType) => {
    const [editMode, setEditMode] = useState(false)
@@ -22,7 +23,11 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
 
    return (
       <div>
-         {!editMode && <span onDoubleClick={activateEditMode}>{props.text || 'no status'}</span>}
+         {!editMode && (
+            <span id={props.id} onDoubleClick={activateEditMode}>
+               {props.text || 'no status'}
+            </span>
+         )}
          {editMode && (
             <div>
                <input
