@@ -9,7 +9,7 @@ import { PageNotFound } from './PageNotFound/PageNotFound'
 import { ProfilePage } from './ProfilePage/ProfilePage'
 import { Registration } from './RegistrationPage/Registration'
 import { SignIn } from './SignInPage/SignIn'
-import { Users } from './Users/Users'
+import { UsersPage } from './Users/UsersPage'
 
 export const PATH = {
    profile: '/profile/:profileID',
@@ -37,7 +37,7 @@ export const Pages = () => {
          <Route element={<RequireAuth />}>
             <Route element={<Layout />}>
                <Route path={PATH.profile} element={<ProfilePage />} />
-               <Route path={PATH.users} element={<Users />} />
+               <Route path={PATH.users} element={<UsersPage />} />
             </Route>
          </Route>
          <Route element={<LoginRoute />}>
