@@ -8,12 +8,19 @@ import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 
 import { User } from './User'
 
-const UsersWrapper = styled.section`
+const Wrapper = styled.section`
    width: 100%;
    h1 {
       margin: 10px 0;
    }
-   .userInner {
+   .usersWrapper {
+      display: grid;
+      grid-template-columns: 9fr 1fr;
+      grid-template-rows: 1fr;
+      grid-column-gap: 10px;
+   }
+   .users {
+      grid-area: 1 / 1 / 2 / 2;
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
@@ -56,16 +63,18 @@ export const UsersPage = () => {
    }
 
    return (
-      <UsersWrapper>
+      <Wrapper>
          <h1>People You May Know</h1>
-         <div className={'userInner'}>
-            {users.length &&
-               users.map((user, index) => {
-                  return <User key={index} user={user} />
-               })}
+         <div className={'usersWrapper'}>
+            <div className={'users'}>
+               {users.length &&
+                  users.map((user, index) => {
+                     return <User key={index} user={user} />
+                  })}
+            </div>
+            <GoToTopButton />
          </div>
-         <GoToTopButton />
-      </UsersWrapper>
+      </Wrapper>
    )
 }
 // https://www.youtube.com/watch?v=J2MWOhV8T6o
