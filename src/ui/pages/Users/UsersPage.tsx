@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getUsersTC } from '../../../bll/usersReducer'
+import { getUsersTC, setFetching } from '../../../bll/usersReducer'
 
 import { User } from './User'
 
@@ -23,19 +23,47 @@ const UsersWrapper = styled.section`
 export const UsersPage = () => {
    const dispatch = useAppDispatch()
    const users = useAppSelector(store => store.users.users)
+   // const totalCount = useAppSelector(store => store.users.totalCount)
+   const currentPage = useAppSelector(store => store.users.currentPage)
+   const isFetching = useAppSelector(store => store.users.isFetching)
 
    useEffect(() => {
-      dispatch(getUsersTC())
-   }, [dispatch])
+      if (isFetching) {
+         dispatch(getUsersTC({ page: currentPage }))
+      }
+   }, [isFetching])
+
+   useEffect(() => {
+      document.addEventListener('scroll', scrollHandler)
+
+      return function () {
+         document.removeEventListener('scroll', scrollHandler)
+      }
+   }, [])
+
+   const scrollHandler = (e: any) => {
+      //TODO need to fix any +  (&& users.length < totalCount)
+
+      const scrollHeight = e.target.documentElement.scrollHeight
+      const scrollTop = e.target.documentElement.scrollTop
+      const innerHeight = window.innerHeight
+      const condition = scrollHeight - (scrollTop + innerHeight) < 100
+
+      if (condition) {
+         dispatch(setFetching({ isFetching: true }))
+      }
+   }
 
    return (
       <UsersWrapper>
          <h1>People You May Know</h1>
          <div className={'userInner'}>
-            {users.map((user, index) => {
-               return <User key={index} user={user} />
-            })}
+            {users.length &&
+               users.map((user, index) => {
+                  return <User key={index} user={user} />
+               })}
          </div>
       </UsersWrapper>
    )
 }
+// https://www.youtube.com/watch?v=J2MWOhV8T6o
