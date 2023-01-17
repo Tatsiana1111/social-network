@@ -4,6 +4,7 @@ import { userAPI, UserItemsType } from '../api/usersAPI'
 
 const initialState = {
    users: {} as UserItemsType[],
+   inFollowingProgress: [] as Array<number>,
 }
 
 const usersSlice = createSlice({
@@ -13,6 +14,7 @@ const usersSlice = createSlice({
       setUsers: (state, action: PayloadAction<{ users: UserItemsType[] }>) => {
          state.users = action.payload.users
       },
+      //followUser: (state, action: PayloadAction<{ isFollowing: boolean }>) => {},
    },
 })
 

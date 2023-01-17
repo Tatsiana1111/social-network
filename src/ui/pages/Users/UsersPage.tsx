@@ -9,9 +9,11 @@ import { User } from './User'
 
 const UsersWrapper = styled.section`
    width: 100%;
+
    h1 {
       margin: 10px 0;
    }
+
    .userInner {
       display: flex;
       flex-wrap: wrap;
@@ -22,7 +24,7 @@ const UsersWrapper = styled.section`
 
 export const UsersPage = () => {
    const dispatch = useAppDispatch()
-   const users = useAppSelector(store => store.users.users)
+   const users = useAppSelector(state => state.users.users)
 
    useEffect(() => {
       dispatch(getUsersTC())
@@ -32,9 +34,10 @@ export const UsersPage = () => {
       <UsersWrapper>
          <h1>People You May Know</h1>
          <div className={'userInner'}>
-            {users.map((user, index) => {
-               return <User key={index} user={user} />
-            })}
+            {users.length &&
+               users.map((user, index) => {
+                  return <User key={index} user={user} />
+               })}
          </div>
       </UsersWrapper>
    )
