@@ -5,6 +5,7 @@ import { getProfileData, getStatus, updateStatus } from '../../../bll/profileRed
 import avatar from '../../../common/images/avatar.svg'
 import { Box } from '../../components/Box/Box'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
+import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { Post } from '../../components/Post/Post'
 
 import { WrapperDiv } from './styled'
