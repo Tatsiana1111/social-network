@@ -2,6 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 
+import { UserItemsType } from '../../../api/usersAPI'
 import { Box } from '../../components/Box/Box'
 
 const UserWrapper = styled(Box)`
@@ -38,11 +39,21 @@ const UserWrapper = styled(Box)`
    }
 `
 
-export const User = () => {
+type UserType = {
+   user: UserItemsType
+}
+export const User = (props: UserType) => {
    return (
       <UserWrapper>
-         <img src="https://via.placeholder.com/150px" alt="userPhoto" />
-         <span>name</span>
+         <img
+            src={
+               props.user.photos.small
+                  ? props.user.photos.small
+                  : 'https://via.placeholder.com/150px'
+            }
+            alt="userPhoto"
+         />
+         <span>{props.user.name}</span>
          <div>
             <button>follow</button>
             <button disabled>unFollow</button>

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import styled from 'styled-components'
 
-import { useAppDispatch } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getUsersTC } from '../../../bll/usersReducer'
 
 import { User } from './User'
@@ -22,9 +22,9 @@ const UsersWrapper = styled.section`
 
 export const UsersPage = () => {
    const dispatch = useAppDispatch()
+   const users = useAppSelector(store => store.users.users)
 
    useEffect(() => {
-      alert('yo')
       dispatch(getUsersTC())
    }, [dispatch])
 
@@ -32,16 +32,9 @@ export const UsersPage = () => {
       <UsersWrapper>
          <h1>People You May Know</h1>
          <div className={'userInner'}>
-            <User />
-            <User />
-            <User />
-            <User />
-            <User />
-            <User />
-            <User />
-            <User />
-            <User />
-            <User />
+            {users.map((user, index) => {
+               return <User key={index} user={user} />
+            })}
          </div>
       </UsersWrapper>
    )
