@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getUsersTC, setFetching } from '../../../bll/usersReducer'
+import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 
 import { User } from './User'
 
@@ -63,6 +64,7 @@ export const UsersPage = () => {
                   return <User key={index} user={user} />
                })}
          </div>
+         <GoToTopButton />
       </UsersWrapper>
    )
 }
