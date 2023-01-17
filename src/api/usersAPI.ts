@@ -2,7 +2,7 @@ import { instance } from './instance'
 
 export const userAPI = {
    getUsers(params: getUsersParamsType) {
-      return instance.get<UsersResponseDataType>('/users', { params: { params } })
+      return instance.get<UsersResponseDataType>('/users', { params })
    },
 }
 
