@@ -14,26 +14,26 @@ const usersSlice = createSlice({
    name: 'users',
    initialState,
    reducers: {
-      setUsers: (state, action: PayloadAction<{ users: UserItemsType[] }>) => {
+      setUsersAC: (state, action: PayloadAction<{ users: UserItemsType[] }>) => {
          state.users = [...state.users, ...action.payload.users]
       },
-      setTotalCount: (state, action: PayloadAction<{ totalCount: number }>) => {
+      setTotalCountAC: (state, action: PayloadAction<{ totalCount: number }>) => {
          state.totalCount = action.payload.totalCount
       },
-      setCurrentPage: (state, action: PayloadAction<{ page: number }>) => {
+      setCurrentPageAC: (state, action: PayloadAction<{ page: number }>) => {
          state.currentPage = action.payload.page
       },
-      setFetching: (state, action: PayloadAction<{ isFetching: boolean }>) => {
+      setFetchingAC: (state, action: PayloadAction<{ isFetching: boolean }>) => {
          state.isFetching = action.payload.isFetching
       },
-      followUser: (state, action: PayloadAction<{ userID: number }>) => {
+      followUserAC: (state, action: PayloadAction<{ userID: number }>) => {
          const index = state.users.findIndex(user => user.id === action.payload.userID)
 
          if (index > -1) {
             state.users[index].followed = true
          }
       },
-      unFollowUser: (state, action: PayloadAction<{ userID: number }>) => {
+      unFollowUserAC: (state, action: PayloadAction<{ userID: number }>) => {
          const index = state.users.findIndex(user => user.id === action.payload.userID)
 
          if (index > -1) {
@@ -44,8 +44,14 @@ const usersSlice = createSlice({
 })
 
 export const usersReducer = usersSlice.reducer
-export const { setUsers, setTotalCount, setFetching, setCurrentPage, followUser, unFollowUser } =
-   usersSlice.actions
+export const {
+   setUsersAC,
+   setTotalCountAC,
+   setFetchingAC,
+   setCurrentPageAC,
+   followUserAC,
+   unFollowUserAC,
+} = usersSlice.actions
 
 export const getUsersTC = createAsyncThunk(
    'users/getUsers',
@@ -55,10 +61,10 @@ export const getUsersTC = createAsyncThunk(
          const state = thunkAPI.getState() as RootState
          const currentPage = state.users.currentPage
 
-         thunkAPI.dispatch(setUsers({ users: res.data.items }))
-         thunkAPI.dispatch(setCurrentPage({ page: currentPage + 1 }))
-         thunkAPI.dispatch(setFetching({ isFetching: false }))
-         thunkAPI.dispatch(setTotalCount({ totalCount: res.data.totalCount }))
+         thunkAPI.dispatch(setUsersAC({ users: res.data.items }))
+         thunkAPI.dispatch(setCurrentPageAC({ page: currentPage + 1 }))
+         thunkAPI.dispatch(setFetchingAC({ isFetching: false }))
+         thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
       } catch (e) {
          console.log(e)
       }
@@ -70,19 +76,19 @@ export const followUserTC = createAsyncThunk(
       try {
          await userAPI.followUser(userId)
 
-         thunkAPI.dispatch(followUser({ userID: userId }))
+         thunkAPI.dispatch(followUserAC({ userID: userId }))
       } catch (e) {
          console.log(e)
       }
    }
 )
-export const unfollowUserTC = createAsyncThunk(
+export const unFollowUserTC = createAsyncThunk(
    'users/unFollowUser',
    async (userId: number, thunkAPI) => {
       try {
          await userAPI.unFollowUser(userId)
 
-         thunkAPI.dispatch(unFollowUser({ userID: userId }))
+         thunkAPI.dispatch(unFollowUserAC({ userID: userId }))
       } catch (e) {
          console.log(e)
       }

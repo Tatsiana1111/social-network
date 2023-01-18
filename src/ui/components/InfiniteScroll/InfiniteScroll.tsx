@@ -1,21 +1,17 @@
 import React, { ReactNode, useEffect } from 'react'
 
-import { User } from '../../pages/Users/User'
-
 type DefaultDivType = React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>
 
 type InfiniteScrollType = DefaultDivType & {
-   // children: ReactNode
+   children: ReactNode
    fetchData: () => void
    setFetching: () => void
    isFetching: boolean
-   items: any[]
 }
 
 export const InfiniteScroll = (props: InfiniteScrollType) => {
    useEffect(() => {
       if (props.isFetching) {
-         // dispatch(getUsersTC({ page: currentPage }))
          props.fetchData()
       }
    }, [props.isFetching])
@@ -37,17 +33,14 @@ export const InfiniteScroll = (props: InfiniteScrollType) => {
       const condition = scrollHeight - (scrollTop + innerHeight) < 100
 
       if (condition) {
-         // dispatch(setFetching({ isFetching: true }))
          props.setFetching()
       }
    }
+   const { fetchData, setFetching, isFetching, ...rest } = props
 
-   return (
-      <div {...props}>
-         {props.items.length &&
-            props.items.map((user, index) => {
-               return <User key={index} user={user} />
-            })}
-      </div>
-   )
+   // line above is for fix problem below
+   // Warning: React does not recognize the X prop on a DOM element
+   // https://stackoverflow.com/questions/66176412/warning-react-does-not-recognize-the-x-prop-on-a-dom-element
+   return <div {...rest}>{props.children}</div>
 }
+//https://www.npmjs.com/package/react-infinite-scroll-component   <-- how this component can be improved

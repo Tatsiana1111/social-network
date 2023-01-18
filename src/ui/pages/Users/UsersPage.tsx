@@ -1,37 +1,12 @@
-import React, { useEffect, useState } from 'react'
-
-import styled from 'styled-components'
+import React from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { followUserTC, getUsersTC, setFetching, unfollowUserTC } from '../../../bll/usersReducer'
-import { UserItemsType } from '../../../dal/usersAPI'
+import { getUsersTC, setFetchingAC } from '../../../bll/usersReducer'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
 
+import { UsersPageWrapper } from './styled-UsersPage'
 import { User } from './User'
-
-const Wrapper = styled.section`
-   width: 100%;
-
-   h1 {
-      margin: 10px 0;
-   }
-
-   .usersWrapper {
-      display: grid;
-      grid-template-columns: 9fr 1fr;
-      grid-template-rows: 1fr;
-      grid-column-gap: 10px;
-   }
-
-   .users {
-      grid-area: 1 / 1 / 2 / 2;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-   }
-`
 
 export const UsersPage = () => {
    const dispatch = useAppDispatch()
@@ -42,24 +17,28 @@ export const UsersPage = () => {
    const fetchData = () => {
       dispatch(getUsersTC({ page: currentPage }))
    }
-   const setFetchingd = () => {
-      dispatch(setFetching({ isFetching: true }))
+   const setFetching = () => {
+      dispatch(setFetchingAC({ isFetching: true }))
    }
 
    return (
-      <Wrapper>
+      <UsersPageWrapper>
          <h1>People You May Know</h1>
          <div className={'usersWrapper'}>
             <InfiniteScroll
                className={'users'}
                fetchData={fetchData}
-               setFetching={setFetchingd}
+               setFetching={setFetching}
                isFetching={isFetching}
-               items={users}
-            />
+            >
+               {users.length &&
+                  users.map((user, index) => {
+                     return <User key={index} user={user} />
+                  })}
+            </InfiniteScroll>
             <GoToTopButton />
          </div>
-      </Wrapper>
+      </UsersPageWrapper>
    )
 }
 // https://www.youtube.com/watch?v=J2MWOhV8T6o
