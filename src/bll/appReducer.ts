@@ -18,8 +18,8 @@ const appSlice = createSlice({
       setInitializationAC: (state, action: PayloadAction<{ value: boolean }>) => {
          state.isInitialized = action.payload.value
       },
-      setProfileID: (state, action: PayloadAction<{ profileID: number }>) => {
-         state.profileID = action.payload.profileID
+      setProfileID: (state, action: PayloadAction<{ userID: number }>) => {
+         state.profileID = action.payload.userID
       },
       setAppStatusAC: (state, action: PayloadAction<{ status: AppStatusType }>) => {
          state.status = action.payload.status
@@ -37,7 +37,7 @@ export const initializeAppTC = createAsyncThunk('auth/me', async (arg, thunkAPI)
 
       if (res.data.resultCode === 0) {
          thunkAPI.dispatch(setLoggedIn({ value: true }))
-         thunkAPI.dispatch(setProfileID({ profileID: res.data.data.id }))
+         thunkAPI.dispatch(setProfileID({ userID: res.data.data.id }))
       }
    } catch (e) {
       console.log(e)

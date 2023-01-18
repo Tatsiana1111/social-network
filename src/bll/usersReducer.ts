@@ -26,25 +26,39 @@ const usersSlice = createSlice({
       setFetching: (state, action: PayloadAction<{ isFetching: boolean }>) => {
          state.isFetching = action.payload.isFetching
       },
-      followUser: (state, action: PayloadAction<{ profileID: number }>) => {
-         state.users.map(user => {
-            if (user.id === action.payload.profileID) {
-               return (user.followed = true)
-            }
-         })
+      followUser: (state, action: PayloadAction<{ userID: number }>) => {
+         const index = state.users.findIndex(user => user.id === action.payload.userID)
+
+         if (index > -1) {
+            state.users[index].followed = true
+         }
       },
-      unfollowUser: (state, action: PayloadAction<{ profileID: number }>) => {
-         state.users.map(user => {
-            if (user.id === action.payload.profileID) {
-               return (user.followed = false)
-            }
-         })
+      unFollowUser: (state, action: PayloadAction<{ userID: number }>) => {
+         const index = state.users.findIndex(user => user.id === action.payload.userID)
+
+         if (index > -1) {
+            state.users[index].followed = false
+         }
       },
+      // followUser: (state, action: PayloadAction<{ profileID: number }>) => {
+      //    state.users.map(user => {
+      //       if (user.id === action.payload.profileID) {
+      //          return (user.followed = true)
+      //       }
+      //    })
+      // },
+      // unfollowUser: (state, action: PayloadAction<{ profileID: number }>) => {
+      //    state.users.map(user => {
+      //       if (user.id === action.payload.profileID) {
+      //          return (user.followed = false)
+      //       }
+      //    })
+      // },
    },
 })
 
 export const usersReducer = usersSlice.reducer
-export const { setUsers, setTotalCount, setFetching, setCurrentPage, followUser, unfollowUser } =
+export const { setUsers, setTotalCount, setFetching, setCurrentPage, followUser, unFollowUser } =
    usersSlice.actions
 
 export const getUsersTC = createAsyncThunk(
@@ -68,21 +82,21 @@ export const followUserTC = createAsyncThunk(
    'users/followUser',
    async (userId: number, thunkAPI) => {
       try {
-         const res = await userAPI.followUser(userId)
+         await userAPI.followUser(userId)
 
-         thunkAPI.dispatch(followUser({ profileID: userId }))
+         thunkAPI.dispatch(followUser({ userID: userId }))
       } catch (e) {
          console.log(e)
       }
    }
 )
 export const unfollowUserTC = createAsyncThunk(
-   'users/unfollowUser',
+   'users/unFollowUser',
    async (userId: number, thunkAPI) => {
       try {
-         const res = await userAPI.unfollowUser(userId)
+         await userAPI.unFollowUser(userId)
 
-         thunkAPI.dispatch(unfollowUser({ profileID: userId }))
+         thunkAPI.dispatch(unFollowUser({ userID: userId }))
       } catch (e) {
          console.log(e)
       }

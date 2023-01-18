@@ -2,6 +2,8 @@ import React from 'react'
 
 import styled from 'styled-components'
 
+import { useAppDispatch } from '../../../app/hooks'
+import { followUserTC, unfollowUserTC } from '../../../bll/usersReducer'
 import { UserItemsType } from '../../../dal/usersAPI'
 import { Box } from '../../components/Box/Box'
 
@@ -28,6 +30,7 @@ const UserWrapper = styled(Box)`
          cursor: pointer;
          padding: 7px 13px;
          color: white;
+         font-weight: bold;
          text-transform: capitalize;
          background-color: #447bba;
          border: none;
@@ -39,18 +42,26 @@ const UserWrapper = styled(Box)`
       }
 
       button:disabled {
-         cursor: not-allowed;
-         opacity: 0.7;
+         background-color: #f0f2f5;
+         color: black;
+         opacity: 0.6;
       }
    }
 `
 
 type UserType = {
    user: UserItemsType
-   unfollowUser: (profileID: number) => void
-   followUser: (profileID: number) => void
 }
 export const User = (props: UserType) => {
+   const dispatch = useAppDispatch()
+
+   const followUserHandler = () => {
+      dispatch(followUserTC(props.user.id))
+   }
+   const unfollowUserHandler = () => {
+      dispatch(unfollowUserTC(props.user.id))
+   }
+
    return (
       <UserWrapper>
          <img
@@ -63,14 +74,11 @@ export const User = (props: UserType) => {
          />
          <span>{props.user.name}</span>
          <div>
-            <button disabled={props.user.followed} onClick={() => props.followUser(props.user.id)}>
+            <button disabled={props.user.followed} onClick={followUserHandler}>
                follow
             </button>
 
-            <button
-               disabled={!props.user.followed}
-               onClick={() => props.unfollowUser(props.user.id)}
-            >
+            <button disabled={!props.user.followed} onClick={unfollowUserHandler}>
                unFollow
             </button>
          </div>

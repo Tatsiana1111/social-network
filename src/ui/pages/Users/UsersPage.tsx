@@ -65,12 +65,6 @@ export const UsersPage = () => {
          dispatch(setFetching({ isFetching: true }))
       }
    }
-   const followUserHandler = (userID: number) => {
-      dispatch(followUserTC(userID))
-   }
-   const unfollowUserHandler = (userID: number) => {
-      dispatch(unfollowUserTC(userID))
-   }
 
    return (
       <Wrapper>
@@ -79,14 +73,7 @@ export const UsersPage = () => {
             <div className={'users'}>
                {users.length &&
                   users.map((user, index) => {
-                     return (
-                        <User
-                           followUser={followUserHandler}
-                           unfollowUser={unfollowUserHandler}
-                           key={index}
-                           user={user}
-                        />
-                     )
+                     return <User key={index} user={user} />
                   })}
             </div>
             <GoToTopButton />

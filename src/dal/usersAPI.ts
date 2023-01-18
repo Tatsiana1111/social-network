@@ -7,7 +7,7 @@ export const userAPI = {
    followUser(userId: number) {
       return instance.post(`/follow/${userId}`, {})
    },
-   unfollowUser(userId: number) {
+   unFollowUser(userId: number) {
       return instance.delete(`/follow/${userId}`)
    },
 }
