@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { followUserTC, getUsersTC, setFetching, unfollowUserTC } from '../../../bll/usersReducer'
 import { UserItemsType } from '../../../dal/usersAPI'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
+import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
 
 import { User } from './User'
 
@@ -35,47 +36,27 @@ const Wrapper = styled.section`
 export const UsersPage = () => {
    const dispatch = useAppDispatch()
    const users = useAppSelector(store => store.users.users)
-   // const totalCount = useAppSelector(store => store.users.totalCount)
    const currentPage = useAppSelector(store => store.users.currentPage)
    const isFetching = useAppSelector(store => store.users.isFetching)
 
-   useEffect(() => {
-      if (isFetching) {
-         dispatch(getUsersTC({ page: currentPage }))
-      }
-   }, [isFetching])
-
-   useEffect(() => {
-      document.addEventListener('scroll', scrollHandler)
-
-      return function () {
-         document.removeEventListener('scroll', scrollHandler)
-      }
-   }, [])
-
-   const scrollHandler = (e: any) => {
-      //TODO need to fix any +  (&& users.length < totalCount)
-
-      const scrollHeight = e.target.documentElement.scrollHeight
-      const scrollTop = e.target.documentElement.scrollTop
-      const innerHeight = window.innerHeight
-      const condition = scrollHeight - (scrollTop + innerHeight) < 100
-
-      if (condition) {
-         dispatch(setFetching({ isFetching: true }))
-      }
+   const fetchData = () => {
+      dispatch(getUsersTC({ page: currentPage }))
+   }
+   const setFetchingd = () => {
+      dispatch(setFetching({ isFetching: true }))
    }
 
    return (
       <Wrapper>
          <h1>People You May Know</h1>
          <div className={'usersWrapper'}>
-            <div className={'users'}>
-               {users.length &&
-                  users.map((user, index) => {
-                     return <User key={index} user={user} />
-                  })}
-            </div>
+            <InfiniteScroll
+               className={'users'}
+               fetchData={fetchData}
+               setFetching={setFetchingd}
+               isFetching={isFetching}
+               items={users}
+            />
             <GoToTopButton />
          </div>
       </Wrapper>

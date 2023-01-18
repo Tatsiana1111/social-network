@@ -40,20 +40,6 @@ const usersSlice = createSlice({
             state.users[index].followed = false
          }
       },
-      // followUser: (state, action: PayloadAction<{ profileID: number }>) => {
-      //    state.users.map(user => {
-      //       if (user.id === action.payload.profileID) {
-      //          return (user.followed = true)
-      //       }
-      //    })
-      // },
-      // unfollowUser: (state, action: PayloadAction<{ profileID: number }>) => {
-      //    state.users.map(user => {
-      //       if (user.id === action.payload.profileID) {
-      //          return (user.followed = false)
-      //       }
-      //    })
-      // },
    },
 })
 
