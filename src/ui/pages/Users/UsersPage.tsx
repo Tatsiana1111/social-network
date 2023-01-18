@@ -3,22 +3,26 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getUsersTC, setFetching } from '../../../bll/usersReducer'
+import { followUserTC, getUsersTC, setFetching, unfollowUserTC } from '../../../bll/usersReducer'
+import { UserItemsType } from '../../../dal/usersAPI'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 
 import { User } from './User'
 
 const Wrapper = styled.section`
    width: 100%;
+
    h1 {
       margin: 10px 0;
    }
+
    .usersWrapper {
       display: grid;
       grid-template-columns: 9fr 1fr;
       grid-template-rows: 1fr;
       grid-column-gap: 10px;
    }
+
    .users {
       grid-area: 1 / 1 / 2 / 2;
       display: flex;
@@ -61,6 +65,12 @@ export const UsersPage = () => {
          dispatch(setFetching({ isFetching: true }))
       }
    }
+   const followUserHandler = (userID: number) => {
+      dispatch(followUserTC(userID))
+   }
+   const unfollowUserHandler = (userID: number) => {
+      dispatch(unfollowUserTC(userID))
+   }
 
    return (
       <Wrapper>
@@ -69,7 +79,14 @@ export const UsersPage = () => {
             <div className={'users'}>
                {users.length &&
                   users.map((user, index) => {
-                     return <User key={index} user={user} />
+                     return (
+                        <User
+                           followUser={followUserHandler}
+                           unfollowUser={unfollowUserHandler}
+                           key={index}
+                           user={user}
+                        />
+                     )
                   })}
             </div>
             <GoToTopButton />

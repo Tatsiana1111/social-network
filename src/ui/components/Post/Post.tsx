@@ -13,14 +13,22 @@ const PostWrapper = styled.div`
    flex-direction: column;
    min-width: 100%;
 
+   img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+   }
+
    .PostHeader {
       display: flex;
       gap: 10px;
       align-items: center;
    }
+
    p {
       margin: 10px 0;
    }
+
    .comment {
       display: flex;
       align-items: center;
@@ -32,9 +40,11 @@ const PostWrapper = styled.div`
          max-height: 30px;
          padding: 3px;
       }
+
       .sendIcon:hover {
          transform: scale(1.1);
       }
+
       textarea {
          width: 100%;
          min-width: 100px;

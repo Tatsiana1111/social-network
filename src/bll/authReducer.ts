@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { authAPI, LoginRequestDataType } from '../api/authAPI'
+import { authAPI, LoginRequestDataType } from '../dal/authAPI'
 
 const initialState = {
    isLoggedIn: false as boolean,

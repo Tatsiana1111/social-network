@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { authAPI } from '../api/authAPI'
+import { authAPI } from '../dal/authAPI'
 
 import { setLoggedIn } from './authReducer'
+
 type AppStatusType = 'idle' | 'load' | 'success' | 'error'
 
 const initialState = {

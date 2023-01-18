@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { profileAPI, ProfileDataType } from '../api/profileAPI'
+import { profileAPI, ProfileDataType } from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
 

@@ -4,6 +4,12 @@ export const userAPI = {
    getUsers(params: getUsersParamsType) {
       return instance.get<UsersResponseDataType>('/users', { params })
    },
+   followUser(userId: number) {
+      return instance.post(`/follow/${userId}`, {})
+   },
+   unfollowUser(userId: number) {
+      return instance.delete(`/follow/${userId}`)
+   },
 }
 
 export type getUsersParamsType = {
@@ -18,10 +24,12 @@ export interface UsersResponseDataType {
    totalCount: number
    error: null
 }
+
 export interface UsertemsPhotos {
    small?: any
    large?: any
 }
+
 export interface UserItemsType {
    photos: UsertemsPhotos
    name: string

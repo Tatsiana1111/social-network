@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 
-import { LoginRequestDataType } from '../../../api/authAPI'
 import { useAppDispatch } from '../../../app/hooks'
 import { LoginTC } from '../../../bll/authReducer'
+import { LoginRequestDataType } from '../../../dal/authAPI'
 import { SButton, SButtonGreen } from '../../components/Button/SButton'
 import { SForm, SInput, SInputWrapper } from '../../components/Input/Input'
 import { Modal } from '../../components/Modal/BaseModal/Modal'

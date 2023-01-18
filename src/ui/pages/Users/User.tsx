@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-import { UserItemsType } from '../../../api/usersAPI'
+import { UserItemsType } from '../../../dal/usersAPI'
 import { Box } from '../../components/Box/Box'
 
 const UserWrapper = styled(Box)`
@@ -10,16 +10,20 @@ const UserWrapper = styled(Box)`
    flex-direction: column;
    align-items: center;
    gap: 10px;
+
    :hover {
       transform: scale(1.01);
    }
+
    img {
       max-width: 250px;
       min-width: 200px;
    }
+
    div {
       display: flex;
       gap: 10px;
+
       button {
          cursor: pointer;
          padding: 7px 13px;
@@ -29,9 +33,11 @@ const UserWrapper = styled(Box)`
          border: none;
          border-radius: 10px;
       }
+
       button:hover {
          opacity: 0.88;
       }
+
       button:disabled {
          cursor: not-allowed;
          opacity: 0.7;
@@ -41,6 +47,8 @@ const UserWrapper = styled(Box)`
 
 type UserType = {
    user: UserItemsType
+   unfollowUser: (profileID: number) => void
+   followUser: (profileID: number) => void
 }
 export const User = (props: UserType) => {
    return (
@@ -55,8 +63,16 @@ export const User = (props: UserType) => {
          />
          <span>{props.user.name}</span>
          <div>
-            <button>follow</button>
-            <button disabled>unFollow</button>
+            <button disabled={props.user.followed} onClick={() => props.followUser(props.user.id)}>
+               follow
+            </button>
+
+            <button
+               disabled={!props.user.followed}
+               onClick={() => props.unfollowUser(props.user.id)}
+            >
+               unFollow
+            </button>
          </div>
       </UserWrapper>
    )

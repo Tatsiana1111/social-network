@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { getUsersParamsType, userAPI, UserItemsType } from '../api/usersAPI'
 import { RootState } from '../app/store'
+import { getUsersParamsType, userAPI, UserItemsType } from '../dal/usersAPI'
 
 const initialState = {
    users: [] as UserItemsType[],
@@ -26,11 +26,26 @@ const usersSlice = createSlice({
       setFetching: (state, action: PayloadAction<{ isFetching: boolean }>) => {
          state.isFetching = action.payload.isFetching
       },
+      followUser: (state, action: PayloadAction<{ profileID: number }>) => {
+         state.users.map(user => {
+            if (user.id === action.payload.profileID) {
+               return (user.followed = true)
+            }
+         })
+      },
+      unfollowUser: (state, action: PayloadAction<{ profileID: number }>) => {
+         state.users.map(user => {
+            if (user.id === action.payload.profileID) {
+               return (user.followed = false)
+            }
+         })
+      },
    },
 })
 
 export const usersReducer = usersSlice.reducer
-export const { setUsers, setTotalCount, setFetching, setCurrentPage } = usersSlice.actions
+export const { setUsers, setTotalCount, setFetching, setCurrentPage, followUser, unfollowUser } =
+   usersSlice.actions
 
 export const getUsersTC = createAsyncThunk(
    'users/getUsers',
@@ -44,6 +59,30 @@ export const getUsersTC = createAsyncThunk(
          thunkAPI.dispatch(setCurrentPage({ page: currentPage + 1 }))
          thunkAPI.dispatch(setFetching({ isFetching: false }))
          thunkAPI.dispatch(setTotalCount({ totalCount: res.data.totalCount }))
+      } catch (e) {
+         console.log(e)
+      }
+   }
+)
+export const followUserTC = createAsyncThunk(
+   'users/followUser',
+   async (userId: number, thunkAPI) => {
+      try {
+         const res = await userAPI.followUser(userId)
+
+         thunkAPI.dispatch(followUser({ profileID: userId }))
+      } catch (e) {
+         console.log(e)
+      }
+   }
+)
+export const unfollowUserTC = createAsyncThunk(
+   'users/unfollowUser',
+   async (userId: number, thunkAPI) => {
+      try {
+         const res = await userAPI.unfollowUser(userId)
+
+         thunkAPI.dispatch(unfollowUser({ profileID: userId }))
       } catch (e) {
          console.log(e)
       }
