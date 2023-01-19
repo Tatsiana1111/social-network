@@ -1,68 +1,32 @@
 import React from 'react'
 
-import styled from 'styled-components'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useAppSelector } from '../../../app/hooks'
 import miniAvatar from '../../../common/images/miniAvatar.svg'
+import { PostDataType } from '../../../dal/profileAPI'
 import { Box } from '../Box/Box'
 
 import sendIcon from './../../../common/icons/send.png'
+import { PostWrapper, WrapperDiv } from './styled'
 
-const PostWrapper = styled.div`
-   display: flex;
-   flex-direction: column;
-   min-width: 100%;
-
-   img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-   }
-
-   .PostHeader {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-   }
-
-   p {
-      margin: 10px 0;
-   }
-
-   .comment {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 10px;
-
-      .sendIcon {
-         max-width: 30px;
-         max-height: 30px;
-         padding: 3px;
-      }
-
-      .sendIcon:hover {
-         transform: scale(1.1);
-      }
-
-      textarea {
-         width: 100%;
-         min-width: 100px;
-
-         resize: none;
-         padding: 10px;
-         border-radius: 10px;
-         border: 1px solid skyblue;
-         background-color: ${props => props.theme.colors.backGroundColor};
-         color: ${props => props.theme.colors.primary};
-      }
-   }
-`
-
-export const Post = () => {
+type PostPropsType = {
+   post: PostDataType
+}
+type Textarea = {
+   post: string
+}
+export const Post = (props: PostPropsType) => {
    const profileName = useAppSelector(state => state.profile.data.fullName)
-   const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
    const userSmallAvatar = useAppSelector(state => state.profile.data.photos?.small)
+
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<Textarea>()
+
+   const onSubmit: SubmitHandler<Textarea> = data => alert(data.post)
 
    return (
       <Box>
@@ -71,15 +35,21 @@ export const Post = () => {
                <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
                <span>{profileName}</span>
             </div>
-            <p>
-               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aperiam autem
-               consectetur cum cupiditate delectus deserunt dolor dolores earum eveniet harum labore
-               minima molestias nesciunt repellendus, reprehenderit tenetur totam voluptatibus.
-            </p>
+            <p style={{ fontWeight: 'bold' }}>{props.post.title}</p>
+            <p>{props.post.body}</p>
             <div className={'comment'}>
                <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
-               <textarea placeholder="Write your comment" />
-               <img className={'sendIcon'} src={sendIcon} alt="sendIcon" />
+               <form onSubmit={handleSubmit(onSubmit)}>
+                  <WrapperDiv>
+                     <textarea
+                        placeholder="Write your comment"
+                        {...register('post', { required: true })}
+                     />
+                     <button>
+                        <img className="sendIcon" src={sendIcon} alt="sendIcon" />
+                     </button>
+                  </WrapperDiv>
+               </form>
             </div>
          </PostWrapper>
       </Box>
