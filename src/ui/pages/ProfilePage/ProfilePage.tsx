@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
+import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
 import avatar from '../../../common/images/avatar.svg'
 import { Box } from '../../components/Box/Box'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
-import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
+import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
 import { Post } from '../../components/Post/Post'
 
 import { WrapperDiv } from './styled'
@@ -14,7 +14,7 @@ export const ProfilePage = () => {
    const profileID = useAppSelector(state => state.app.profileID)
    const profileName = useAppSelector(state => state.profile.data.fullName)
    const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
-   const userSmallAvatar = useAppSelector(state => state.profile.data.photos?.small)
+   const posts = useAppSelector(state => state.profile.posts)
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
    const contacts = useAppSelector(state => state.profile.data.contacts)
@@ -25,6 +25,7 @@ export const ProfilePage = () => {
    useEffect(() => {
       dispatch(getProfileData(profileID))
       dispatch(getStatus(profileID))
+      dispatch(getPostsTC())
    }, [])
 
    const updateUserStatus = (status: string) => {
@@ -46,10 +47,9 @@ export const ProfilePage = () => {
             <span>{userAboutMeInfo}</span>
          </Box>
          <div className={'profilePosts'}>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
-            <Post></Post>
+            {posts.map((post, index) => {
+               return <Post post={post} key={index}></Post>
+            })}
          </div>
       </WrapperDiv>
    )

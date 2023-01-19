@@ -1,4 +1,7 @@
+import axios from 'axios'
+
 import { instance } from './instance'
+import { getUsersParamsType } from './usersAPI'
 
 export const profileAPI = {
    getProfileData(userId: number) {
@@ -9,6 +12,14 @@ export const profileAPI = {
    },
    updateStatus(status: string) {
       return instance.put(`/profile/status`, { status })
+   },
+   getPosts(params: GetUsersParamsType) {
+      return axios
+         .create({
+            baseURL: 'https://jsonplaceholder.typicode.com',
+            withCredentials: true,
+         })
+         .get(`/posts`, { params })
    },
    updateProfile(profile: ProfileDataType) {
       return instance.put(`/profile`, profile)
@@ -23,6 +34,16 @@ export type ProfileDataType = {
    userId: number
    contacts: ProfileDataTypeContacts
    photos: ProfileDataTypePhotos
+}
+export type PostDataType = {
+   id: number
+   title: string
+   body: string
+   userId: number
+}
+export type GetUsersParamsType = {
+   _page?: number
+   _limit?: number
 }
 export type ProfileDataTypeContacts = {
    facebook?: string
