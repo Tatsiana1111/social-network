@@ -14,10 +14,10 @@ export const UsersPage = () => {
    const currentPage = useAppSelector(store => store.users.currentPage)
    const isFetching = useAppSelector(store => store.users.isFetching)
 
-   const fetchData = () => {
+   const fetchDataHandler = () => {
       dispatch(getUsersTC({ page: currentPage }))
    }
-   const setFetching = () => {
+   const setFetchingHandler = () => {
       dispatch(setFetchingAC({ isFetching: true }))
    }
 
@@ -27,8 +27,8 @@ export const UsersPage = () => {
          <div className={'usersWrapper'}>
             <InfiniteScroll
                className={'users'}
-               fetchData={fetchData}
-               setFetching={setFetching}
+               fetchData={fetchDataHandler}
+               setFetching={setFetchingHandler}
                isFetching={isFetching}
             >
                {users.length &&

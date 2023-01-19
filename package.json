@@ -1,15 +1,9 @@
 {
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "homepage": "https://Tatsiana1111.github.io/social-network",
+  "name": "social-network",
+  "private": true,
+  "resolutions": {
+    "styled-components": "^5"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
@@ -38,6 +32,18 @@
     "url-loader": "^4.1.1",
     "web-vitals": "^2.1.0"
   },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.33.1",
     "@typescript-eslint/parser": "^5.33.1",
@@ -61,12 +67,6 @@
       "react-app",
       "react-app/jest"
     ]
-  },
-  "homepage": "https://Tatsiana1111.github.io/social-network",
-  "name": "social-network",
-  "private": true,
-  "resolutions": {
-    "styled-components": "^5"
   },
   "scripts": {
     "start": "react-scripts start",
