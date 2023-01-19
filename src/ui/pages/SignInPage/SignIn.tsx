@@ -30,7 +30,6 @@ export const SignIn = () => {
          <Modal closeModal={handleModalClose} title={'Registration'} isOpen={isModalOpen}>
             <RegistrationModal />
          </Modal>
-         SignInPage
          <Container>
             <SSignInWrapper>
                <SSignInLeft>
