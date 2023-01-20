@@ -1,27 +1,38 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { getPostsDataType, PostDataType, profileAPI, ProfileDataType } from '../dal/profileAPI'
+import { RootState } from '../app/store'
+import { GetPostsParamsType, PostDataType, profileAPI, ProfileDataType } from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
 
 const profileSlice = createSlice({
    name: 'profile',
-   initialState: { data: {} as ProfileDataType, status: '' as string, posts: [] as PostDataType[] },
+   initialState: {
+      data: {} as ProfileDataType,
+      status: '' as string,
+      posts: [] as PostDataType[],
+      currentPage: 1 as number,
+   },
+
    reducers: {
       setProfileDataAC: (state, action: PayloadAction<ProfileDataType>) => {
          state.data = { ...action.payload }
          //TODO check spreed operator
       },
       setPostsDataAC: (state, action: PayloadAction<PostDataType[]>) => {
-         state.posts = [...action.payload]
+         state.posts = [...state.posts, ...action.payload]
       },
       setProfileStatus: (state, action: PayloadAction<string>) => {
          state.status = action.payload
       },
+      setCurrentPageAC: (state, action: PayloadAction<{ _page: number }>) => {
+         state.currentPage = action.payload._page
+      },
    },
 })
 
-export const { setProfileDataAC, setProfileStatus, setPostsDataAC } = profileSlice.actions
+export const { setProfileDataAC, setProfileStatus, setPostsDataAC, setCurrentPageAC } =
+   profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
 export const getProfileData = createAsyncThunk(
@@ -65,12 +76,15 @@ export const updateStatus = createAsyncThunk(
 )
 export const getPostsTC = createAsyncThunk(
    'profile/posts',
-   async (params: getPostsDataType, thunkAPI) => {
+   async (params: GetPostsParamsType, thunkAPI) => {
       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         const res = await profileAPI.getPosts()
+         const res = await profileAPI.getPosts(params)
+         const state = thunkAPI.getState() as RootState
+         const currentPage = state.profile.currentPage
 
          thunkAPI.dispatch(setPostsDataAC(res.data))
+         thunkAPI.dispatch(setCurrentPageAC({ _page: currentPage + 1 }))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {
          console.log(e)

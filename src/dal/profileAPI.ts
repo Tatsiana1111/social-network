@@ -13,7 +13,7 @@ export const profileAPI = {
    updateStatus(status: string) {
       return instance.put(`/profile/status`, { status })
    },
-   getPosts(params: GetUsersParamsType) {
+   getPosts(params: GetPostsParamsType) {
       return axios
          .create({
             baseURL: 'https://jsonplaceholder.typicode.com',
@@ -41,7 +41,7 @@ export type PostDataType = {
    body: string
    userId: number
 }
-export type GetUsersParamsType = {
+export type GetPostsParamsType = {
    _page?: number
    _limit?: number
 }

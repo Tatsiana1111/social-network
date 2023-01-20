@@ -5,7 +5,6 @@ import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bl
 import avatar from '../../../common/images/avatar.svg'
 import { Box } from '../../components/Box/Box'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
-import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
 import { Post } from '../../components/Post/Post'
 
 import { WrapperDiv } from './styled'
@@ -25,7 +24,7 @@ export const ProfilePage = () => {
    useEffect(() => {
       dispatch(getProfileData(profileID))
       dispatch(getStatus(profileID))
-      dispatch(getPostsTC())
+      dispatch(getPostsTC({ _page: 5, _limit: 5 }))
    }, [])
 
    const updateUserStatus = (status: string) => {
