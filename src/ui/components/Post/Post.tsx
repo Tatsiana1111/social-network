@@ -8,7 +8,7 @@ import { PostDataType } from '../../../dal/profileAPI'
 import { Box } from '../Box/Box'
 
 import sendIcon from './../../../common/icons/send.png'
-import { PostWrapper, WrapperDiv } from './styled'
+import { BoxWrapper, PostWrapper, WrapperDiv } from './styled'
 
 type PostPropsType = {
    post: PostDataType
@@ -29,29 +29,37 @@ export const Post = (props: PostPropsType) => {
    const onSubmit: SubmitHandler<Textarea> = data => alert(data.post)
 
    return (
-      <Box>
-         <PostWrapper>
-            <div className={'PostHeader'}>
-               <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
-               <span>{profileName}</span>
-            </div>
-            <p style={{ fontWeight: 'bold' }}>{props.post.title}</p>
-            <p>{props.post.body}</p>
-            <div className={'comment'}>
-               <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
-               <form onSubmit={handleSubmit(onSubmit)}>
-                  <WrapperDiv>
-                     <textarea
-                        placeholder="Write your comment"
-                        {...register('post', { required: true })}
-                     />
-                     <button>
-                        <img className="sendIcon" src={sendIcon} alt="sendIcon" />
-                     </button>
-                  </WrapperDiv>
-               </form>
-            </div>
-         </PostWrapper>
-      </Box>
+      <BoxWrapper>
+         <Box>
+            <PostWrapper>
+               <div className={'PostHeader'}>
+                  <img
+                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
+                     alt="user mini-avatar"
+                  />
+                  <span>{profileName}</span>
+               </div>
+               <p style={{ fontWeight: 'bold' }}>{props.post.title}</p>
+               <p>{props.post.body}</p>
+               <div className={'comment'}>
+                  <img
+                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
+                     alt="user mini-avatar"
+                  />
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                     <WrapperDiv>
+                        <textarea
+                           placeholder="Write your comment"
+                           {...register('post', { required: true })}
+                        />
+                        <button>
+                           <img className="sendIcon" src={sendIcon} alt="sendIcon" />
+                        </button>
+                     </WrapperDiv>
+                  </form>
+               </div>
+            </PostWrapper>
+         </Box>
+      </BoxWrapper>
    )
 }

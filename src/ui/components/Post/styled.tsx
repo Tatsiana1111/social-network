@@ -66,3 +66,6 @@ export const WrapperDiv = styled.div`
       border: none;
    }
 `
+export const BoxWrapper = styled.div`
+   margin-bottom: 10px;
+`

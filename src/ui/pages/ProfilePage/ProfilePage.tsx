@@ -1,10 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
+import {
+   getPostsTC,
+   getProfileData,
+   getStatus,
+   setFetchingAC,
+   updateStatus,
+} from '../../../bll/profileReducer'
 import avatar from '../../../common/images/avatar.svg'
 import { Box } from '../../components/Box/Box'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
+import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
+import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
 import { Post } from '../../components/Post/Post'
 
 import { WrapperDiv } from './styled'
@@ -17,6 +25,8 @@ export const ProfilePage = () => {
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
    const contacts = useAppSelector(state => state.profile.data.contacts)
+   const currentPage = useAppSelector(state => state.profile.currentPage)
+   const fetch = useAppSelector(state => state.profile.fetch)
    const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    // const { profileID } = useParams()
    const dispatch = useAppDispatch()
@@ -24,7 +34,6 @@ export const ProfilePage = () => {
    useEffect(() => {
       dispatch(getProfileData(profileID))
       dispatch(getStatus(profileID))
-      dispatch(getPostsTC({ _page: 5, _limit: 5 }))
    }, [])
 
    const updateUserStatus = (status: string) => {
@@ -33,22 +42,35 @@ export const ProfilePage = () => {
    // const updateProfileHandler = (profile: ProfileDataType) => {
    //    dispatch(updateProfile(profile))
    // }
+   const getPostsPortionHandler = () => {
+      dispatch(getPostsTC({ _page: currentPage, _limit: 10 }))
+   }
+   const setFetchingHandler = () => {
+      dispatch(setFetchingAC({ fetch: true }))
+   }
 
    return (
       <WrapperDiv>
          <Box className={'profilePhoto'}>
             <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />
          </Box>
-
          <Box className={'profileData'}>
             <span>{profileName}</span>
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
             <span>{userAboutMeInfo}</span>
          </Box>
          <div className={'profilePosts'}>
-            {posts.map((post, index) => {
-               return <Post post={post} key={index}></Post>
-            })}
+            <InfiniteScroll
+               className="post"
+               fetchData={getPostsPortionHandler}
+               setFetching={setFetchingHandler}
+               isFetching={fetch}
+            >
+               {posts.map((post, index) => {
+                  return <Post post={post} key={index}></Post>
+               })}
+            </InfiniteScroll>
+            <GoToTopButton />
          </div>
       </WrapperDiv>
    )

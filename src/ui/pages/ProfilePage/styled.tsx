@@ -11,9 +11,11 @@ export const WrapperDiv = styled.div`
    .profilePhoto {
       grid-area: 1 / 1 / 2 / 2;
    }
+
    .profileData {
       grid-area: 1 / 2 / 2 / 3;
    }
+
    .profilePosts {
       grid-area: 2 / 2 / 3 / 3;
       display: flex;

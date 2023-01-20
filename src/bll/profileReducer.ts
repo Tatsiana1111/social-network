@@ -12,6 +12,7 @@ const profileSlice = createSlice({
       status: '' as string,
       posts: [] as PostDataType[],
       currentPage: 1 as number,
+      fetch: true as boolean,
    },
 
    reducers: {
@@ -25,14 +26,22 @@ const profileSlice = createSlice({
       setProfileStatus: (state, action: PayloadAction<string>) => {
          state.status = action.payload
       },
-      setCurrentPageAC: (state, action: PayloadAction<{ _page: number }>) => {
-         state.currentPage = action.payload._page
+      setCurrentPagesAC: (state, action: PayloadAction<{ newCurrentPage: number }>) => {
+         state.currentPage = action.payload.newCurrentPage
+      },
+      setFetchingAC: (state, action: PayloadAction<{ fetch: boolean }>) => {
+         state.fetch = action.payload.fetch
       },
    },
 })
 
-export const { setProfileDataAC, setProfileStatus, setPostsDataAC, setCurrentPageAC } =
-   profileSlice.actions
+export const {
+   setProfileDataAC,
+   setProfileStatus,
+   setPostsDataAC,
+   setCurrentPagesAC,
+   setFetchingAC,
+} = profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
 export const getProfileData = createAsyncThunk(
@@ -83,8 +92,9 @@ export const getPostsTC = createAsyncThunk(
          const state = thunkAPI.getState() as RootState
          const currentPage = state.profile.currentPage
 
+         thunkAPI.dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
          thunkAPI.dispatch(setPostsDataAC(res.data))
-         thunkAPI.dispatch(setCurrentPageAC({ _page: currentPage + 1 }))
+         thunkAPI.dispatch(setFetchingAC({ fetch: false }))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {
          console.log(e)
