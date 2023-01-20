@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useAppDispatch } from '../../../app/hooks'
 import { followUserTC, unFollowUserTC } from '../../../bll/usersReducer'
+import defaultUserImage from '../../../common/images/defaultUser.jpg'
 import { UserItemsType } from '../../../dal/usersAPI'
 
 import { UserWrapper } from './styled-User'
@@ -22,11 +23,7 @@ export const User = (props: UserType) => {
    return (
       <UserWrapper>
          <img
-            src={
-               props.user.photos.small
-                  ? props.user.photos.small
-                  : 'https://via.placeholder.com/150px'
-            }
+            src={props.user.photos.small ? props.user.photos.small : defaultUserImage}
             alt="userPhoto"
          />
          <span>{props.user.name}</span>

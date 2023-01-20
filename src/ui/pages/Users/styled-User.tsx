@@ -13,8 +13,8 @@ export const UserWrapper = styled(Box)`
    }
 
    img {
-      max-width: 250px;
-      min-width: 200px;
+      max-width: 150px;
+      min-width: 150px;
    }
 
    div {
