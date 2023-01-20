@@ -21,6 +21,14 @@ export const profileAPI = {
          })
          .get(`/posts`, { params })
    },
+   addPost(params: PostDataType) {
+      return axios
+         .create({
+            baseURL: 'https://jsonplaceholder.typicode.com',
+            withCredentials: true,
+         })
+         .post(`/posts`, params)
+   },
    updateProfile(profile: ProfileDataType) {
       return instance.put(`/profile`, profile)
    },
@@ -36,11 +44,12 @@ export type ProfileDataType = {
    photos: ProfileDataTypePhotos
 }
 export type PostDataType = {
-   id: number
+   id?: number
    title: string
    body: string
    userId: number
 }
+
 export type GetPostsParamsType = {
    _page?: number
    _limit?: number

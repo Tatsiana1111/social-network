@@ -2,7 +2,8 @@ import React from 'react'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { useAppSelector } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { addPostTC } from '../../../bll/profileReducer'
 import miniAvatar from '../../../common/images/miniAvatar.svg'
 import { PostDataType } from '../../../dal/profileAPI'
 import { Box } from '../Box/Box'
@@ -18,15 +19,21 @@ type Textarea = {
 }
 export const Post = (props: PostPropsType) => {
    const profileName = useAppSelector(state => state.profile.data.fullName)
+   const userId = useAppSelector(state => state.profile.data.userId)
    const userSmallAvatar = useAppSelector(state => state.profile.data.photos?.small)
+   const dispatch = useAppDispatch()
 
    const {
       register,
       handleSubmit,
+      reset,
       formState: { errors },
    } = useForm<Textarea>()
 
-   const onSubmit: SubmitHandler<Textarea> = data => alert(data.post)
+   const onSubmit: SubmitHandler<Textarea> = data => {
+      dispatch(addPostTC({ userId: userId, body: data.post, id: userId, title: data.post }))
+      reset()
+   }
 
    return (
       <BoxWrapper>

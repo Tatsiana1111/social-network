@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import {
@@ -24,10 +24,8 @@ export const ProfilePage = () => {
    const posts = useAppSelector(state => state.profile.posts)
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
-   const contacts = useAppSelector(state => state.profile.data.contacts)
    const currentPage = useAppSelector(state => state.profile.currentPage)
    const fetch = useAppSelector(state => state.profile.fetch)
-   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    // const { profileID } = useParams()
    const dispatch = useAppDispatch()
 

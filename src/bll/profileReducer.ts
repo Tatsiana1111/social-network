@@ -13,6 +13,7 @@ const profileSlice = createSlice({
       posts: [] as PostDataType[],
       currentPage: 1 as number,
       fetch: true as boolean,
+      totalCount: 0 as number | undefined,
    },
 
    reducers: {
@@ -32,6 +33,12 @@ const profileSlice = createSlice({
       setFetchingAC: (state, action: PayloadAction<{ fetch: boolean }>) => {
          state.fetch = action.payload.fetch
       },
+      setTotalCountAC: (state, action: PayloadAction<{ totalCount: number | undefined }>) => {
+         state.totalCount = action.payload?.totalCount
+      },
+      addPostAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
+         state.posts.unshift(action.payload.newPost)
+      },
    },
 })
 
@@ -41,6 +48,8 @@ export const {
    setPostsDataAC,
    setCurrentPagesAC,
    setFetchingAC,
+   setTotalCountAC,
+   addPostAC,
 } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
@@ -95,6 +104,35 @@ export const getPostsTC = createAsyncThunk(
          thunkAPI.dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
          thunkAPI.dispatch(setPostsDataAC(res.data))
          thunkAPI.dispatch(setFetchingAC({ fetch: false }))
+         thunkAPI.dispatch(setTotalCountAC({ totalCount: Number(res.headers['x-total-count']) }))
+         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+      } catch (e) {
+         console.log(e)
+      }
+   }
+)
+export const addPostTC = createAsyncThunk(
+   'profile/addPost',
+   async (params: PostDataType, thunkAPI) => {
+      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         const res = await profileAPI.addPost({
+            title: params.title,
+            userId: params.userId,
+            id: params.id,
+            body: params.body,
+         })
+
+         thunkAPI.dispatch(
+            addPostAC({
+               newPost: {
+                  title: res.data.title,
+                  body: res.data.body,
+                  userId: res.data.userId,
+               },
+            })
+         )
+
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {
          console.log(e)
