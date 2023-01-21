@@ -1,7 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import { GetPostsParamsType, PostDataType, profileAPI, ProfileDataType } from '../dal/profileAPI'
+import {
+   CommentsDataType,
+   GetPostsParamsType,
+   PostDataType,
+   profileAPI,
+   ProfileDataType,
+} from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
 
@@ -14,6 +20,7 @@ const profileSlice = createSlice({
       currentPage: 1 as number,
       fetch: true as boolean,
       totalCount: 0 as number | undefined,
+      comments: [] as CommentsDataType[],
    },
 
    reducers: {
@@ -39,6 +46,9 @@ const profileSlice = createSlice({
       addPostAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
          state.posts.unshift(action.payload.newPost)
       },
+      setCommentsAC: (state, action: PayloadAction<{ comments: CommentsDataType[] }>) => {
+         state.comments = action.payload.comments
+      },
    },
 })
 
@@ -50,6 +60,7 @@ export const {
    setFetchingAC,
    setTotalCountAC,
    addPostAC,
+   setCommentsAC,
 } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
@@ -132,6 +143,21 @@ export const addPostTC = createAsyncThunk(
                },
             })
          )
+
+         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+      } catch (e) {
+         console.log(e)
+      }
+   }
+)
+export const getCommentsTC = createAsyncThunk(
+   'profile/getComments',
+   async (postId: number | undefined, thunkAPI) => {
+      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         const res = await profileAPI.getComments(postId)
+
+         thunkAPI.dispatch(setCommentsAC(res.data))
 
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {

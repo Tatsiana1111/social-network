@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { addPostTC } from '../../../bll/profileReducer'
+import { addPostTC, getCommentsTC } from '../../../bll/profileReducer'
 import miniAvatar from '../../../common/images/miniAvatar.svg'
 import { PostDataType } from '../../../dal/profileAPI'
 import { Box } from '../Box/Box'
@@ -34,6 +34,10 @@ export const Post = (props: PostPropsType) => {
       dispatch(addPostTC({ userId: userId, body: data.post, id: userId, title: data.post }))
       reset()
    }
+
+   useEffect(() => {
+      dispatch(getCommentsTC(props.post.id))
+   }, [])
 
    return (
       <BoxWrapper>
