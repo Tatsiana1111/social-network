@@ -22,4 +22,20 @@ export const WrapperDiv = styled.div`
       flex-direction: column;
       gap: 15px;
    }
+
+   .profileButtonAddPost {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-area: 2 / 1 / 3 / 2;
+      max-height: 50px;
+      cursor: pointer;
+
+      button {
+         border: none;
+         background-color: transparent;
+         cursor: pointer;
+         font-size: 20px;
+      }
+   }
 `
