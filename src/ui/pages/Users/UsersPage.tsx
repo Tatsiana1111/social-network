@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
+
+import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getUsersTC, setFetchingAC } from '../../../bll/usersReducer'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
+import { SearchBar } from '../../components/SearchBar/SearchBar'
 
 import { UsersPageWrapper } from './styled-UsersPage'
 import { User } from './User'
@@ -24,6 +27,7 @@ export const UsersPage = () => {
    return (
       <UsersPageWrapper>
          <h1>People You May Know</h1>
+         <SearchBar type="text" placeholder={'Find more...'} />
          <div className={'usersWrapper'}>
             <InfiniteScroll
                className={'users'}

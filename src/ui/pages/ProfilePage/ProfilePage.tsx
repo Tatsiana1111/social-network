@@ -70,7 +70,7 @@ export const ProfilePage = () => {
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
             <span>{userAboutMeInfo}</span>
          </Box>
-         <Box className="profileButtonAddPost">
+         <Box className={'profileButtonAddPost'}>
             <button onClick={handleModalOpen}>Add new post</button>
          </Box>
          <div className={'profilePosts'}>
