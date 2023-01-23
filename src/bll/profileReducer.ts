@@ -83,7 +83,7 @@ export const updateStatus = createAsyncThunk(
    async (status: string, thunkAPI) => {
       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         const res = await profileAPI.updateStatus(status)
+         await profileAPI.updateStatus(status)
 
          thunkAPI.dispatch(setProfileStatus(status))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))

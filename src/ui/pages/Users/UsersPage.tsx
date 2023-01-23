@@ -27,7 +27,7 @@ export const UsersPage = () => {
    return (
       <UsersPageWrapper>
          <h1>People You May Know</h1>
-         <SearchBar type="text" placeholder={'Find more...'} page={currentPage} />
+         <SearchBar type="text" placeholder={'Find more...'} page={currentPage} delay={700} />
          <div className={'usersWrapper'}>
             <InfiniteScroll
                className={'users'}
