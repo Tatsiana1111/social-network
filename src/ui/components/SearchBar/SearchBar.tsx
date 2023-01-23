@@ -9,7 +9,10 @@ import React, {
 import { useSearchParams } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { useAppDispatch } from '../../../app/hooks'
+import { getUsersTC } from '../../../bll/usersReducer'
 import useDebounce from '../../../common/Utils/useDebounce'
+import { getUsersParamsType } from '../../../dal/usersAPI'
 import { SInput } from '../Input/Input'
 
 const SearchBarWrapper = styled(SInput)`
@@ -17,33 +20,30 @@ const SearchBarWrapper = styled(SInput)`
 `
 
 type PropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
-   query?: string
+   page?: number
 }
 
 export const SearchBar = (props: PropsType) => {
-   const { query, ref, ...restInputProps } = props
+   const dispatch = useAppDispatch()
+   const { ref, ...restInputProps } = props
 
    const [searchParams, setSearchParams] = useSearchParams()
+   const [value, setValue] = useState<string>('')
 
-   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      setSearchParams({ term: `${e.currentTarget.value}` })
-   }
    const searchValue = searchParams.get('term')
 
-   console.log(searchValue)
-
-   const [value, setValue] = useState<string>('')
    const debouncedValue = useDebounce<string>(value, 500)
 
    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setValue(event.target.value)
+      setValue(event.currentTarget.value)
    }
 
-   // Fetch API (optional)
    useEffect(() => {
-      // Do fetch here...
-      // Triggers when "debouncedValue" changes
+      setSearchParams({ term: `${debouncedValue}` })
+      if (searchValue) {
+         dispatch(getUsersTC({ page: props.page, term: searchValue }))
+      }
    }, [debouncedValue])
 
-   return <SearchBarWrapper onChange={searchHandler} {...restInputProps} />
+   return <SearchBarWrapper value={value} onChange={handleChange} {...restInputProps} />
 }
