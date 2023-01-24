@@ -7,7 +7,7 @@ const initialState = {
    users: [] as UserItemsType[],
    totalCount: 0 as number,
    isFetching: true as boolean,
-   queryParams: { page: 1, term: '' } as getUsersParamsType,
+   queryParams: { page: '1', term: '' } as getUsersParamsType,
 }
 
 const usersSlice = createSlice({
@@ -53,7 +53,7 @@ const usersSlice = createSlice({
             state.users[index].followed = false
          }
       },
-      setQueryParamsAC: (state, action: PayloadAction<{ query: getUsersParamsType }>) => {
+      updateUrlParamsAC: (state, action: PayloadAction<{ query: getUsersParamsType }>) => {
          state.queryParams = action.payload.query
       },
    },
@@ -67,26 +67,24 @@ export const {
    // setCurrentPageAC,
    followUserAC,
    unFollowUserAC,
-   setQueryParamsAC,
+   updateUrlParamsAC,
 } = usersSlice.actions
 
-export const getUsersTC = createAsyncThunk(
-   'users/getUsers',
-   async (queryParams: getUsersParamsType, thunkAPI) => {
-      try {
-         const res = await userAPI.getUsers(queryParams)
-         const state = thunkAPI.getState() as RootState
-         const currentPage = state.users.queryParams.page
+export const getUsersTC = createAsyncThunk('users/getUsers', async (arg, thunkAPI) => {
+   try {
+      const state = thunkAPI.getState() as RootState
+      const params = state.users.queryParams
 
-         thunkAPI.dispatch(setUsersAC({ users: res.data.items }))
+      const res = await userAPI.getUsers(params)
 
-         thunkAPI.dispatch(setFetchingAC({ isFetching: false }))
-         thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
-      } catch (e) {
-         console.log(e)
-      }
+      thunkAPI.dispatch(setUsersAC({ users: res.data.items }))
+
+      thunkAPI.dispatch(setFetchingAC({ isFetching: false }))
+      thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
+   } catch (e) {
+      console.log(e)
    }
-)
+})
 export const followUserTC = createAsyncThunk(
    'users/followUser',
    async (userId: number, thunkAPI) => {

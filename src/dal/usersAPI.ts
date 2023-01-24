@@ -13,10 +13,10 @@ export const userAPI = {
 }
 
 export type getUsersParamsType = {
-   count?: number //page size (how many items will be returned in response)
-   page?: number //number of portion of items
+   count?: string //page size (how many items will be returned in response)
+   page?: string //number of portion of items
    term?: string //user name string for searching
-   friend?: boolean //if true, then find only followed users, false - only not followed users, if omit parameter - all users
+   friend?: string //if true, then find only followed users, false - only not followed users, if omit parameter - all users
 }
 
 export interface UsersResponseDataType {
