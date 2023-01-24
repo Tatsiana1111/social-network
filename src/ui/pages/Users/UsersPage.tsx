@@ -36,7 +36,7 @@ export const UsersPage = () => {
       setSearchParams({
          ...filterAllParams({
             ...paramsSearchState,
-            term: termURL,
+            term,
             page: pageURL,
          }),
       })
@@ -55,10 +55,17 @@ export const UsersPage = () => {
    }, [dispatch, paramsSearchState])
 
    const fetchDataHandler = () => {
-      // if (currentPage) {
-      //    setSearchParams({ page: +currentPage + 1 + '' })
-      // }
-      // dispatch(getUsersTC(queryParams))
+      const page = (Number(pageURL) + 1).toString()
+
+      // dispatch(updateUrlParamsAC({ query: { ...paramsSearchState, page } }))
+
+      setSearchParams({
+         ...filterAllParams({
+            ...paramsSearchState,
+            page,
+            term: termURL,
+         }),
+      })
    }
    const setFetchingHandler = () => {
       dispatch(setFetchingAC({ isFetching: true }))
@@ -75,6 +82,18 @@ export const UsersPage = () => {
 
    const searchValueTextHandler = (value: string) => {
       setTerm(value)
+      setSearchParams({
+         ...filterAllParams({
+            ...paramsSearchState,
+            page: '1',
+            term: termURL,
+         }),
+      })
+   }
+   const resetFilterHandler = () => {
+      dispatch(updateUrlParamsAC({ query: { page: '1', term: '' } }))
+      setSearchParams({ page: '1' })
+      setTerm('')
    }
 
    return (
@@ -85,7 +104,7 @@ export const UsersPage = () => {
             placeholder={'Search...'}
             searchValueText={searchValueTextHandler}
             valueSearch={term}
-            delay={2000}
+            resetFilter={resetFilterHandler}
          />
          <div className={'usersWrapper'}>
             <InfiniteScroll

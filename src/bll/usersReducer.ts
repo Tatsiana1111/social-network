@@ -33,9 +33,6 @@ const usersSlice = createSlice({
       setTotalCountAC: (state, action: PayloadAction<{ totalCount: number }>) => {
          state.totalCount = action.payload.totalCount
       },
-      // setCurrentPageAC: (state, action: PayloadAction<{ page: number }>) => {
-      //    state.queryParams.page = action.payload.page
-      // },
       setFetchingAC: (state, action: PayloadAction<{ isFetching: boolean }>) => {
          state.isFetching = action.payload.isFetching
       },
@@ -64,7 +61,6 @@ export const {
    setUsersAC,
    setTotalCountAC,
    setFetchingAC,
-   // setCurrentPageAC,
    followUserAC,
    unFollowUserAC,
    updateUrlParamsAC,
