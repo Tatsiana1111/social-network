@@ -1,11 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import { GetPostsParamsType, PostDataType, profileAPI, ProfileDataType } from '../dal/profileAPI'
+import {
+   CommentsDataType,
+   GetPostsParamsType,
+   PostDataType,
+   profileAPI,
+   ProfileDataType,
+} from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
 
-const profileSlice = createSlice({
+export const profileSlice = createSlice({
    name: 'profile',
    initialState: {
       data: {} as ProfileDataType,
@@ -93,19 +99,21 @@ export const updateStatus = createAsyncThunk(
    }
 )
 export const getPostsTC = createAsyncThunk(
-   'profile/posts',
-   async (params: GetPostsParamsType, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+   'profile/getPosts',
+   async (params: GetPostsParamsType, { dispatch, getState }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
       try {
          const res = await profileAPI.getPosts(params)
-         const state = thunkAPI.getState() as RootState
+         const state = getState() as RootState
          const currentPage = state.profile.currentPage
 
-         thunkAPI.dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
-         thunkAPI.dispatch(setPostsDataAC(res.data))
-         thunkAPI.dispatch(setFetchingAC({ fetch: false }))
-         thunkAPI.dispatch(setTotalCountAC({ totalCount: Number(res.headers['x-total-count']) }))
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
+         dispatch(setPostsDataAC(res.data))
+         dispatch(setFetchingAC({ fetch: false }))
+         dispatch(setTotalCountAC({ totalCount: Number(res.headers['x-total-count']) }))
+         dispatch(setAppStatusAC({ status: 'idle' }))
+
+         return res.data
       } catch (e) {
          console.log(e)
       }
@@ -126,6 +134,7 @@ export const addPostTC = createAsyncThunk(
          thunkAPI.dispatch(
             addPostAC({
                newPost: {
+                  id: res.data.id,
                   title: res.data.title,
                   body: res.data.body,
                   userId: res.data.userId,
@@ -139,6 +148,14 @@ export const addPostTC = createAsyncThunk(
       }
    }
 )
+
+export const asyncProfileActions = {
+   addPostTC,
+   getPostsTC,
+   updateStatus,
+   getProfileData,
+   getStatus,
+}
 // export const updateProfile = createAsyncThunk(
 //    'profile/updateAboutMe',
 //    async (profile: ProfileDataType, thunkAPI) => {

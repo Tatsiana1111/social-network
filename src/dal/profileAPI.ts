@@ -29,6 +29,14 @@ export const profileAPI = {
          })
          .post(`/posts`, params)
    },
+   getComments(postId: number | undefined) {
+      return axios
+         .create({
+            baseURL: 'https://jsonplaceholder.typicode.com',
+            withCredentials: true,
+         })
+         .get(`/posts/${postId}/comments`)
+   },
    updateProfile(profile: ProfileDataType) {
       return instance.put(`/profile`, profile)
    },
@@ -44,16 +52,24 @@ export type ProfileDataType = {
    photos: ProfileDataTypePhotos
 }
 export type PostDataType = {
-   id?: number
+   id: number
    title: string
    body: string
    userId: number
+}
+export type CommentsDataType = {
+   postId?: number
+   id?: number
+   name?: string
+   email?: string
+   body?: string
 }
 
 export type GetPostsParamsType = {
    _page?: number
    _limit?: number
 }
+
 export type ProfileDataTypeContacts = {
    facebook?: string
    website?: string

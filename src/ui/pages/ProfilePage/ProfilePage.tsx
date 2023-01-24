@@ -27,6 +27,7 @@ export const ProfilePage = () => {
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
    const currentPage = useAppSelector(state => state.profile.currentPage)
    const fetch = useAppSelector(state => state.profile.fetch)
+   const comments = useAppSelector(state => state.comments)
    const [isModalOpen, setModalOpen] = useState(false)
 
    // const { profileID } = useParams()
@@ -81,7 +82,7 @@ export const ProfilePage = () => {
                isFetching={fetch}
             >
                {posts.map((post, index) => {
-                  return <Post post={post} key={index}></Post>
+                  return <Post post={post} key={post.id}></Post>
                })}
             </InfiniteScroll>
             <GoToTopButton />

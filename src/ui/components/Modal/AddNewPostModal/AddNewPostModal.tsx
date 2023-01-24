@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 
 import { useForm } from 'react-hook-form'
+import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { addPostTC } from '../../../../bll/profileReducer'
 import { Modal } from '../BaseModal/Modal'
-
-import { WrapperDiv } from './styled'
 
 type AddModalPropsType = {
    isModalOpen: boolean
@@ -17,6 +16,12 @@ type FormData = {
    title: string
    body: string
 }
+
+const WrapperDiv = styled.div`
+   display: flex;
+   flex-direction: column;
+`
+
 export const AddNewPostModal = (props: AddModalPropsType) => {
    const dispatch = useAppDispatch()
    const userId = useAppSelector(state => state.profile.data.userId)
@@ -29,7 +34,7 @@ export const AddNewPostModal = (props: AddModalPropsType) => {
    })
 
    const onSubmit = handleSubmit(data => {
-      dispatch(addPostTC({ userId: userId, title: data.title, body: data.body }))
+      dispatch(addPostTC({ userId: userId, title: data.title, body: data.body, id: userId }))
       reset()
       props.handleModalClose()
    })

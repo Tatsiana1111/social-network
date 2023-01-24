@@ -1,0 +1,48 @@
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+
+import { asyncProfileActions as profileActions } from '../bll/profileReducer'
+import { CommentsDataType, PostDataType, profileAPI } from '../dal/profileAPI'
+
+import { setAppStatusAC } from './appReducer'
+
+export type CommentsStateType = {
+   [key: number]: CommentsDataType[]
+}
+
+export const getCommentsTC = createAsyncThunk(
+   'comments/getComments',
+   async (postId: number, thunkAPI) => {
+      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         const res = await profileAPI.getComments(postId)
+         const comments: CommentsDataType[] = res.data
+
+         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+
+         return { postId, comments }
+      } catch (e) {
+         return console.log(e)
+      }
+   }
+)
+export const commentsSlice = createSlice({
+   name: 'comments',
+   initialState: {} as CommentsStateType,
+   reducers: {},
+   extraReducers: builder => {
+      builder.addCase(profileActions.getPostsTC.fulfilled, (state, action) => {
+         if (action.payload.posts) {
+            action.payload.posts.forEach((post: PostDataType) => {
+               state[post.id] = []
+            })
+         }
+      })
+      builder.addCase(getCommentsTC.fulfilled, (state, action) => {
+         if (action.payload) state[action.payload.postId] = action.payload.comments
+      })
+   },
+})
+
+export const {} = commentsSlice.actions
+
+export const commentsReducer = commentsSlice.reducer
