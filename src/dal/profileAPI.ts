@@ -52,17 +52,17 @@ export type ProfileDataType = {
    photos: ProfileDataTypePhotos
 }
 export type PostDataType = {
-   id?: number
+   id: number
    title: string
    body: string
    userId: number
 }
 export type CommentsDataType = {
-   postId: number
-   id: number
-   name: string
-   email: string
-   body: string
+   postId?: number
+   id?: number
+   name?: string
+   email?: string
+   body?: string
 }
 
 export type GetPostsParamsType = {

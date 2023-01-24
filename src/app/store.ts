@@ -2,16 +2,17 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import { appReducer } from '../bll/appReducer'
 import { authReducer } from '../bll/authReducer'
+import { commentsReducer } from '../bll/commentsReducer'
 import { profileReducer } from '../bll/profileReducer'
 import { usersReducer } from '../bll/usersReducer'
 
 export const store = configureStore({
    reducer: {
       app: appReducer,
-      //dialogs: dialogsReducer,
       users: usersReducer,
       profile: profileReducer,
       auth: authReducer,
+      comments: commentsReducer,
    },
 })
 

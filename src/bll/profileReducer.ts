@@ -11,7 +11,7 @@ import {
 
 import { setAppStatusAC } from './appReducer'
 
-const profileSlice = createSlice({
+export const profileSlice = createSlice({
    name: 'profile',
    initialState: {
       data: {} as ProfileDataType,
@@ -20,7 +20,6 @@ const profileSlice = createSlice({
       currentPage: 1 as number,
       fetch: true as boolean,
       totalCount: 0 as number | undefined,
-      comments: [] as CommentsDataType[],
    },
 
    reducers: {
@@ -46,9 +45,6 @@ const profileSlice = createSlice({
       addPostAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
          state.posts.unshift(action.payload.newPost)
       },
-      setCommentsAC: (state, action: PayloadAction<{ comments: CommentsDataType[] }>) => {
-         state.comments = action.payload.comments
-      },
    },
 })
 
@@ -60,7 +56,6 @@ export const {
    setFetchingAC,
    setTotalCountAC,
    addPostAC,
-   setCommentsAC,
 } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
@@ -104,19 +99,21 @@ export const updateStatus = createAsyncThunk(
    }
 )
 export const getPostsTC = createAsyncThunk(
-   'profile/posts',
-   async (params: GetPostsParamsType, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+   'profile/getPosts',
+   async (params: GetPostsParamsType, { dispatch, getState }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
       try {
          const res = await profileAPI.getPosts(params)
-         const state = thunkAPI.getState() as RootState
+         const state = getState() as RootState
          const currentPage = state.profile.currentPage
 
-         thunkAPI.dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
-         thunkAPI.dispatch(setPostsDataAC(res.data))
-         thunkAPI.dispatch(setFetchingAC({ fetch: false }))
-         thunkAPI.dispatch(setTotalCountAC({ totalCount: Number(res.headers['x-total-count']) }))
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
+         dispatch(setPostsDataAC(res.data))
+         dispatch(setFetchingAC({ fetch: false }))
+         dispatch(setTotalCountAC({ totalCount: Number(res.headers['x-total-count']) }))
+         dispatch(setAppStatusAC({ status: 'idle' }))
+
+         return res.data
       } catch (e) {
          console.log(e)
       }
@@ -137,6 +134,7 @@ export const addPostTC = createAsyncThunk(
          thunkAPI.dispatch(
             addPostAC({
                newPost: {
+                  id: res.data.id,
                   title: res.data.title,
                   body: res.data.body,
                   userId: res.data.userId,
@@ -150,21 +148,14 @@ export const addPostTC = createAsyncThunk(
       }
    }
 )
-export const getCommentsTC = createAsyncThunk(
-   'profile/getComments',
-   async (postId: number | undefined, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
-      try {
-         const res = await profileAPI.getComments(postId)
 
-         thunkAPI.dispatch(setCommentsAC(res.data))
-
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
-      } catch (e) {
-         console.log(e)
-      }
-   }
-)
+export const asyncProfileActions = {
+   addPostTC,
+   getPostsTC,
+   updateStatus,
+   getProfileData,
+   getStatus,
+}
 // export const updateProfile = createAsyncThunk(
 //    'profile/updateAboutMe',
 //    async (profile: ProfileDataType, thunkAPI) => {

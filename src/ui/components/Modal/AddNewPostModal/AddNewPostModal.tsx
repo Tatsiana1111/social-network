@@ -34,7 +34,7 @@ export const AddNewPostModal = (props: AddModalPropsType) => {
    })
 
    const onSubmit = handleSubmit(data => {
-      dispatch(addPostTC({ userId: userId, title: data.title, body: data.body }))
+      dispatch(addPostTC({ userId: userId, title: data.title, body: data.body, id: userId }))
       reset()
       props.handleModalClose()
    })
