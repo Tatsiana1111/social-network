@@ -5,6 +5,7 @@ import { getUsersParamsType, userAPI, UserItemsType } from '../dal/usersAPI'
 
 const initialState = {
    users: [] as UserItemsType[],
+   usersSearch: [] as UserItemsType[],
    totalCount: 0 as number,
    isFetching: true as boolean,
    queryParams: { page: '1', term: '' } as getUsersParamsType,
@@ -14,19 +15,21 @@ const usersSlice = createSlice({
    name: 'users',
    initialState,
    reducers: {
-      setUsersAC: (state, action: PayloadAction<{ users: UserItemsType[] }>) => {
-         // console.log(state.users[0]?.name.slice(0, state.queryParams.term?.length))
-         // console.log(action.payload.users[0]?.name.slice(0, state.queryParams.term?.length))
-
-         if (
-            state.queryParams.term &&
-            state.users.length > 0 &&
-            state.users[0].name.slice(0, state.queryParams.term.length).toLowerCase() ===
-               action.payload.users[0].name.slice(0, state.queryParams.term.length).toLowerCase()
-         ) {
-            state.users = [...state.users, ...action.payload.users]
+      setUsersAC: (state, action: PayloadAction<{ users: UserItemsType[]; query: string }>) => {
+         if (action.payload.query.length > 0) {
+            state.users = []
          } else {
-            state.users = [...action.payload.users]
+            state.users = [...state.users, ...action.payload.users]
+         }
+      },
+      setUsersSearchAC: (
+         state,
+         action: PayloadAction<{ users: UserItemsType[]; query: string }>
+      ) => {
+         if (action.payload.query.length > 0) {
+            state.usersSearch = [...state.usersSearch, ...action.payload.users]
+         } else {
+            state.usersSearch = []
          }
       },
 
@@ -64,6 +67,7 @@ export const {
    followUserAC,
    unFollowUserAC,
    updateUrlParamsAC,
+   setUsersSearchAC,
 } = usersSlice.actions
 
 export const getUsersTC = createAsyncThunk('users/getUsers', async (arg, thunkAPI) => {
@@ -73,8 +77,12 @@ export const getUsersTC = createAsyncThunk('users/getUsers', async (arg, thunkAP
 
       const res = await userAPI.getUsers(params)
 
-      thunkAPI.dispatch(setUsersAC({ users: res.data.items }))
-
+      thunkAPI.dispatch(
+         setUsersAC({ users: res.data.items, query: params.term ? params.term : '' })
+      )
+      thunkAPI.dispatch(
+         setUsersSearchAC({ users: res.data.items, query: params.term ? params.term : '' })
+      )
       thunkAPI.dispatch(setFetchingAC({ isFetching: false }))
       thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
    } catch (e) {

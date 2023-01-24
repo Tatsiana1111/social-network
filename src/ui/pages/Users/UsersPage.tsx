@@ -16,6 +16,7 @@ import { User } from './User'
 export const UsersPage = () => {
    const dispatch = useAppDispatch()
    const users = useAppSelector(store => store.users.users)
+   const usersSearch = useAppSelector(store => store.users.usersSearch)
    const [searchParams, setSearchParams] = useSearchParams()
    const paramsSearchState = useAppSelector(state => state.users.queryParams)
    const isFetching = useAppSelector(store => store.users.isFetching)
@@ -72,12 +73,15 @@ export const UsersPage = () => {
    }
 
    const showUsers = () => {
-      return (
-         users.length &&
-         users.map((user, index) => {
+      if (usersSearch.length) {
+         return usersSearch.map((user, index) => {
             return <User key={index} user={user} />
          })
-      )
+      }
+
+      return users.map((user, index) => {
+         return <User key={index} user={user} />
+      })
    }
 
    const searchValueTextHandler = (value: string) => {

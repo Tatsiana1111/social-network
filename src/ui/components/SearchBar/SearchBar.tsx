@@ -38,7 +38,9 @@ export const SearchBar = (props: PropsType) => {
       props.searchValueText(event.currentTarget.value)
    }
    const handleClean = () => {
-      props.resetFilter()
+      if (props.valueSearch) {
+         props.resetFilter()
+      }
    }
 
    return (
