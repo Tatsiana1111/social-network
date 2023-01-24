@@ -6,8 +6,8 @@ import { getUsersParamsType, userAPI, UserItemsType } from '../dal/usersAPI'
 const initialState = {
    users: [] as UserItemsType[],
    totalCount: 0 as number,
-   currentPage: 1 as number,
    isFetching: true as boolean,
+   queryParams: { page: 1, term: '' } as getUsersParamsType,
 }
 
 const usersSlice = createSlice({
@@ -15,14 +15,27 @@ const usersSlice = createSlice({
    initialState,
    reducers: {
       setUsersAC: (state, action: PayloadAction<{ users: UserItemsType[] }>) => {
-         state.users = [...state.users, ...action.payload.users]
+         // console.log(state.users[0]?.name.slice(0, state.queryParams.term?.length))
+         // console.log(action.payload.users[0]?.name.slice(0, state.queryParams.term?.length))
+
+         if (
+            state.queryParams.term &&
+            state.users.length > 0 &&
+            state.users[0].name.slice(0, state.queryParams.term.length).toLowerCase() ===
+               action.payload.users[0].name.slice(0, state.queryParams.term.length).toLowerCase()
+         ) {
+            state.users = [...state.users, ...action.payload.users]
+         } else {
+            state.users = [...action.payload.users]
+         }
       },
+
       setTotalCountAC: (state, action: PayloadAction<{ totalCount: number }>) => {
          state.totalCount = action.payload.totalCount
       },
-      setCurrentPageAC: (state, action: PayloadAction<{ page: number }>) => {
-         state.currentPage = action.payload.page
-      },
+      // setCurrentPageAC: (state, action: PayloadAction<{ page: number }>) => {
+      //    state.queryParams.page = action.payload.page
+      // },
       setFetchingAC: (state, action: PayloadAction<{ isFetching: boolean }>) => {
          state.isFetching = action.payload.isFetching
       },
@@ -40,6 +53,9 @@ const usersSlice = createSlice({
             state.users[index].followed = false
          }
       },
+      setQueryParamsAC: (state, action: PayloadAction<{ query: getUsersParamsType }>) => {
+         state.queryParams = action.payload.query
+      },
    },
 })
 
@@ -48,21 +64,22 @@ export const {
    setUsersAC,
    setTotalCountAC,
    setFetchingAC,
-   setCurrentPageAC,
+   // setCurrentPageAC,
    followUserAC,
    unFollowUserAC,
+   setQueryParamsAC,
 } = usersSlice.actions
 
 export const getUsersTC = createAsyncThunk(
    'users/getUsers',
-   async (params: getUsersParamsType, thunkAPI) => {
+   async (queryParams: getUsersParamsType, thunkAPI) => {
       try {
-         const res = await userAPI.getUsers(params)
+         const res = await userAPI.getUsers(queryParams)
          const state = thunkAPI.getState() as RootState
-         const currentPage = state.users.currentPage
+         const currentPage = state.users.queryParams.page
 
          thunkAPI.dispatch(setUsersAC({ users: res.data.items }))
-         thunkAPI.dispatch(setCurrentPageAC({ page: currentPage + 1 }))
+
          thunkAPI.dispatch(setFetchingAC({ isFetching: false }))
          thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
       } catch (e) {
