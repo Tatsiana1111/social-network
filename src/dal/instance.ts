@@ -7,3 +7,8 @@ export const instance = axios.create({
       'api-key': '52ccabf3-0184-4f40-b001-5997202bec15',
    },
 })
+
+export const placeholder = axios.create({
+   baseURL: 'https://jsonplaceholder.typicode.com',
+   withCredentials: true,
+})

@@ -43,19 +43,21 @@ export const TextArea = (props: PropsType) => {
       setComment(e.currentTarget.value)
    }
    const AddNewCommentHandler = () => {
-      const data: CommentsDataType = {
-         postId: props.postId,
-         body: comment,
-         name: profileName,
-      }
+      if (comment.trim()) {
+         const data: CommentsDataType = {
+            postId: props.postId,
+            body: comment,
+            name: profileName,
+         }
 
-      dispatch(addCommentsTC(data))
-      setComment('')
+         dispatch(addCommentsTC(data))
+         setComment('')
+      }
    }
 
    return (
       <TextAreaWrapper>
-         <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
+         <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user-avatar" />
          <textarea
             placeholder="Write your comment"
             onChange={handleCommentChange}

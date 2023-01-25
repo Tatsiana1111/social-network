@@ -24,9 +24,10 @@ export const SInput = styled.input`
    text-align: center;
    border: 1px solid rgba(0, 0, 0, 0.2);
    width: 100%;
+   font-weight: bold;
    &::placeholder {
       text-align: center;
-      opacity: 0.4;
+      opacity: 0.7;
    }
    &:hover {
       opacity: 0.8;

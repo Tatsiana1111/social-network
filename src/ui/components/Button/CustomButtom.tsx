@@ -16,7 +16,7 @@ interface ButtonProps {
    color: ButtonColor
 }
 
-// to try
+// TODO want to customize difenent varints of button
 
 export const Button = styled.button<ButtonProps>`
    // ...

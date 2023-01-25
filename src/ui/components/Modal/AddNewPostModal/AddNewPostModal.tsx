@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useId, useState } from 'react'
 
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { addPostTC } from '../../../../bll/profileReducer'
+import { SButtonGreen } from '../../Button/SButton'
+import { SInput } from '../../Input/Input'
 import { Modal } from '../BaseModal/Modal'
 
 type AddModalPropsType = {
@@ -20,6 +22,7 @@ type FormData = {
 const WrapperDiv = styled.div`
    display: flex;
    flex-direction: column;
+   gap: 10px;
 `
 
 export const AddNewPostModal = (props: AddModalPropsType) => {
@@ -34,7 +37,10 @@ export const AddNewPostModal = (props: AddModalPropsType) => {
    })
 
    const onSubmit = handleSubmit(data => {
-      dispatch(addPostTC({ userId: userId, title: data.title, body: data.body, id: userId }))
+      const randomNumber = Math.random() * 5
+      const id = Math.floor(randomNumber)
+
+      dispatch(addPostTC({ userId, title: data.title, body: data.body, id }))
       reset()
       props.handleModalClose()
    })
@@ -43,9 +49,9 @@ export const AddNewPostModal = (props: AddModalPropsType) => {
       <Modal title={'Add new post'} isOpen={props.isModalOpen} closeModal={props.handleModalClose}>
          <form onSubmit={onSubmit}>
             <WrapperDiv>
-               <input type="text" placeholder="Add title" {...register('title')} />
-               <input type="text" placeholder="Add post text" {...register('body')} />
-               <button>Add post</button>
+               <SInput type="text" placeholder="Title" {...register('title')} />
+               <SInput type="text" placeholder="Post text" {...register('body')} />
+               <SButtonGreen type={'submit'}>Add post</SButtonGreen>
             </WrapperDiv>
          </form>
       </Modal>

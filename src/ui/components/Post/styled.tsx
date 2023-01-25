@@ -2,8 +2,7 @@ import styled from 'styled-components'
 
 export const PostWrapper = styled.div`
    margin-bottom: 15px;
-   .postInner {
-   }
+
    img {
       width: 50px;
       height: 50px;
