@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 import { instance } from './instance'
 import { getUsersParamsType } from './usersAPI'
@@ -36,6 +36,20 @@ export const profileAPI = {
             withCredentials: true,
          })
          .get(`/posts/${postId}/comments`)
+   },
+   addComment(params: CommentsDataType) {
+      return (
+         axios
+            .create({
+               baseURL: 'https://jsonplaceholder.typicode.com',
+               withCredentials: true,
+            })
+            // @ts-ignore
+            .post<{ body: string }, AxiosResponse<ResponseType<{ comment: CommentsDataType }>>>(
+               `/posts/${params.postId}/comments`,
+               params
+            )
+      )
    },
    updateProfile(profile: ProfileDataType) {
       return instance.put(`/profile`, profile)
