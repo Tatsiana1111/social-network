@@ -1,8 +1,7 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { addPostAC, asyncProfileActions as profileActions } from '../bll/profileReducer'
+import { asyncProfileActions as profileActions } from '../bll/profileReducer'
 import { CommentsDataType, PostDataType, profileAPI } from '../dal/profileAPI'
-import { UserItemsType } from '../dal/usersAPI'
 
 import { setAppStatusAC } from './appReducer'
 
@@ -49,21 +48,10 @@ export const commentsSlice = createSlice({
 
 export const addCommentsTC = createAsyncThunk(
    'comments/addComments',
-   async (
-      params: {
-         postId: number | undefined
-         body: string
-         profileName: string
-      },
-      thunkAPI
-   ) => {
+   async (data: CommentsDataType, thunkAPI) => {
       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         const res = await profileAPI.addComment({
-            postId: params.postId,
-            body: params.body,
-            email: params.profileName,
-         })
+         const res = await profileAPI.addComment(data)
 
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
 

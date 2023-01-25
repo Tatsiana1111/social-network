@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getUsersTC, setHasMoreAC, updateUrlParamsAC } from '../../../bll/usersReducer'
+import { getUsersTC, updateUrlParamsAC } from '../../../bll/usersReducer'
 import { filterAllParams } from '../../../common/Utils/filterAllParams'
 import useDebounce from '../../../common/Utils/useDebounce'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'

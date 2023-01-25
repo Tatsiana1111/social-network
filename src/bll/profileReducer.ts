@@ -18,7 +18,7 @@ export const profileSlice = createSlice({
       status: '' as string,
       posts: [] as PostDataType[],
       currentPage: 1 as number,
-      fetch: true as boolean,
+      fetch: false as boolean,
       totalCount: 0 as number | undefined,
    },
 
@@ -100,17 +100,18 @@ export const updateStatus = createAsyncThunk(
 )
 export const getPostsTC = createAsyncThunk(
    'profile/getPosts',
-   async (params: GetPostsParamsType, { dispatch, getState }) => {
+   async (arg, { dispatch, getState }) => {
       dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         const res = await profileAPI.getPosts(params)
+         debugger
          const state = getState() as RootState
          const currentPage = state.profile.currentPage
+         const res = await profileAPI.getPosts({ _page: currentPage, _limit: 10 })
 
          dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
          dispatch(setPostsDataAC(res.data))
-         dispatch(setFetchingAC({ fetch: false }))
-         dispatch(setTotalCountAC({ totalCount: Number(res.headers['x-total-count']) }))
+         dispatch(setFetchingAC({ fetch: true }))
+         dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
          dispatch(setAppStatusAC({ status: 'idle' }))
 
          return res.data

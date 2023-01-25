@@ -1,22 +1,17 @@
-import React, { useEffect } from 'react'
-
-import { SubmitHandler, useForm } from 'react-hook-form'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { addCommentsTC, getCommentsTC } from '../../../bll/commentsReducer'
 import miniAvatar from '../../../common/images/miniAvatar.svg'
-import { PostDataType } from '../../../dal/profileAPI'
+import { CommentsDataType, PostDataType } from '../../../dal/profileAPI'
 import { Box } from '../Box/Box'
 import { Comment } from '../Comment/Comment'
 
 import sendIcon from './../../../common/icons/send.png'
-import { BoxWrapper, PostWrapper, WrapperDiv } from './styled'
+import { PostWrapper } from './styled'
 
 type PostPropsType = {
    post: PostDataType
-}
-type Textarea = {
-   comment: string
 }
 export const Post = (props: PostPropsType) => {
    const profileName = useAppSelector(state => state.profile.data.fullName)
@@ -24,18 +19,19 @@ export const Post = (props: PostPropsType) => {
    const userSmallAvatar = useAppSelector(state => state.profile.data.photos?.small)
    const dispatch = useAppDispatch()
 
-   const {
-      register,
-      handleSubmit,
-      reset,
-      formState: { errors },
-   } = useForm<Textarea>()
+   const [comment, setComment] = useState('')
 
-   const onSubmit: SubmitHandler<Textarea> = data => {
-      dispatch(
-         addCommentsTC({ body: data.comment, postId: props.post.id, profileName: profileName })
-      )
-      reset()
+   const handleCommentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+      setComment(e.currentTarget.value)
+   }
+   const AddNewCommentHandler = () => {
+      const data: CommentsDataType = {
+         postId: props.post.id,
+         body: comment,
+         name: profileName,
+      }
+
+      dispatch(addCommentsTC(data))
    }
 
    useEffect(() => {
@@ -43,40 +39,34 @@ export const Post = (props: PostPropsType) => {
    }, [])
 
    return (
-      <BoxWrapper>
-         <Box>
-            <PostWrapper>
-               <div className={'PostHeader'}>
-                  <img
-                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
-                     alt="user mini-avatar"
+      <Box>
+         <PostWrapper>
+            <div className={'PostHeader'}>
+               <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
+               <span>{profileName}</span>
+            </div>
+            <p style={{ fontWeight: 'bold' }}>{props.post.title}</p>
+            <p>{props.post.body}</p>
+            {Object.values(stateComments).map((comments, index) => {
+               return <Comment post={props.post} key={index} comments={comments} />
+            })}
+            <div className={'comment'}>
+               <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
+               <div>
+                  <textarea
+                     placeholder="Write your comment"
+                     onChange={handleCommentChange}
+                     value={comment}
                   />
-                  <span>{profileName}</span>
-               </div>
-               <p style={{ fontWeight: 'bold' }}>{props.post.title}</p>
-               <p>{props.post.body}</p>
-               {Object.values(stateComments).map((comments, index) => {
-                  return <Comment post={props.post} key={index} comments={comments} />
-               })}
-               <div className={'comment'}>
                   <img
-                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
-                     alt="user mini-avatar"
+                     className="sendIcon"
+                     onClick={AddNewCommentHandler}
+                     src={sendIcon}
+                     alt="sendIcon"
                   />
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                     <WrapperDiv>
-                        <textarea
-                           placeholder="Write your comment"
-                           {...register('comment', { required: true })}
-                        />
-                        <button>
-                           <img className="sendIcon" src={sendIcon} alt="sendIcon" />
-                        </button>
-                     </WrapperDiv>
-                  </form>
                </div>
-            </PostWrapper>
-         </Box>
-      </BoxWrapper>
+            </div>
+         </PostWrapper>
+      </Box>
    )
 }

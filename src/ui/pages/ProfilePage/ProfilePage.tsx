@@ -27,7 +27,6 @@ export const ProfilePage = () => {
    const posts = useAppSelector(state => state.profile.posts)
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
-   const currentPage = useAppSelector(state => state.profile.currentPage)
    const fetch = useAppSelector(state => state.profile.fetch)
    const [isModalOpen, setModalOpen] = useState(false)
 
@@ -37,6 +36,7 @@ export const ProfilePage = () => {
    useEffect(() => {
       dispatch(getProfileData(profileID))
       dispatch(getStatus(profileID))
+      getPostsHandler()
    }, [])
 
    const updateUserStatus = (status: string) => {
@@ -45,17 +45,21 @@ export const ProfilePage = () => {
    // const updateProfileHandler = (profile: ProfileDataType) => {
    //    dispatch(updateProfile(profile))
    // }
-   const getPostsPortionHandler = () => {
-      dispatch(getPostsTC({ _page: currentPage, _limit: 10 }))
+   const getPostsHandler = () => {
+      dispatch(getPostsTC())
    }
-   const setFetchingHandler = () => {
-      dispatch(setFetchingAC({ fetch: true }))
-   }
+
    const handleModalOpen = () => {
       setModalOpen(true)
    }
+
    const handleModalClose = () => {
       setModalOpen(false)
+   }
+   const showPostsHandler = () => {
+      return posts.map((post, index) => {
+         return <Post post={post} key={post.id} />
+      })
    }
 
    return (
@@ -79,13 +83,11 @@ export const ProfilePage = () => {
             <InfiniteScroll
                className="post"
                dataLength={posts.length}
-               next={getPostsPortionHandler}
+               next={getPostsHandler}
                hasMore={fetch}
                loader={<Loader />}
             >
-               {posts.map((post, index) => {
-                  return <Post post={post} key={post.id}></Post>
-               })}
+               {showPostsHandler()}
             </InfiniteScroll>
             <GoToTopButton />
          </div>

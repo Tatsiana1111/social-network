@@ -37,11 +37,6 @@ export const PostWrapper = styled.div`
          transform: scale(1.1);
       }
 
-      form {
-         width: 100%;
-         min-width: 100px;
-      }
-
       textarea {
          width: 100%;
          min-width: 100px;
@@ -54,18 +49,4 @@ export const PostWrapper = styled.div`
          color: ${props => props.theme.colors.primary};
       }
    }
-`
-
-export const WrapperDiv = styled.div`
-   display: flex;
-   flex-direction: row;
-
-   button {
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-   }
-`
-export const BoxWrapper = styled.div`
-   margin-bottom: 10px;
 `
