@@ -103,7 +103,6 @@ export const getPostsTC = createAsyncThunk(
    async (arg, { dispatch, getState }) => {
       dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         debugger
          const state = getState() as RootState
          const currentPage = state.profile.currentPage
          const res = await profileAPI.getPosts({ _page: currentPage, _limit: 10 })

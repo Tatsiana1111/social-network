@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const PostDiv = styled.div`
+export const CommentWrapper = styled.div`
    display: flex;
    flex-direction: row;
 
