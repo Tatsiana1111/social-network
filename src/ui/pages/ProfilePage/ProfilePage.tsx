@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
+import InfiniteScroll from 'react-infinite-scroll-component'
+
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import {
    getPostsTC,
@@ -12,7 +14,7 @@ import avatar from '../../../common/images/avatar.svg'
 import { Box } from '../../components/Box/Box'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
-import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
+import { Loader } from '../../components/Loader/Loader'
 import { AddNewPostModal } from '../../components/Modal/AddNewPostModal/AddNewPostModal'
 import { Post } from '../../components/Post/Post'
 
@@ -77,9 +79,10 @@ export const ProfilePage = () => {
          <div className={'profilePosts'}>
             <InfiniteScroll
                className="post"
-               fetchData={getPostsPortionHandler}
-               setFetching={setFetchingHandler}
-               isFetching={fetch}
+               dataLength={posts.length}
+               next={getPostsPortionHandler}
+               hasMore={fetch}
+               loader={<Loader />}
             >
                {posts.map((post, index) => {
                   return <Post post={post} key={post.id}></Post>

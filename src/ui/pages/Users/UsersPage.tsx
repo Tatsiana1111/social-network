@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 
+import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getUsersTC, setFetchingAC, updateUrlParamsAC } from '../../../bll/usersReducer'
+import { getUsersTC, setHasMoreAC, updateUrlParamsAC } from '../../../bll/usersReducer'
 import { filterAllParams } from '../../../common/Utils/filterAllParams'
 import useDebounce from '../../../common/Utils/useDebounce'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
-import { InfiniteScroll } from '../../components/InfiniteScroll/InfiniteScroll'
+import { Loader } from '../../components/Loader/Loader'
 import { SearchBar } from '../../components/SearchBar/SearchBar'
 
 import { UsersPageWrapper } from './styled-UsersPage'
@@ -19,7 +20,7 @@ export const UsersPage = () => {
    const usersSearch = useAppSelector(store => store.users.usersSearch)
    const [searchParams, setSearchParams] = useSearchParams()
    const paramsSearchState = useAppSelector(state => state.users.queryParams)
-   const isFetching = useAppSelector(store => store.users.isFetching)
+   const hasMore = useAppSelector(store => store.users.hasMore)
 
    const termURL = searchParams.get('term') ? searchParams.get('term') + '' : ''
    const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'
@@ -68,9 +69,6 @@ export const UsersPage = () => {
          }),
       })
    }
-   const setFetchingHandler = () => {
-      dispatch(setFetchingAC({ isFetching: true }))
-   }
 
    const showUsers = () => {
       if (usersSearch.length) {
@@ -112,10 +110,11 @@ export const UsersPage = () => {
          />
          <div className={'usersWrapper'}>
             <InfiniteScroll
+               dataLength={showUsers().length}
+               next={fetchDataHandler}
+               hasMore={hasMore}
+               loader={<Loader />}
                className={'users'}
-               fetchData={fetchDataHandler}
-               setFetching={setFetchingHandler}
-               isFetching={isFetching}
             >
                {showUsers()}
             </InfiniteScroll>
@@ -124,4 +123,4 @@ export const UsersPage = () => {
       </UsersPageWrapper>
    )
 }
-// https://www.youtube.com/watch?v=J2MWOhV8T6o
+// https://www.npmjs.com/package/react-infinite-scroll-component

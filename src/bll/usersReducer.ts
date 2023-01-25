@@ -7,7 +7,7 @@ const initialState = {
    users: [] as UserItemsType[],
    usersSearch: [] as UserItemsType[],
    totalCount: 0 as number,
-   isFetching: true as boolean,
+   hasMore: false as boolean,
    queryParams: { page: '1', term: '' } as getUsersParamsType,
 }
 
@@ -36,8 +36,8 @@ const usersSlice = createSlice({
       setTotalCountAC: (state, action: PayloadAction<{ totalCount: number }>) => {
          state.totalCount = action.payload.totalCount
       },
-      setFetchingAC: (state, action: PayloadAction<{ isFetching: boolean }>) => {
-         state.isFetching = action.payload.isFetching
+      setHasMoreAC: (state, action: PayloadAction<{ hasMore: boolean }>) => {
+         state.hasMore = action.payload.hasMore
       },
       followUserAC: (state, action: PayloadAction<{ userID: number }>) => {
          const index = state.users.findIndex(user => user.id === action.payload.userID)
@@ -63,7 +63,7 @@ export const usersReducer = usersSlice.reducer
 export const {
    setUsersAC,
    setTotalCountAC,
-   setFetchingAC,
+   setHasMoreAC,
    followUserAC,
    unFollowUserAC,
    updateUrlParamsAC,
@@ -83,7 +83,7 @@ export const getUsersTC = createAsyncThunk('users/getUsers', async (arg, thunkAP
       thunkAPI.dispatch(
          setUsersSearchAC({ users: res.data.items, query: params.term ? params.term : '' })
       )
-      thunkAPI.dispatch(setFetchingAC({ isFetching: false }))
+      thunkAPI.dispatch(setHasMoreAC({ hasMore: true }))
       thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
    } catch (e) {
       console.log(e)
