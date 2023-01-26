@@ -13,7 +13,7 @@ export const Comment = (props: CommentPropsType) => {
       <CommentWrapper>
          <img src={userPhoto} alt="post user photo" />
          <div>
-            <CommentEmail>{props.comment.email}</CommentEmail>
+            <CommentEmail>{props.comment.name}</CommentEmail>
             <CommentText>{props.comment.body}</CommentText>
          </div>
       </CommentWrapper>
