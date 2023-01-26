@@ -40,17 +40,33 @@ const usersSlice = createSlice({
          state.hasMore = action.payload.hasMore
       },
       followUserAC: (state, action: PayloadAction<{ userID: number }>) => {
-         const index = state.users.findIndex(user => user.id === action.payload.userID)
+         if (state.users.length) {
+            const index = state.users.findIndex(user => user.id === action.payload.userID)
 
-         if (index > -1) {
-            state.users[index].followed = true
+            if (index > -1) {
+               state.users[index].followed = true
+            }
+         } else {
+            const index = state.usersSearch.findIndex(user => user.id === action.payload.userID)
+
+            if (index > -1) {
+               state.usersSearch[index].followed = true
+            }
          }
       },
       unFollowUserAC: (state, action: PayloadAction<{ userID: number }>) => {
-         const index = state.users.findIndex(user => user.id === action.payload.userID)
+         if (state.users.length) {
+            const index = state.users.findIndex(user => user.id === action.payload.userID)
 
-         if (index > -1) {
-            state.users[index].followed = false
+            if (index > -1) {
+               state.users[index].followed = false
+            }
+         } else {
+            const index = state.usersSearch.findIndex(user => user.id === action.payload.userID)
+
+            if (index > -1) {
+               state.usersSearch[index].followed = false
+            }
          }
       },
       updateUrlParamsAC: (state, action: PayloadAction<{ query: getUsersParamsType }>) => {
