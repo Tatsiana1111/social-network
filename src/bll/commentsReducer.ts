@@ -53,7 +53,6 @@ export const addCommentsTC = createAsyncThunk(
    async (data: CommentsDataType, thunkAPI) => {
       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         debugger
          const res = await profileAPI.addComment(data)
 
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))

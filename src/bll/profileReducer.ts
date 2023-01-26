@@ -1,13 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import {
-   CommentsDataType,
-   GetPostsParamsType,
-   PostDataType,
-   profileAPI,
-   ProfileDataType,
-} from '../dal/profileAPI'
+import { PostDataType, profileAPI, ProfileDataType } from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
 
@@ -43,6 +37,9 @@ export const profileSlice = createSlice({
          state.totalCount = action.payload?.totalCount
       },
       addPostAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
+         state.posts.unshift(action.payload.newPost)
+      },
+      updateProfileAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
          state.posts.unshift(action.payload.newPost)
       },
    },
@@ -156,17 +153,17 @@ export const asyncProfileActions = {
    getProfileData,
    getStatus,
 }
-// export const updateProfile = createAsyncThunk(
-//    'profile/updateAboutMe',
-//    async (profile: ProfileDataType, thunkAPI) => {
-//       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
-//       try {
-//          const res = await profileAPI.updateProfile(profile)
-//
-//          thunkAPI.dispatch(setProfileDataAC(res.data))
-//          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
-//       } catch (e) {
-//          console.log(e)
-//       }
-//    }
-// )
+export const updateProfile = createAsyncThunk(
+   'profile/updateAboutMe',
+   async (profile: ProfileDataType, thunkAPI) => {
+      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         const res = await profileAPI.updateProfile(profile)
+
+         thunkAPI.dispatch(setProfileDataAC(res.data))
+         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+      } catch (e) {
+         console.log(e)
+      }
+   }
+)
