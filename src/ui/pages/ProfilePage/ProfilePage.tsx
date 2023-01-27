@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 
@@ -7,11 +7,12 @@ import {
    getPostsTC,
    getProfileData,
    getStatus,
-   setFetchingAC,
+   updatePhoto,
    updateStatus,
 } from '../../../bll/profileReducer'
 import avatar from '../../../common/images/avatar.svg'
 import { Box } from '../../components/Box/Box'
+import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { Loader } from '../../components/Loader/Loader'
@@ -61,6 +62,14 @@ export const ProfilePage = () => {
          return <Post post={post} key={post.id} />
       })
    }
+   const updatePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files.length) {
+         const file = e.target.files[0]
+
+         // @ts-ignore
+         dispatch(updatePhoto(file))
+      }
+   }
 
    return (
       <WrapperDiv>
@@ -69,6 +78,9 @@ export const ProfilePage = () => {
             handleModalClose={handleModalClose}
          ></AddNewPostModal>
          <Box className={'profilePhoto'}>
+            <CameraIcon className="icon">
+               <input className="input" type="file" onChange={updatePhotoHandler} />
+            </CameraIcon>
             <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />
          </Box>
          <Box className={'profileData'}>

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import { PostDataType, profileAPI, ProfileDataType } from '../dal/profileAPI'
+import { PostDataType, profileAPI, ProfileDataType, ProfileDataTypePhotos } from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
 
@@ -39,8 +39,11 @@ export const profileSlice = createSlice({
       addPostAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
          state.posts.unshift(action.payload.newPost)
       },
-      updateProfileAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
-         state.posts.unshift(action.payload.newPost)
+      updateProfileAC: (state, action) => {
+         state.data = action.payload.data
+      },
+      updatePhotoAC: (state, action: PayloadAction<ProfileDataTypePhotos>) => {
+         state.data.photos = action.payload
       },
    },
 })
@@ -53,6 +56,7 @@ export const {
    setFetchingAC,
    setTotalCountAC,
    addPostAC,
+   updatePhotoAC,
 } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
@@ -139,6 +143,22 @@ export const addPostTC = createAsyncThunk(
             })
          )
 
+         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+      } catch (e) {
+         console.log(e)
+      }
+   }
+)
+export const updatePhoto = createAsyncThunk(
+   'profile/updatePhoto',
+   async (photos: any, thunkAPI) => {
+      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         debugger
+         const res = await profileAPI.updatePhoto(photos)
+
+         console.log(res)
+         thunkAPI.dispatch(updatePhotoAC(res.data.data.photos))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {
          console.log(e)

@@ -28,6 +28,15 @@ export const profileAPI = {
    addComment(params: CommentsDataType) {
       return placeholder.post(`/posts/${params.postId}/comments`, params)
    },
+   updatePhoto(photos: string | Blob) {
+      const formData = new FormData()
+
+      formData.append('Image', photos)
+
+      return instance.put(`/profile/photo`, formData, {
+         headers: { 'Content-Type': 'multipart/form-data' },
+      })
+   },
 }
 
 export type ProfileDataType = {

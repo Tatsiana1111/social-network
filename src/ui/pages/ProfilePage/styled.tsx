@@ -36,5 +36,13 @@ export const WrapperDiv = styled.div`
          cursor: pointer;
          font-size: 20px;
       }
+
+      .input {
+         opacity: 0;
+      }
+
+      .icon {
+         z-index: 100;
+      }
    }
 `
