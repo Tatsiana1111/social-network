@@ -4,6 +4,7 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
 import { useAppSelector } from '../../app/hooks'
 
+import { Albums } from './Albums/Albums'
 import { Layout } from './Layout/Layout'
 import { PageNotFound } from './PageNotFound/PageNotFound'
 import { ProfilePage } from './ProfilePage/ProfilePage'
@@ -16,6 +17,7 @@ export const PATH = {
    signIn: '/signIn',
    registration: '/registration',
    users: '/users',
+   albums: '/albums',
 }
 
 export const Pages = () => {
@@ -38,6 +40,7 @@ export const Pages = () => {
             <Route element={<Layout />}>
                <Route path={PATH.profile} element={<ProfilePage />} />
                <Route path={PATH.users} element={<UsersPage />} />
+               <Route path={PATH.albums} element={<Albums />} />
             </Route>
          </Route>
          <Route element={<LoginRoute />}>

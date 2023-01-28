@@ -88,8 +88,8 @@ export const ProfilePage = () => {
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
             <span>{userAboutMeInfo}</span>
          </Box>
-         <Box className={'profileButtonAddPost'}>
-            <button onClick={handleModalOpen}>Add new post</button>
+         <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
+            <span>Add new post</span>
          </Box>
          <div className={'profilePosts'}>
             <InfiniteScroll

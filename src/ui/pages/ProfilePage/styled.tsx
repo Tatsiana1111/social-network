@@ -29,13 +29,8 @@ export const WrapperDiv = styled.div`
       justify-content: center;
       grid-area: 2 / 1 / 3 / 2;
       max-height: 50px;
-
-      button {
-         border: none;
-         background-color: transparent;
-         cursor: pointer;
-         font-size: 20px;
-      }
+      cursor: pointer;
+      font-size: 20px;
 
       .input {
          opacity: 0;

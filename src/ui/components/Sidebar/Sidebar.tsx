@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 import community from '../../../common/icons/community.svg'
-import message from '../../../common/icons/message.svg'
+import message from '../../../common/icons/music.svg'
 import music from '../../../common/icons/music.svg'
 import profile from '../../../common/icons/profile.svg'
 import users from '../../../common/icons/users.svg'
@@ -17,6 +17,8 @@ export const SidebarWrapper = styled.aside`
 export const NavLinkStyled = styled(NavLink)`
    img {
       margin-right: 10px;
+      height: 30px;
+      width: 30px;
    }
 
    cursor: pointer;
@@ -47,10 +49,10 @@ export const Sidebar = () => {
                <img alt="users icon" src={users} />
                Find Friends
             </NavLinkStyled>
-            {/*<NavLink>*/}
-            {/*   <img alt="profile icon" src={message} />*/}
-            {/*   Сообщения*/}
-            {/*</NavLink>*/}
+            <NavLinkStyled to={PATH.albums}>
+               <img alt="albums icon" src={message} />
+               Albums
+            </NavLinkStyled>
             {/*<NavLink>*/}
             {/*   <img alt="profile icon" src={music} />*/}
             {/*   Музыка*/}
