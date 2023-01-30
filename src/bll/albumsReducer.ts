@@ -12,7 +12,7 @@ export const albumsSlice = createSlice({
    initialState,
    reducers: {
       setAlbumsAC: (state, action: PayloadAction<{ albums: AlbumsType[] }>) => {
-         state.albums = [...action.payload.albums]
+         state.albums = [...state.albums, ...action.payload.albums]
       },
       setFetchAlbumsAC: (state, action: PayloadAction<{ fetchAlbums: boolean }>) => {
          state.fetchAlbums = action.payload.fetchAlbums

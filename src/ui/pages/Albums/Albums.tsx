@@ -38,9 +38,7 @@ export const Albums = () => {
    }
    const showAlbum = () => {
       return albums.map(album => {
-         return (
-            <Album key={album.id} title={album.title} cover={'https://via.placeholder.com/150'} />
-         )
+         return <Album key={album.id} title={album.title} cover={'https://picsum.photos/200'} />
       })
    }
 
@@ -48,16 +46,15 @@ export const Albums = () => {
       <AlbumsWrapper>
          <h1>My Albums</h1>
          <Box>
-            <div className={'albumContentWrapper'}>
-               <InfiniteScroll
-                  dataLength={albums.length}
-                  next={fetchAlbumsHandler}
-                  hasMore={fetch}
-                  loader={<Loader />}
-               >
-                  {showAlbum()}
-               </InfiniteScroll>
-            </div>
+            <InfiniteScroll
+               className={'albumContentWrapper'}
+               dataLength={albums.length}
+               next={fetchAlbumsHandler}
+               hasMore={fetch}
+               loader={<Loader />}
+            >
+               {showAlbum()}
+            </InfiniteScroll>
          </Box>
       </AlbumsWrapper>
    )
