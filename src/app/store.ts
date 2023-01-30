@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { albumsReducer } from '../bll/albumsReducer'
 import { appReducer } from '../bll/appReducer'
 import { authReducer } from '../bll/authReducer'
 import { commentsReducer } from '../bll/commentsReducer'
@@ -13,6 +14,7 @@ export const store = configureStore({
       profile: profileReducer,
       auth: authReducer,
       comments: commentsReducer,
+      albums: albumsReducer,
    },
 })
 
