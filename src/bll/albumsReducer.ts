@@ -1,21 +1,35 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { AlbumsType } from '../dal/albumsAPI'
+import { albumsAPI, AlbumsType } from '../dal/albumsAPI'
+
+const initialState = {
+   albums: [] as AlbumsType[],
+   fetchAlbums: false as boolean,
+}
 
 export const albumsSlice = createSlice({
    name: 'albums',
-   initialState: { albums: [] as AlbumsType[] },
+   initialState,
    reducers: {
-      setAlbumsAC: () => {},
+      setAlbumsAC: (state, action: PayloadAction<{ albums: AlbumsType[] }>) => {
+         state.albums = [...action.payload.albums]
+      },
+      setFetchAlbumsAC: (state, action: PayloadAction<{ fetchAlbums: boolean }>) => {
+         state.fetchAlbums = action.payload.fetchAlbums
+      },
    },
 })
 
-export const { setAlbumsAC } = albumsSlice.actions
+export const { setAlbumsAC, setFetchAlbumsAC } = albumsSlice.actions
 export const albumsReducer = albumsSlice.reducer
 
+//// Thunks
 export const getAlbumsTC = createAsyncThunk('albums/getAlbums', async (arg, thunkAPI) => {
    try {
-      console.log()
+      const res = await albumsAPI.getAlbums({ _limit: 4 })
+
+      thunkAPI.dispatch(setAlbumsAC({ albums: res.data }))
+      thunkAPI.dispatch(setFetchAlbumsAC({ fetchAlbums: true }))
    } catch (e) {
       console.log(e)
    }

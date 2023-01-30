@@ -16,7 +16,7 @@ export const profileAPI = {
    updateProfile(profile: ProfileDataType) {
       return instance.put(`/profile`, profile)
    },
-   getPosts(params: GetPostsParamsType) {
+   getPosts(params: PlaceholderParamsType) {
       return placeholder.get(`/posts`, { params })
    },
    addPost(params: PostDataType) {
@@ -62,7 +62,7 @@ export type CommentsDataType = {
    body?: string
 }
 
-export type GetPostsParamsType = {
+export type PlaceholderParamsType = {
    _page?: number
    _limit?: number
 }

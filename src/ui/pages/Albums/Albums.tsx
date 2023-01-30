@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
+import InfiniteScroll from 'react-infinite-scroll-component'
 import styled from 'styled-components'
 
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { getAlbumsTC } from '../../../bll/albumsReducer'
 import { Box } from '../../components/Box/Box'
+import { Loader } from '../../components/Loader/Loader'
 
 import { Album } from './Album'
 
@@ -21,14 +25,38 @@ const AlbumsWrapper = styled.section`
 `
 
 export const Albums = () => {
+   const dispatch = useAppDispatch()
+   const albums = useAppSelector(state => state.albums.albums)
+   const fetch = useAppSelector(state => state.albums.fetchAlbums)
+
+   useEffect(() => {
+      fetchAlbumsHandler()
+   }, [])
+
+   const fetchAlbumsHandler = () => {
+      dispatch(getAlbumsTC())
+   }
+   const showAlbum = () => {
+      return albums.map(album => {
+         return (
+            <Album key={album.id} title={album.title} cover={'https://via.placeholder.com/150'} />
+         )
+      })
+   }
+
    return (
       <AlbumsWrapper>
          <h1>My Albums</h1>
          <Box>
             <div className={'albumContentWrapper'}>
-               <Album title={'red'} cover={'https://via.placeholder.com/150'} />
-               <Album title={'red'} cover={'https://via.placeholder.com/150'} />
-               <Album title={'red'} cover={'https://via.placeholder.com/150'} />
+               <InfiniteScroll
+                  dataLength={albums.length}
+                  next={fetchAlbumsHandler}
+                  hasMore={fetch}
+                  loader={<Loader />}
+               >
+                  {showAlbum()}
+               </InfiniteScroll>
             </div>
          </Box>
       </AlbumsWrapper>

@@ -59,8 +59,6 @@ export const UsersPage = () => {
    const fetchDataHandler = () => {
       const page = (Number(pageURL) + 1).toString()
 
-      // dispatch(updateUrlParamsAC({ query: { ...paramsSearchState, page } }))
-
       setSearchParams({
          ...filterAllParams({
             ...paramsSearchState,
