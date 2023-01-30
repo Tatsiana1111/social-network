@@ -11,8 +11,11 @@ import users from '../../../common/icons/users.svg'
 import { PATH } from '../../pages/Pages'
 
 export const SidebarWrapper = styled.aside`
+   position: sticky;
+   top: 15px;
    max-width: 100%;
    min-width: fit-content;
+   height: 100%;
 `
 export const NavLinkStyled = styled(NavLink)`
    img {
@@ -20,7 +23,6 @@ export const NavLinkStyled = styled(NavLink)`
       height: 30px;
       width: 30px;
    }
-
    cursor: pointer;
    margin: 10px;
    display: flex;
