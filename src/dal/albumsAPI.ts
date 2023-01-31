@@ -5,8 +5,8 @@ export const albumsAPI = {
    getAlbums(params: PlaceholderParamsType) {
       return placeholder.get<AlbumsType[]>('/albums', { params })
    },
-   getPhotos(params: PlaceholderParamsType) {
-      return placeholder.get<PhotosType[]>('/photos', { params })
+   getPhotos(albumId: number, params: PlaceholderParamsType) {
+      return placeholder.get<PhotosType[]>(`albums/${albumId}/photos`, { params })
    },
 }
 export type AlbumsType = {

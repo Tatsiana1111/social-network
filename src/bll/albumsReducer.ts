@@ -8,6 +8,7 @@ const initialState = {
    fetchAlbums: false as boolean,
    currentPageAlbum: 1 as number,
    photos: [] as PhotosType[],
+   currentPagePhotos: 1 as number,
 }
 
 export const albumsSlice = createSlice({
@@ -23,10 +24,22 @@ export const albumsSlice = createSlice({
       setAlbumsCurrentPagesAC: (state, action: PayloadAction<{ newCurrentPage: number }>) => {
          state.currentPageAlbum = action.payload.newCurrentPage
       },
+      setPhotosAC: (state, action: PayloadAction<{ photos: PhotosType[] }>) => {
+         state.photos = [...state.photos, ...action.payload.photos]
+      },
+      setPhotosCurrentPagesAC: (state, action: PayloadAction<{ newCurrentPage: number }>) => {
+         state.currentPagePhotos = action.payload.newCurrentPage
+      },
    },
 })
 
-export const { setAlbumsAC, setFetchAlbumsAC, setAlbumsCurrentPagesAC } = albumsSlice.actions
+export const {
+   setAlbumsAC,
+   setFetchAlbumsAC,
+   setAlbumsCurrentPagesAC,
+   setPhotosCurrentPagesAC,
+   setPhotosAC,
+} = albumsSlice.actions
 export const albumsReducer = albumsSlice.reducer
 
 //// Thunks
@@ -34,6 +47,7 @@ export const getAlbumsTC = createAsyncThunk('albums/getAlbums', async (arg, thun
    try {
       const state = thunkAPI.getState() as RootState
       const currentPageAlbum = state.albums.currentPageAlbum
+
       const res = await albumsAPI.getAlbums({ _page: currentPageAlbum, _limit: 4 })
 
       thunkAPI.dispatch(setAlbumsAC({ albums: res.data }))
@@ -44,10 +58,19 @@ export const getAlbumsTC = createAsyncThunk('albums/getAlbums', async (arg, thun
    }
 })
 
-export const getPhotosTC = createAsyncThunk('albums/getPhotos', async (arg, thunkAPI) => {
-   try {
-      const state = thunkAPI.getState() as RootState
-   } catch (e) {
-      console.log(e)
+export const getPhotosTC = createAsyncThunk(
+   'albums/getPhotos',
+   async (albumId: number, thunkAPI) => {
+      try {
+         const state = thunkAPI.getState() as RootState
+         const currentPagePhotos = state.albums.currentPagePhotos
+
+         const res = await albumsAPI.getPhotos(albumId, { _page: currentPagePhotos, _limit: 10 })
+
+         thunkAPI.dispatch(setPhotosAC({ photos: res.data }))
+         thunkAPI.dispatch(setPhotosCurrentPagesAC({ newCurrentPage: currentPagePhotos + 1 }))
+      } catch (e) {
+         console.log(e)
+      }
    }
-})
+)

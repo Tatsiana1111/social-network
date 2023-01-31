@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
@@ -7,6 +7,8 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
 import 'swiper/css/bundle'
+import { useAppDispatch } from '../../../app/hooks'
+import { getPhotosTC } from '../../../bll/albumsReducer'
 import { NavLinkStyled } from '../../components/Sidebar/Sidebar'
 import { PATH } from '../Pages'
 
@@ -15,7 +17,14 @@ const AlbumWrapper = styled.div`
 `
 
 export const Album = () => {
+   const dispatch = useAppDispatch()
    const { albumId } = useParams()
+
+   useEffect(() => {
+      if (albumId) {
+         dispatch(getPhotosTC(+albumId))
+      }
+   }, [])
 
    return (
       <AlbumWrapper>
