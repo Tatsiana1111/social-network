@@ -1,12 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { RootState } from '../app/store'
-import { albumsAPI, AlbumsType } from '../dal/albumsAPI'
+import { albumsAPI, AlbumsType, PhotosType } from '../dal/albumsAPI'
 
 const initialState = {
    albums: [] as AlbumsType[],
    fetchAlbums: false as boolean,
    currentPageAlbum: 1 as number,
+   photos: [] as PhotosType[],
 }
 
 export const albumsSlice = createSlice({
@@ -38,6 +39,14 @@ export const getAlbumsTC = createAsyncThunk('albums/getAlbums', async (arg, thun
       thunkAPI.dispatch(setAlbumsAC({ albums: res.data }))
       thunkAPI.dispatch(setFetchAlbumsAC({ fetchAlbums: true }))
       thunkAPI.dispatch(setAlbumsCurrentPagesAC({ newCurrentPage: currentPageAlbum + 1 }))
+   } catch (e) {
+      console.log(e)
+   }
+})
+
+export const getPhotosTC = createAsyncThunk('albums/getPhotos', async (arg, thunkAPI) => {
+   try {
+      const state = thunkAPI.getState() as RootState
    } catch (e) {
       console.log(e)
    }
