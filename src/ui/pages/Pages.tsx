@@ -4,6 +4,7 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
 import { useAppSelector } from '../../app/hooks'
 
+import { Album } from './Albums/Album'
 import { Albums } from './Albums/Albums'
 import { Layout } from './Layout/Layout'
 import { PageNotFound } from './PageNotFound/PageNotFound'
@@ -41,6 +42,7 @@ export const Pages = () => {
                <Route path={PATH.profile} element={<ProfilePage />} />
                <Route path={PATH.users} element={<UsersPage />} />
                <Route path={PATH.albums} element={<Albums />} />
+               <Route path={`${PATH.albums}/:albumId`} element={<Album />} />
             </Route>
          </Route>
          <Route element={<LoginRoute />}>

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
@@ -8,10 +9,11 @@ import { getAlbumsTC } from '../../../bll/albumsReducer'
 import { Box } from '../../components/Box/Box'
 import { Loader } from '../../components/Loader/Loader'
 
-import { Album } from './Album'
+import { AlbumItem } from './AlbumItem'
 
 const AlbumsWrapper = styled.section`
    width: 100%;
+   height: 100%;
 
    h1 {
       margin: 10px 0;
@@ -38,24 +40,34 @@ export const Albums = () => {
    }
    const showAlbum = () => {
       return albums.map(album => {
-         return <Album key={album.id} title={album.title} cover={'https://picsum.photos/200'} />
+         return (
+            <AlbumItem
+               id={album.id}
+               key={album.id}
+               title={album.title}
+               cover={'https://picsum.photos/200'}
+            />
+         )
       })
    }
 
    return (
-      <AlbumsWrapper>
-         <h1>My Albums</h1>
-         <Box>
-            <InfiniteScroll
-               className={'albumContentWrapper'}
-               dataLength={albums.length}
-               next={fetchAlbumsHandler}
-               hasMore={fetch}
-               loader={<Loader />}
-            >
-               {showAlbum()}
-            </InfiniteScroll>
-         </Box>
-      </AlbumsWrapper>
+      <>
+         <AlbumsWrapper>
+            <h1>My Albums</h1>
+            <Box>
+               <InfiniteScroll
+                  className={'albumContentWrapper'}
+                  dataLength={albums.length}
+                  next={fetchAlbumsHandler}
+                  hasMore={fetch}
+                  loader={<Loader />}
+               >
+                  {showAlbum()}
+               </InfiniteScroll>
+            </Box>
+         </AlbumsWrapper>
+         <Outlet />
+      </>
    )
 }
