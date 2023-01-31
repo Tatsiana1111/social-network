@@ -18,7 +18,7 @@ export type AlbumsType = {
 export type PhotosType = {
    albumId: number
    id: number
-   title: number
+   title: string
    url: string
    thumbnailUrl: string
 }

@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
 import 'swiper/css/bundle'
-import { useAppDispatch } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getPhotosTC } from '../../../bll/albumsReducer'
 import { NavLinkStyled } from '../../components/Sidebar/Sidebar'
 import { PATH } from '../Pages'
@@ -19,12 +19,23 @@ const AlbumWrapper = styled.div`
 export const Album = () => {
    const dispatch = useAppDispatch()
    const { albumId } = useParams()
+   const photos = useAppSelector(state => state.albums.photos)
 
    useEffect(() => {
       if (albumId) {
          dispatch(getPhotosTC(+albumId))
       }
    }, [])
+
+   const showSlidesHandler = () => {
+      return photos.map(slide => {
+         return (
+            <SwiperSlide key={slide.id}>
+               <img src={slide.url} alt={slide.title} />
+            </SwiperSlide>
+         )
+      })
+   }
 
    return (
       <AlbumWrapper>
@@ -33,18 +44,14 @@ export const Album = () => {
          <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             spaceBetween={50}
-            slidesPerView={3}
+            slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
             onSwiper={swiper => console.log(swiper)}
             onSlideChange={() => console.log('slide change')}
          >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            ...
+            {showSlidesHandler()}
          </Swiper>
       </AlbumWrapper>
    )
