@@ -15,6 +15,7 @@ import {
 import camera from '../../../common/icons/camera.png'
 import avatar from '../../../common/images/defaultUser.jpg'
 import { Box } from '../../components/Box/Box'
+import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { Loader } from '../../components/Loader/Loader'
@@ -22,38 +23,6 @@ import { AddNewPostModal } from '../../components/Modal/AddNewPostModal/AddNewPo
 import { Post } from '../../components/Post/Post'
 
 import { WrapperDiv } from './styled'
-
-const CameraIconWrapper = styled.div`
-   cursor: pointer;
-   position: absolute;
-   bottom: 30px;
-   right: 30px;
-
-   div {
-      position: relative;
-      height: 50px;
-      width: 50px;
-      z-index: 4;
-
-      input {
-         position: absolute;
-         left: 0;
-         opacity: 0;
-         top: 0;
-         bottom: 0;
-         width: 100%;
-         z-index: 2;
-      }
-      img {
-         position: absolute;
-         left: 0;
-         top: 0;
-         width: 100%;
-         height: 100%;
-         z-index: 3;
-      }
-   }
-`
 
 export const ProfilePage = () => {
    const myProfileID = useAppSelector(state => state.app.profileID)
@@ -98,13 +67,6 @@ export const ProfilePage = () => {
          return <Post post={post} key={index} />
       })
    }
-   const updatePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files.length) {
-         const file = e.target.files[0]
-
-         dispatch(updatePhoto(file))
-      }
-   }
 
    return (
       <WrapperDiv>
@@ -113,21 +75,7 @@ export const ProfilePage = () => {
             handleModalClose={handleModalClose}
          ></AddNewPostModal>
          <Box className={'profilePhoto'}>
-            {
-               // @ts-ignore
-
-               myProfileID === +profileID && (
-                  // <CameraIcon className="icon">
-                  //    <input className="input" type="file" onChange={updatePhotoHandler} />
-                  // </CameraIcon>
-                  <CameraIconWrapper onClick={() => updatePhotoHandler}>
-                     <div>
-                        <input type="file" onChange={updatePhotoHandler} />
-                        <img src={camera} alt="cameraIcon" />
-                     </div>
-                  </CameraIconWrapper>
-               )
-            }
+            {profileID ? myProfileID === +profileID && <CameraIcon /> : ''}
             <img
                alt="user avatar"
                className="userAvatar"
