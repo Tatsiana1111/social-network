@@ -39,8 +39,8 @@ export const Pages = () => {
       <Routes>
          <Route element={<RequireAuth />}>
             <Route element={<Layout />}>
-               <Route path={`${PATH.profile}/:profileID`} element={<ProfilePage />} />
                <Route path={PATH.users} element={<UsersPage />} />
+               <Route path={`${PATH.profile}/:profileID`} element={<ProfilePage />} />
                <Route path={PATH.albums} element={<Albums />} />
                <Route path={`${PATH.albums}/:albumId`} element={<Album />} />
             </Route>
