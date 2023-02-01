@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper'
+import { Navigation, Pagination, Scrollbar, A11y, EffectFade } from 'swiper'
 import { Swiper, SwiperSlide } from 'swiper/react'
 
 import 'swiper/css'
@@ -13,7 +13,22 @@ import { NavLinkStyled } from '../../components/Sidebar/Sidebar'
 import { PATH } from '../Pages'
 
 const AlbumWrapper = styled.div`
-   width: 73%;
+   width: 80%;
+   height: calc(100vh - 50px);
+`
+
+const MySliderItem = styled(SwiperSlide)`
+   overflow: hidden;
+   position: relative;
+   padding-bottom: 58%;
+   img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+   }
 `
 
 export const Album = () => {
@@ -30,26 +45,25 @@ export const Album = () => {
    const showSlidesHandler = () => {
       return photos.map(slide => {
          return (
-            <SwiperSlide key={slide.id}>
+            <MySliderItem key={slide.id}>
                <img src={slide.url} alt={slide.title} />
-            </SwiperSlide>
+            </MySliderItem>
          )
       })
    }
 
    return (
       <AlbumWrapper>
-         <NavLinkStyled to={PATH.albums}>---Back to Albums</NavLinkStyled>
+         <NavLinkStyled to={PATH.albums}>Back to Albums</NavLinkStyled>
          <h2>Album: {albumId}</h2>
          <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y]}
-            spaceBetween={50}
+            modules={[EffectFade, Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={10}
             slidesPerView={1}
             navigation
             pagination={{ clickable: true }}
             scrollbar={{ draggable: true }}
-            onSwiper={swiper => console.log(swiper)}
-            onSlideChange={() => console.log('slide change')}
+            autoplay={{ delay: 1 }}
          >
             {showSlidesHandler()}
          </Swiper>
