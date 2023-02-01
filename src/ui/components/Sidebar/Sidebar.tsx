@@ -3,9 +3,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
-import community from '../../../common/icons/community.svg'
+import { useAppSelector } from '../../../app/hooks'
 import message from '../../../common/icons/music.svg'
-import music from '../../../common/icons/music.svg'
 import profile from '../../../common/icons/profile.svg'
 import users from '../../../common/icons/users.svg'
 import { PATH } from '../../pages/Pages'
@@ -23,6 +22,7 @@ export const NavLinkStyled = styled(NavLink)`
       height: 30px;
       width: 30px;
    }
+
    cursor: pointer;
    margin: 10px;
    display: flex;
@@ -34,16 +34,19 @@ export const NavLinkStyled = styled(NavLink)`
    font-size: 20px;
    color: #1f3c60;
    text-decoration: none;
+
    :active {
       color: #526884;
    }
 `
 
 export const Sidebar = () => {
+   const myProfileID = useAppSelector(state => state.app.profileID)
+
    return (
       <SidebarWrapper>
          <nav>
-            <NavLinkStyled to={PATH.profile}>
+            <NavLinkStyled to={`${PATH.profile}/${myProfileID}`}>
                <img alt="profile icon" src={profile} />
                My Profile
             </NavLinkStyled>

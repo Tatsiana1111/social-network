@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
+import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import {
@@ -10,7 +11,7 @@ import {
    updatePhoto,
    updateStatus,
 } from '../../../bll/profileReducer'
-import avatar from '../../../common/images/avatar.svg'
+import avatar from '../../../common/images/defaultUser.jpg'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
@@ -22,7 +23,7 @@ import { Post } from '../../components/Post/Post'
 import { WrapperDiv } from './styled'
 
 export const ProfilePage = () => {
-   const profileID = useAppSelector(state => state.app.profileID)
+   const myProfileID = useAppSelector(state => state.app.profileID)
    const profileName = useAppSelector(state => state.profile.data.fullName)
    const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
    const posts = useAppSelector(state => state.profile.posts)
@@ -31,14 +32,16 @@ export const ProfilePage = () => {
    const fetch = useAppSelector(state => state.profile.fetch)
    const [isModalOpen, setModalOpen] = useState(false)
 
-   // const { profileID } = useParams()
+   const { profileID } = useParams()
    const dispatch = useAppDispatch()
 
    useEffect(() => {
-      dispatch(getProfileData(profileID))
-      dispatch(getStatus(profileID))
-      getPostsHandler()
-   }, [])
+      if (profileID) {
+         dispatch(getProfileData(+profileID))
+         dispatch(getStatus(+profileID))
+         getPostsHandler()
+      }
+   }, [profileID])
 
    const updateUserStatus = (status: string) => {
       dispatch(updateStatus(status))
@@ -59,14 +62,13 @@ export const ProfilePage = () => {
    }
    const showPostsHandler = () => {
       return posts.map((post, index) => {
-         return <Post post={post} key={post.id} />
+         return <Post post={post} key={index} />
       })
    }
    const updatePhotoHandler = (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files.length) {
          const file = e.target.files[0]
 
-         // @ts-ignore
          dispatch(updatePhoto(file))
       }
    }
@@ -78,19 +80,33 @@ export const ProfilePage = () => {
             handleModalClose={handleModalClose}
          ></AddNewPostModal>
          <Box className={'profilePhoto'}>
-            <CameraIcon className="icon">
-               <input className="input" type="file" onChange={updatePhotoHandler} />
-            </CameraIcon>
-            <img alt="user avatar" src={userLargeAvatar ? userLargeAvatar : avatar} />
+            {
+               // @ts-ignore
+               myProfileID === +profileID && (
+                  <CameraIcon className="icon">
+                     <input className="input" type="file" onChange={updatePhotoHandler} />
+                  </CameraIcon>
+               )
+            }
+            <img
+               alt="user avatar"
+               className="userAvatar"
+               src={userLargeAvatar ? userLargeAvatar : avatar}
+            />
          </Box>
          <Box className={'profileData'}>
             <span>{profileName}</span>
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
             <span>{userAboutMeInfo}</span>
          </Box>
-         <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
-            <span>Add new post</span>
-         </Box>
+         {
+            // @ts-ignore
+            myProfileID === +profileID && (
+               <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
+                  <span>Add new post</span>
+               </Box>
+            )
+         }
          <div className={'profilePosts'}>
             <InfiniteScroll
                className="post"

@@ -1,9 +1,12 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 import { useAppDispatch } from '../../../app/hooks'
 import { followUserTC, unFollowUserTC } from '../../../bll/usersReducer'
 import defaultUserImage from '../../../common/images/defaultUser.jpg'
 import { UserItemsType } from '../../../dal/usersAPI'
+import { PATH } from '../Pages'
 
 import { UserWrapper } from './styled-User'
 
@@ -22,10 +25,12 @@ export const User = (props: UserType) => {
 
    return (
       <UserWrapper>
-         <img
-            src={props.user.photos.small ? props.user.photos.small : defaultUserImage}
-            alt="userPhoto"
-         />
+         <Link to={`${PATH.profile}/${props.user.id}`}>
+            <img
+               src={props.user.photos.small ? props.user.photos.small : defaultUserImage}
+               alt="userPhoto"
+            />
+         </Link>
          <span>{props.user.name}</span>
          <div>
             <button disabled={props.user.followed} onClick={followUserHandler}>

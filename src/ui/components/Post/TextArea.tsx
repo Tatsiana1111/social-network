@@ -5,18 +5,20 @@ import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { addCommentsTC } from '../../../bll/commentsReducer'
 import sendIcon from '../../../common/icons/send.png'
-import miniAvatar from '../../../common/images/miniAvatar.svg'
+import miniAvatar from '../../../common/images/defaultUser.jpg'
 import { CommentsDataType } from '../../../dal/profileAPI'
 
 const TextAreaWrapper = styled.div`
    display: flex;
    align-items: center;
    gap: 5px;
+
    .sendIcon {
       cursor: pointer;
       width: 30px;
       height: 30px;
    }
+
    textarea {
       width: 100%;
       min-width: 100px;
@@ -27,6 +29,11 @@ const TextAreaWrapper = styled.div`
       border: 1px solid skyblue;
       background-color: ${props => props.theme.colors.backGroundColor};
       color: ${props => props.theme.colors.primary};
+   }
+
+   .miniAvatar {
+      width: 50px;
+      height: 50px;
    }
 `
 
@@ -57,7 +64,11 @@ export const TextArea = (props: PropsType) => {
 
    return (
       <TextAreaWrapper>
-         <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user-avatar" />
+         <img
+            src={userSmallAvatar ? userSmallAvatar : miniAvatar}
+            className="miniAvatar"
+            alt="user-avatar"
+         />
          <textarea
             placeholder="Write your comment"
             onChange={handleCommentChange}

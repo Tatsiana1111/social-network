@@ -14,7 +14,7 @@ import { SignIn } from './SignInPage/SignIn'
 import { UsersPage } from './Users/UsersPage'
 
 export const PATH = {
-   profile: '/profile/:profileID',
+   profile: '/profile',
    signIn: '/signIn',
    registration: '/registration',
    users: '/users',
@@ -39,7 +39,7 @@ export const Pages = () => {
       <Routes>
          <Route element={<RequireAuth />}>
             <Route element={<Layout />}>
-               <Route path={PATH.profile} element={<ProfilePage />} />
+               <Route path={`${PATH.profile}/:profileID`} element={<ProfilePage />} />
                <Route path={PATH.users} element={<UsersPage />} />
                <Route path={PATH.albums} element={<Albums />} />
                <Route path={`${PATH.albums}/:albumId`} element={<Album />} />

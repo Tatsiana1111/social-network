@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const WrapperDiv = styled.div`
    position: absolute;
-   top: 260px;
+   top: 140px;
    left: 260px;
 
    .userAvatar {
@@ -28,7 +28,7 @@ export const WrapperDiv = styled.div`
    }
 
    .children {
-      top: 15px;
+      top: 135px;
       position: absolute;
       z-index: 2;
       opacity: 0;

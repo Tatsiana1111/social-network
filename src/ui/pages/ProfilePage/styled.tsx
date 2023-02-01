@@ -8,6 +8,11 @@ export const WrapperDiv = styled.div`
    grid-row-gap: 20px;
    margin-bottom: 20px;
 
+   .userAvatar {
+      width: 300px;
+      height: 300px;
+   }
+
    .profilePhoto {
       grid-area: 1 / 1 / 2 / 2;
    }

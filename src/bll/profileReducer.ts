@@ -149,10 +149,8 @@ export const updatePhoto = createAsyncThunk(
    async (photos: any, thunkAPI) => {
       thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         debugger
          const res = await profileAPI.updatePhoto(photos)
 
-         console.log(res)
          thunkAPI.dispatch(updatePhotoAC(res.data.data.photos))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {

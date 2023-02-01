@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 
+import { useParams } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getCommentsTC } from '../../../bll/commentsReducer'
-import miniAvatar from '../../../common/images/miniAvatar.svg'
+import miniAvatar from '../../../common/images/defaultUser.jpg'
 import { PostDataType } from '../../../dal/profileAPI'
 import { Box } from '../Box/Box'
 import { Comment } from '../Comment/Comment'
