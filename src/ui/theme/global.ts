@@ -47,4 +47,5 @@ export const Container = styled.div`
    padding: 0 10px;
    max-width: 1200px;
    background-color: inherit;
+   color: ${props => props.theme.colors.primary};
 `

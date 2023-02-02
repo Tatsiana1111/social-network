@@ -7,6 +7,7 @@ export const lightTheme: DefaultTheme = {
 
    colors: {
       backGroundColor: '#E5E5E5',
+      backGroundColor2: '#E5E5E5',
       primary: '#7398CE',
    },
    button: {
@@ -25,8 +26,9 @@ export const darkTheme: DefaultTheme = {
    type: ThemeEnum.dark,
 
    colors: {
-      primary: '#314272',
-      backGroundColor: 'red',
+      primary: '#E8F3D6',
+      backGroundColor: '#00425A',
+      backGroundColor2: '#567189',
    },
    button: {
       default: {

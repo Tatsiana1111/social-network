@@ -15,6 +15,8 @@ import { useAppDispatch, useAppSelector } from './hooks'
 
 export const App = () => {
    const isInitialized = useAppSelector(state => state.app.isInitialized)
+   const theme = useAppSelector(state => state.app.theme)
+
    const dispatch = useAppDispatch()
 
    useEffect(() => {
@@ -27,7 +29,7 @@ export const App = () => {
 
    return (
       <>
-         <ThemeProvider theme={lightTheme}>
+         <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
             <NavigationForUs />
             <GlobalStyle />
             <Header />

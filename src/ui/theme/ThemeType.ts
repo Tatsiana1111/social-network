@@ -6,6 +6,7 @@ export enum ThemeEnum {
 export interface ITheme {
    colors: {
       backGroundColor: string
+      backGroundColor2: string
       primary: string
    }
    button: {

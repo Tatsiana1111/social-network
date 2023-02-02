@@ -7,6 +7,12 @@ import { commentsReducer } from '../bll/commentsReducer'
 import { profileReducer } from '../bll/profileReducer'
 import { usersReducer } from '../bll/usersReducer'
 
+// const reHydrateStore = () => {
+//    if (localStorage.getItem('theme') !== null) {
+//       return JSON.parse(JSON.stringify(localStorage.getItem('theme'))) // re-hydrate the store
+//    }
+// }
+
 export const store = configureStore({
    reducer: {
       app: appReducer,

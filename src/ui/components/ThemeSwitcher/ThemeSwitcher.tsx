@@ -1,11 +1,16 @@
 import React, { ChangeEvent } from 'react'
 
+import { useAppDispatch } from '../../../app/hooks'
+import { setAppThemeAC } from '../../../bll/appReducer'
+
 import s from './ThemeSwitcher.module.css'
 
-// https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
-// https://www.youtube.com/watch?v=U8f01SM8Kq4&t=62s
 export const ThemeSwitcher = () => {
-   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {}
+   const dispatch = useAppDispatch()
+
+   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      dispatch(setAppThemeAC({ theme: e.target.checked ? 'light' : 'dark' }))
+   }
 
    return (
       <div className={s.ThemeSwitcher}>
