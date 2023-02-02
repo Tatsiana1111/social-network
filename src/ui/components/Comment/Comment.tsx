@@ -10,7 +10,7 @@ type CommentPropsType = {
    comment: CommentsDataType
 }
 export const Comment = (props: CommentPropsType) => {
-   const userPhoto = useAppSelector(state => state.profile.data.photos.large)
+   const userPhoto = useAppSelector(state => state.profile.data.photos?.large)
    const userName = useAppSelector(state => state.profile.data.fullName)
 
    return (

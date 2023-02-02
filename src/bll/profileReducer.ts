@@ -4,6 +4,7 @@ import { RootState } from '../app/store'
 import { PostDataType, profileAPI, ProfileDataType, ProfileDataTypePhotos } from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
+import { addCommentsTC } from './commentsReducer'
 
 export const profileSlice = createSlice({
    name: 'profile',

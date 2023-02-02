@@ -28,6 +28,7 @@ const CameraIconWrapper = styled.div`
          bottom: 0;
          width: 100%;
       }
+
       img {
          position: absolute;
          left: 0;

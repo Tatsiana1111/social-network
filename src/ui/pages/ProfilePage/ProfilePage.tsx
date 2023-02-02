@@ -87,14 +87,13 @@ export const ProfilePage = () => {
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
             <span>{userAboutMeInfo}</span>
          </Box>
-         {
-            // @ts-ignore
-            myProfileID === +profileID && (
-               <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
-                  <span>Add new post</span>
-               </Box>
-            )
-         }
+         {profileID
+            ? myProfileID === +profileID && (
+                 <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
+                    <span>Add new post</span>
+                 </Box>
+              )
+            : ''}
          <div className={'profilePosts'}>
             <InfiniteScroll
                className="post"
