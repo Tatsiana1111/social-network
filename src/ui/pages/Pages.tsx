@@ -23,6 +23,7 @@ export const PATH = {
 
 export const Pages = () => {
    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+   const profileID = useAppSelector(state => state.app.profileID)
 
    const RequireAuth = () => {
       if (!isLoggedIn) return <Navigate to={PATH.signIn} replace />
@@ -30,7 +31,7 @@ export const Pages = () => {
       return <Outlet />
    }
    const LoginRoute = () => {
-      if (isLoggedIn) return <Navigate to={PATH.profile} replace />
+      if (isLoggedIn) return <Navigate to={`${PATH.profile}/${profileID}`} replace />
 
       return <Outlet />
    }
