@@ -4,9 +4,9 @@ import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useAppSelector } from '../../../app/hooks'
-import message from '../../../common/icons/music.svg'
-import profile from '../../../common/icons/profile.svg'
-import users from '../../../common/icons/users.svg'
+import users from '../../../common/icons/friends.png'
+import message from '../../../common/icons/gallery.png'
+import profile from '../../../common/icons/user.png'
 import { PATH } from '../../pages/Pages'
 
 export const SidebarWrapper = styled.aside`
@@ -32,7 +32,7 @@ export const NavLinkStyled = styled(NavLink)`
    font-weight: bold;
    font-family: 'Roboto Light', sans-serif;
    font-size: 20px;
-   color: #1f3c60;
+   color: ${props => props.theme.colors.primary};
    text-decoration: none;
 
    :active {
@@ -58,14 +58,6 @@ export const Sidebar = () => {
                <img alt="albums icon" src={message} />
                Albums
             </NavLinkStyled>
-            {/*<NavLink>*/}
-            {/*   <img alt="profile icon" src={music} />*/}
-            {/*   Музыка*/}
-            {/*</NavLink>*/}
-            {/*<NavLink>*/}
-            {/*   <img alt="profile icon" src={community} />*/}
-            {/*   Сообщества*/}
-            {/*</NavLink>*/}
          </nav>
       </SidebarWrapper>
    )

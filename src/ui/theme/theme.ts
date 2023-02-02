@@ -8,7 +8,7 @@ export const lightTheme: DefaultTheme = {
    colors: {
       backGroundColor: '#E5E5E5',
       backGroundColor2: '#E5E5E5',
-      primary: '#7398CE',
+      primary: '#000',
    },
    button: {
       default: {

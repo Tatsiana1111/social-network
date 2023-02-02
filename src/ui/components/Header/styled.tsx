@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const SHeader = styled.header`
-   background-color: white;
+   background-color: ${props => props.theme.colors.backGroundColor}; ;
 `
 export const SHeaderInner = styled.div`
    display: flex;
@@ -9,9 +9,9 @@ export const SHeaderInner = styled.div`
 
    justify-content: space-between;
    padding: 20px 0;
-   background-color: inherit;
+   background-color: ${props => props.theme.colors.backGroundColor};
    h1 {
-      color: rgb(31, 60, 96);
+      color: #1f3c60ff;
       background-color: inherit;
       font-family: 'Caveat', cursive;
    }
