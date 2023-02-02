@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const SHeader = styled.header`
-   background-color: white;
+   background-color: wheat;
 `
 export const SHeaderInner = styled.div`
    display: flex;
