@@ -1,28 +1,30 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 
-const ThemeSwitcherWrapper = styled.div``
+import s from './ThemeSwitcher.module.css'
 
-import './style.css'
-import styled from 'styled-components'
+// https://medium.com/@jrcreencia/persisting-redux-state-to-local-storage-f81eb0b90e7e
+// https://www.youtube.com/watch?v=U8f01SM8Kq4&t=62s
 export const ThemeSwitcher = () => {
+   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {}
+
    return (
-      <ThemeSwitcherWrapper>
-         <div className="toggleWrapper">
-            <input type="checkbox" className="dn" id="dn" />
-            <label htmlFor="dn" className="toggle">
-               <span className="toggle__handler">
-                  <span className="crater crater--1"></span>
-                  <span className="crater crater--2"></span>
-                  <span className="crater crater--3"></span>
+      <div className={s.ThemeSwitcher}>
+         <div className={s.toggleWrapper}>
+            <input type="checkbox" onChange={onChangeHandler} className={s.dn} id="dn" />
+            <label htmlFor="dn" className={s.toggle}>
+               <span className={s.toggle__handler}>
+                  <span className={`${s.crater} ${s.crater1}`}></span>
+                  <span className={`${s.crater} ${s.crater2}`}></span>
+                  <span className={`${s.crater} ${s.crater3}`}></span>
                </span>
-               <span className="star star--1"></span>
-               <span className="star star--2"></span>
-               <span className="star star--3"></span>
-               <span className="star star--4"></span>
-               <span className="star star--5"></span>
-               <span className="star star--6"></span>
+               <span className={`${s.star} ${s.star1}`}></span>
+               <span className={`${s.star} ${s.star2}`}></span>
+               <span className={`${s.star} ${s.star3}`}></span>
+               <span className={`${s.star} ${s.star4}`}></span>
+               <span className={`${s.star} ${s.star5}`}></span>
+               <span className={`${s.star} ${s.star6}`}></span>
             </label>
          </div>
-      </ThemeSwitcherWrapper>
+      </div>
    )
 }

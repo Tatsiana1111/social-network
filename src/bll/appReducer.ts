@@ -6,10 +6,13 @@ import { setLoggedIn } from './authReducer'
 
 type AppStatusType = 'idle' | 'load' | 'success' | 'error'
 
+export type AppThemeType = 'light' | 'dark'
+
 const initialState = {
    isInitialized: false as boolean,
    profileID: 0 as number,
    status: 'idle' as AppStatusType,
+   theme: 'light' as AppThemeType,
 }
 const appSlice = createSlice({
    name: 'app',
@@ -24,10 +27,13 @@ const appSlice = createSlice({
       setAppStatusAC: (state, action: PayloadAction<{ status: AppStatusType }>) => {
          state.status = action.payload.status
       },
+      setAppThemeAC: (state, action: PayloadAction<{ theme: AppThemeType }>) => {
+         state.theme = action.payload.theme
+      },
    },
 })
 
-export const { setInitializationAC, setProfileID, setAppStatusAC } = appSlice.actions
+export const { setInitializationAC, setProfileID, setAppStatusAC, setAppThemeAC } = appSlice.actions
 
 export const appReducer = appSlice.reducer
 
