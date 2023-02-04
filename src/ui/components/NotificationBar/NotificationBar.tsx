@@ -2,6 +2,9 @@ import React from 'react'
 
 import styled from 'styled-components'
 
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { SetAppErrorAC } from '../../../bll/appReducer'
+
 const NotificationBarWrapper = styled.div`
    position: fixed;
    bottom: 0;
@@ -47,15 +50,22 @@ const CloseModal = styled.span`
    }
 `
 
-type PropsType = {
-   text: string
-}
-export const NotificationBar = (props: PropsType) => {
+export const NotificationBar = () => {
+   const error = useAppSelector(state => state.app.error)
+   const dispatch = useAppDispatch()
+
+   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+      if (reason === 'clickaway') {
+         return
+      }
+      dispatch(SetAppErrorAC({ error: 'd' }))
+   }
+
    return (
       <NotificationBarWrapper>
          <div>
-            <h2>{props.text}</h2>
-            <CloseModal />
+            <h2>{error}</h2>
+            <CloseModal onClick={handleClose} />
          </div>
       </NotificationBarWrapper>
    )

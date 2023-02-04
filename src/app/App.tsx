@@ -36,7 +36,7 @@ export const App = () => {
             <Header />
             <Loader />
             <Pages />
-            <NotificationBar text={'some text'} />
+            <NotificationBar />
          </ThemeProvider>
       </>
    )
