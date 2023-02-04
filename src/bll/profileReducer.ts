@@ -106,7 +106,7 @@ export const getPostsTC = createAsyncThunk(
       try {
          const state = getState() as RootState
          const currentPage = state.profile.currentPage
-         const res = await profileAPI.getPosts({ _page: currentPage, _limit: 4 })
+         const res = await profileAPI.getPosts({ _page: currentPage, _limit: 2 })
 
          dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
          dispatch(setPostsDataAC(res.data))

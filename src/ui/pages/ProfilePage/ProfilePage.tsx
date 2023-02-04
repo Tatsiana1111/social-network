@@ -1,18 +1,10 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
-import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import {
-   getPostsTC,
-   getProfileData,
-   getStatus,
-   updatePhoto,
-   updateStatus,
-} from '../../../bll/profileReducer'
-import camera from '../../../common/icons/camera.png'
+import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
 import avatar from '../../../common/images/defaultUser.jpg'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
@@ -32,8 +24,8 @@ export const ProfilePage = () => {
    const userStatus = useAppSelector(state => state.profile.status)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
    const fetch = useAppSelector(state => state.profile.fetch)
-   const [isModalOpen, setModalOpen] = useState(false)
 
+   const [isModalOpen, setModalOpen] = useState(false)
    const { profileID } = useParams()
    const dispatch = useAppDispatch()
 
@@ -96,7 +88,6 @@ export const ProfilePage = () => {
             : ''}
          <div className={'profilePosts'}>
             <InfiniteScroll
-               className="post"
                dataLength={posts.length}
                next={getPostsHandler}
                hasMore={fetch}

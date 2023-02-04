@@ -7,6 +7,7 @@ import { Header } from '../ui/components/Header/Header'
 import { Initialization } from '../ui/components/Loader/Initialization'
 import { Loader } from '../ui/components/Loader/Loader'
 import { NavigationForUs } from '../ui/components/NavigationForUs/NavigationForUs'
+import { NotificationBar } from '../ui/components/NotificationBar/NotificationBar'
 import { Pages } from '../ui/pages/Pages'
 import { GlobalStyle } from '../ui/theme/global'
 import { darkTheme, lightTheme } from '../ui/theme/theme'
@@ -35,6 +36,7 @@ export const App = () => {
             <Header />
             <Loader />
             <Pages />
+            <NotificationBar text={'some text'} />
          </ThemeProvider>
       </>
    )

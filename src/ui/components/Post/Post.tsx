@@ -1,12 +1,9 @@
 import React, { useEffect } from 'react'
 
-import { useParams } from 'react-router-dom'
-
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getCommentsTC } from '../../../bll/commentsReducer'
 import miniAvatar from '../../../common/images/defaultUser.jpg'
 import { PostDataType } from '../../../dal/profileAPI'
-import { Box } from '../Box/Box'
 import { Comment } from '../Comment/Comment'
 
 import { PostWrapper } from './styled'
@@ -27,24 +24,19 @@ export const Post = (props: PostPropsType) => {
 
    return (
       <PostWrapper>
-         <Box>
-            <div className={'postInner'}>
-               <div className={'PostHeader'}>
-                  <img
-                     src={userSmallAvatar ? userSmallAvatar : miniAvatar}
-                     alt="user mini-avatar"
-                  />
-                  <span>{profileName}</span>
-               </div>
-               <h2>{props.post.title}</h2>
-               <p>{props.post.body}</p>
-               {stateComments[props.post.id] &&
-                  stateComments[props.post.id].map((comment, index) => {
-                     return <Comment key={index} comment={comment} />
-                  })}
+         <div className={'postInner'}>
+            <div className={'PostHeader'}>
+               <img src={userSmallAvatar ? userSmallAvatar : miniAvatar} alt="user mini-avatar" />
+               <span>{profileName}</span>
             </div>
-            <TextArea postId={props.post.id} />
-         </Box>
+            <h2>{props.post.title}</h2>
+            <p>{props.post.body}</p>
+            {stateComments[props.post.id] &&
+               stateComments[props.post.id].map((comment, index) => {
+                  return <Comment key={index} comment={comment} />
+               })}
+         </div>
+         <TextArea postId={props.post.id} />
       </PostWrapper>
    )
 }

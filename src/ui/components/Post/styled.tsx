@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-export const PostWrapper = styled.div`
+import { Box } from '../Box/Box'
+
+export const PostWrapper = styled(Box)`
    margin-bottom: 15px;
 
    img {
