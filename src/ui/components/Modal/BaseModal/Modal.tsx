@@ -58,7 +58,6 @@ type ModalPropsType = {
    children: ReactNode
    title: string
    isOpen: boolean
-   // toggleOpenMode: (value: boolean) => void
    closeModal: () => void
 }
 export const Modal = (props: ModalPropsType) => {
