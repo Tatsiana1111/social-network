@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
-import { asyncProfileActions as profileActions, getPostsTC } from '../bll/profileReducer'
+import { addPostTC, asyncProfileActions as profileActions, getPostsTC } from '../bll/profileReducer'
 import { CommentsDataType, PostDataType, profileAPI } from '../dal/profileAPI'
 
 import { setAppStatusAC } from './appReducer'
@@ -11,7 +11,7 @@ export type CommentsStateType = {
 
 export const commentsSlice = createSlice({
    name: 'comments',
-   initialState: {} as CommentsStateType,
+   initialState: {} as Record<number, CommentsDataType[]>,
    reducers: {},
    extraReducers: builder => {
       builder.addCase(getPostsTC.fulfilled, (state, action) => {
@@ -21,11 +21,16 @@ export const commentsSlice = createSlice({
             })
          }
       })
+      builder.addCase(addPostTC.fulfilled, (state, action) => {
+         state[action?.payload?.newPost.id] = []
+      })
       builder.addCase(getCommentsTC.fulfilled, (state, action) => {
          if (action.payload) state[action.payload.postId] = action.payload.comments
       })
       builder.addCase(addCommentsTC.fulfilled, (state, action) => {
-         if (action.payload.postId) state[action.payload.postId].push(action.payload)
+         if (action.payload.postId) {
+            state[action.payload.postId].push(action.payload)
+         }
       })
    },
 })
