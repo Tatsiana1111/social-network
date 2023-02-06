@@ -137,8 +137,16 @@ export const addPostTC = createAsyncThunk(
                },
             })
          )
-
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+
+         return {
+            newPost: {
+               id: res.data.id,
+               title: res.data.title,
+               body: res.data.body,
+               userId: res.data.userId,
+            },
+         }
       } catch (e) {
          console.log(e)
       }
