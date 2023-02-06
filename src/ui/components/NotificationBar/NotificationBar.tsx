@@ -1,33 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
-import styled from 'styled-components'
-
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import './de.css'
 import { SetAppErrorAC } from '../../../bll/appReducer'
 
-import { CloseModalIcon } from './styled'
-
-const NotificationBarWrapper = styled.div`
-   position: fixed;
-   bottom: 0;
-   left: 0;
-   width: 100%;
-   max-width: 300px;
-   height: 50px;
-   background-color: red;
-   color: burlywood;
-   border-radius: 20px;
-   margin: 0 0 10px 10px;
-   border: 2px solid #17bd0d;
-
-   div {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100%;
-   }
-`
+import { CloseModalIcon, NotificationBarItem, NotificationBarWrapper, ProgressBar } from './styled'
 
 export const NotificationBar = () => {
    const error = useAppSelector(state => state.app.error)
@@ -85,17 +61,19 @@ export const NotificationBar = () => {
       handleStartTimer()
    }, [])
 
+   const handleClose = () => {
+      dispatch(SetAppErrorAC({ error: '' }))
+      setExit(true)
+      // setWidth(100)
+   }
+
    return (
-      <NotificationBarWrapper
-         onMouseEnter={handlePauseTimer}
-         onMouseLeave={handleStartTimer}
-         className={`notification-item ${error ? 'success' : 'error'} ${exit ? 'exit' : ''}`}
-      >
-         <div>
-            <h2>{error}</h2>
-            <CloseModalIcon />
-            <div className={'bar'} style={{ width: `${width}%` }} />
-         </div>
+      <NotificationBarWrapper exit={exit} error={!!error} success={true}>
+         <NotificationBarItem onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer}>
+            <p>{error}</p>
+            <CloseModalIcon onClick={handleClose} />
+            <ProgressBar style={{ width: `${width}%` }} />
+         </NotificationBarItem>
       </NotificationBarWrapper>
    )
 }

@@ -13,7 +13,7 @@ const initialState = {
    profileID: 0 as number,
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
-   error: 'some error' as string,
+   error: 'some errors dfffffffff ffffffff ffffffffffffffffffff ffffffffffffffff ffffffffffffff ffff' as string,
 }
 const appSlice = createSlice({
    name: 'app',

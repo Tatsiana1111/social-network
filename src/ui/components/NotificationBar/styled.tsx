@@ -1,9 +1,65 @@
-import styled from 'styled-components'
-export const ProgressBar = styled.div``
+import styled, { keyframes } from 'styled-components'
+
+const SlideRight = keyframes`
+  from {
+    margin-left: -120%;
+  }
+
+  to {
+    margin-left: 0;
+  }
+`
+const SlideLeft = keyframes`
+  from {
+    margin-left: 0;
+  }
+
+  to {
+    left: -120%;
+  }
+`
+
+type D = {
+   exit?: boolean
+   success?: boolean
+   error?: boolean
+}
+
+export const NotificationBarWrapper = styled.div<D>`
+   position: fixed;
+   bottom: 10px;
+   left: 10px;
+   width: 300px;
+
+   border-radius: 20px;
+   background-color: ${props => (props.error ? 'red' : 'geed')};
+   animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s;
+   animation-fill-mode: forwards;
+`
+
+export const NotificationBarItem = styled.div`
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   padding: 3px;
+   overflow: hidden;
+   p {
+      margin: 0;
+      padding: 10px;
+      text-align: center;
+   }
+`
+
+export const ProgressBar = styled.div`
+   background-color: #65d266;
+   height: 5px;
+`
+
 export const CloseModalIcon = styled.span`
    position: absolute;
-   top: 10px;
-   right: 10px;
+   top: -20px;
+   right: -20px;
    width: 24px;
    height: 24px;
    opacity: 0.5;
