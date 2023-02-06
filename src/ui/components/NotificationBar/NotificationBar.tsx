@@ -2,40 +2,41 @@ import React, { useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { SetAppErrorAC } from '../../../bll/appReducer'
+import alert from '../../../common/icons/alert.png'
+import success from '../../../common/icons/success.png'
 
-import { CloseModalIcon, NotificationBarItem, NotificationBarWrapper, ProgressBar } from './styled'
+import {
+   AlertIcon,
+   CloseModalIcon,
+   NotificationBarItem,
+   NotificationBarWrapper,
+   ProgressBar,
+} from './styled'
 
 export const NotificationBar = () => {
    const error = useAppSelector(state => state.app.error)
    const dispatch = useAppDispatch()
 
-   //   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
-   //    if (reason === 'clickaway') {
-   //         return
-   //      }
-   //      dispatch(SetAppErrorAC({ error: '' }))
-   //   }
-   //   const handleOpen = (): boolean => {
-   //      return !!error
-   //   }
    const [exit, setExit] = useState(false)
    const [width, setWidth] = useState(0)
    const [intervalID, setIntervalID] = useState<any>(null)
 
    const handleStartTimer = () => {
-      const id = setInterval(() => {
-         setWidth(prev => {
-            if (prev < 100) {
-               return prev + 0.5
-            }
+      if (error) {
+         const id = setInterval(() => {
+            setWidth(prev => {
+               if (prev < 100) {
+                  return prev + 0.5
+               }
 
-            clearInterval(id)
+               clearInterval(id)
 
-            return prev
-         })
-      }, 20)
+               return prev
+            })
+         }, 20)
 
-      setIntervalID(id)
+         setIntervalID(id)
+      }
    }
 
    const handlePauseTimer = () => {
@@ -46,13 +47,12 @@ export const NotificationBar = () => {
       handlePauseTimer()
       setExit(true)
       setTimeout(() => {
-         dispatch(SetAppErrorAC({ error: '' }))
+         dispatch(SetAppErrorAC({ message: '' }))
       }, 400)
    }
 
    useEffect(() => {
       if (width === 100) {
-         // Close notification
          handleCloseNotification()
       }
    }, [width])
@@ -62,7 +62,7 @@ export const NotificationBar = () => {
    }, [])
 
    const handleClose = () => {
-      dispatch(SetAppErrorAC({ error: '' }))
+      dispatch(SetAppErrorAC({ message: '' }))
       setExit(true)
       // setWidth(100)
    }
@@ -73,6 +73,8 @@ export const NotificationBar = () => {
             <p>{error}</p>
             <CloseModalIcon onClick={handleClose} />
             <ProgressBar style={{ width: `${width}%` }} />
+            <AlertIcon src={alert} alt={'alertIcon'} />
+            {/*<AlertIcon src={success} alt={'alertIcon'} />*/}
          </NotificationBarItem>
       </NotificationBarWrapper>
    )

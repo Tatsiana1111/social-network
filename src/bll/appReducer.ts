@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios/index'
 
+import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { authAPI } from '../dal/authAPI'
 
 import { setLoggedIn } from './authReducer'
@@ -13,7 +15,7 @@ const initialState = {
    profileID: 0 as number,
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
-   error: 'some errors dfffffffff ffffffff ffffffffffffffffffff ffffffffffffffff ffffffffffffff ffff' as string,
+   error: '' as string,
 }
 const appSlice = createSlice({
    name: 'app',
@@ -31,8 +33,8 @@ const appSlice = createSlice({
       setAppThemeAC: (state, action: PayloadAction<{ theme: AppThemeType }>) => {
          state.theme = action.payload.theme
       },
-      SetAppErrorAC: (state, action: PayloadAction<{ error: string }>) => {
-         state.error = action.payload.error
+      SetAppErrorAC: (state, action: PayloadAction<{ message: string }>) => {
+         state.error = action.payload.message
       },
    },
 })
@@ -49,9 +51,15 @@ export const initializeAppTC = createAsyncThunk('auth/me', async (arg, thunkAPI)
       if (res.data.resultCode === 0) {
          thunkAPI.dispatch(setLoggedIn({ value: true }))
          thunkAPI.dispatch(setProfileID({ userID: res.data.data.id }))
+      } else {
+         HandleServerAppError(thunkAPI.dispatch, res.data)
+         thunkAPI.dispatch(setInitializationAC({ value: true }))
       }
    } catch (e) {
-      console.log(e)
+      const error = e as AxiosError | Error
+
+      HandleServerNetworkError(thunkAPI.dispatch, error)
+      thunkAPI.dispatch(setInitializationAC({ value: true }))
    } finally {
       thunkAPI.dispatch(setInitializationAC({ value: true }))
    }

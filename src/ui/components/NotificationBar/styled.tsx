@@ -26,13 +26,15 @@ type D = {
 }
 
 export const NotificationBarWrapper = styled.div<D>`
+   display: ${props => (props.error ? 'block' : 'none')};
    position: fixed;
    bottom: 10px;
    left: 10px;
    width: 300px;
 
-   border-radius: 20px;
-   background-color: ${props => (props.error ? 'red' : 'geed')};
+   border-radius: 15px;
+   color: #fff;
+   background-color: ${props => (props.error ? '#C6271A' : 'geed')};
    animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s;
    animation-fill-mode: forwards;
 `
@@ -76,7 +78,7 @@ export const CloseModalIcon = styled.span`
       position: absolute;
       top: 10px;
       display: block;
-      width: 24px;
+      width: 15px;
       height: 3px;
       background: #000;
    }
@@ -88,4 +90,10 @@ export const CloseModalIcon = styled.span`
    ::after {
       transform: rotate(-45deg);
    }
+`
+export const AlertIcon = styled.img`
+   position: absolute;
+   top: -40px;
+   width: 40px;
+   height: 40px;
 `
