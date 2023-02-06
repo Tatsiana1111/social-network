@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-
+export const ProgressBar = styled.div``
 export const CloseModalIcon = styled.span`
    position: absolute;
    top: 10px;

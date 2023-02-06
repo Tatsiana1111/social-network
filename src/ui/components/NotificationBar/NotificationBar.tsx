@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-
 import './de.css'
+import { SetAppErrorAC } from '../../../bll/appReducer'
+
 import { CloseModalIcon } from './styled'
 
 const NotificationBarWrapper = styled.div`
@@ -62,12 +63,15 @@ export const NotificationBar = () => {
    }
 
    const handlePauseTimer = () => {
-      // clearInterval(intervalID)
+      clearInterval(intervalID)
    }
 
    const handleCloseNotification = () => {
       handlePauseTimer()
       setExit(true)
+      setTimeout(() => {
+         dispatch(SetAppErrorAC({ error: '' }))
+      }, 400)
    }
 
    useEffect(() => {
@@ -82,7 +86,11 @@ export const NotificationBar = () => {
    }, [])
 
    return (
-      <NotificationBarWrapper onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer}>
+      <NotificationBarWrapper
+         onMouseEnter={handlePauseTimer}
+         onMouseLeave={handleStartTimer}
+         className={`notification-item ${error ? 'success' : 'error'} ${exit ? 'exit' : ''}`}
+      >
          <div>
             <h2>{error}</h2>
             <CloseModalIcon />
