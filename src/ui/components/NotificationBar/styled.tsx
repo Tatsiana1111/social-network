@@ -26,7 +26,7 @@ type D = {
 }
 
 export const NotificationBarWrapper = styled.div<D>`
-   display: ${props => (props.error ? 'block' : 'none')};
+   display: ${props => (props.error || props.success ? 'block' : 'none')};
    position: fixed;
    bottom: 10px;
    left: 10px;
@@ -34,7 +34,7 @@ export const NotificationBarWrapper = styled.div<D>`
 
    border-radius: 15px;
    color: #fff;
-   background-color: ${props => (props.error ? '#C6271A' : 'geed')};
+   background-color: ${props => (props.error ? '#C6271A' : '#3bc74a')};
    animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s;
    animation-fill-mode: forwards;
 `
@@ -53,8 +53,8 @@ export const NotificationBarItem = styled.div`
    }
 `
 
-export const ProgressBar = styled.div`
-   background-color: #65d266;
+export const ProgressBar = styled.div<D>`
+   background-color: ${props => props.error && '#65d266'} ${props => props.success && 'white'};
    height: 5px;
 `
 
@@ -93,7 +93,7 @@ export const CloseModalIcon = styled.span`
 `
 export const AlertIcon = styled.img`
    position: absolute;
-   top: -40px;
+   top: -43px;
    width: 40px;
    height: 40px;
 `

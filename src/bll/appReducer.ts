@@ -16,6 +16,7 @@ const initialState = {
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
    error: '' as string,
+   success: 'fde' as string,
 }
 const appSlice = createSlice({
    name: 'app',
@@ -36,11 +37,20 @@ const appSlice = createSlice({
       SetAppErrorAC: (state, action: PayloadAction<{ message: string }>) => {
          state.error = action.payload.message
       },
+      SetAppSuccessAC: (state, action: PayloadAction<{ message: string }>) => {
+         state.success = action.payload.message
+      },
    },
 })
 
-export const { setInitializationAC, setProfileID, setAppStatusAC, setAppThemeAC, SetAppErrorAC } =
-   appSlice.actions
+export const {
+   setInitializationAC,
+   setProfileID,
+   setAppStatusAC,
+   setAppThemeAC,
+   SetAppErrorAC,
+   SetAppSuccessAC,
+} = appSlice.actions
 
 export const appReducer = appSlice.reducer
 
