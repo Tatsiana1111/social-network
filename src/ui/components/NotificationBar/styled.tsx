@@ -22,24 +22,21 @@ const SlideLeft = keyframes`
 `
 
 export const AlertWrapper = styled.div<Pick<NotificationType, 'type'> & { exit: boolean }>`
-   display: none;
    position: relative;
    border-radius: 15px;
    color: #fff;
    margin-top: 33px;
-   animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s;
+   animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s; //TODO cheek why doesnt work Slide to Left
    animation-fill-mode: forwards;
 
    ${props => {
       switch (props.type) {
          case 'error':
             return css`
-               display: block;
                background-color: #c6271a;
             `
          case 'success':
             return css`
-               display: block;
                background-color: #3bc74a;
             `
       }

@@ -5,21 +5,17 @@ import { Dispatch } from 'redux'
 import { SetAppNotificationAC, setAppStatusAC } from '../../bll/appReducer'
 import { ResponseType } from '../../dal/authAPI'
 
-import { GenerateId } from './generateID'
-
 export const HandleServerAppError = <D>(dispatch: ErrorUtilsDispatcType, data: ResponseType<D>) => {
-   const id = GenerateId()
-
    if (data.messages.length) {
       dispatch(
          SetAppNotificationAC({
-            notifications: { type: 'error', message: data.messages[0], id },
+            notifications: { type: 'error', message: data.messages[0] },
          })
       )
    } else {
       dispatch(
          SetAppNotificationAC({
-            notifications: { type: 'error', message: 'Some Error occurred!!', id },
+            notifications: { type: 'error', message: 'Some Error occurred!!' },
          })
       )
    }
@@ -31,11 +27,10 @@ export const HandleServerNetworkError = (
    dispatch: ErrorUtilsDispatcType,
    error: { message: string }
 ) => {
-   const id = GenerateId()
-
    dispatch(setAppStatusAC({ status: 'error' }))
-   dispatch(SetAppNotificationAC({ notifications: { type: 'error', message: error.message, id } }))
+   dispatch(SetAppNotificationAC({ notifications: { type: 'error', message: error.message } }))
 }
 type ErrorUtilsDispatcType = Dispatch<
    ReturnType<typeof setAppStatusAC> | ReturnType<typeof SetAppNotificationAC>
 >
+//TODO cheek why doent work when we run out of Network

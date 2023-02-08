@@ -18,8 +18,6 @@ const NotificationBarWrapper = styled.div`
 export const NotificationBar = () => {
    const notifications = useAppSelector(state => state.app.notifications)
 
-   const dispatch = useAppDispatch()
-
    return (
       <NotificationBarWrapper>
          {notifications.map(alert => {

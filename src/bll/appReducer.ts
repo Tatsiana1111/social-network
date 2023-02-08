@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios/index'
 
 import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
+import { GenerateId } from '../common/Utils/generateID'
 import { authAPI } from '../dal/authAPI'
 
 import { setLoggedIn } from './authReducer'
@@ -39,8 +40,13 @@ const appSlice = createSlice({
       setAppThemeAC: (state, action: PayloadAction<{ theme: AppThemeType }>) => {
          state.theme = action.payload.theme
       },
-      SetAppNotificationAC: (state, action: PayloadAction<{ notifications: NotificationType }>) => {
-         state.notifications.push(action.payload.notifications)
+      SetAppNotificationAC: (
+         state,
+         action: PayloadAction<{ notifications: Omit<NotificationType, 'id'> }>
+      ) => {
+         const id = GenerateId()
+
+         state.notifications.push({ ...action.payload.notifications, id })
       },
       RemoveAppNotificationAC: (state, action: PayloadAction<{ id: string }>) => {
          const index = state.notifications.findIndex(index => index.id === action.payload.id)

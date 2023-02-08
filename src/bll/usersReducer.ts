@@ -3,6 +3,8 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
 import { getUsersParamsType, userAPI, UserItemsType } from '../dal/usersAPI'
 
+import { SetAppNotificationAC } from './appReducer'
+
 const initialState = {
    users: [] as UserItemsType[],
    usersSearch: [] as UserItemsType[],
@@ -112,6 +114,17 @@ export const followUserTC = createAsyncThunk(
          await userAPI.followUser(userId)
 
          thunkAPI.dispatch(followUserAC({ userID: userId }))
+         const state = thunkAPI.getState() as RootState
+         const user = state.users.users.find(user => user.id === userId)
+
+         thunkAPI.dispatch(
+            SetAppNotificationAC({
+               notifications: {
+                  type: 'success',
+                  message: `${user?.name} \n was successfully followed`, //TODO line break when concatenating js https://puzzleweb.ru/javascript/5_types4.php
+               },
+            })
+         )
       } catch (e) {
          console.log(e)
       }
