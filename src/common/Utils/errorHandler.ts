@@ -1,13 +1,19 @@
 import { Dispatch } from 'redux'
 
-import { SetAppErrorAC, setAppStatusAC } from '../../bll/appReducer'
+import { SetAppNotificationAC, setAppStatusAC } from '../../bll/appReducer'
 import { ResponseType } from '../../dal/authAPI'
 
 export const HandleServerAppError = <D>(dispatch: ErrorUtilsDispatcType, data: ResponseType<D>) => {
    if (data.messages.length) {
-      dispatch(SetAppErrorAC({ message: data.messages[0] }))
+      dispatch(
+         SetAppNotificationAC({ notifications: { type: 'error', message: data.messages[0] } })
+      )
    } else {
-      dispatch(SetAppErrorAC({ message: 'Some Error occurred!!' }))
+      dispatch(
+         SetAppNotificationAC({
+            notifications: { type: 'error', message: 'Some Error occurred!!' },
+         })
+      )
    }
 
    dispatch(setAppStatusAC({ status: 'error' }))
@@ -18,8 +24,8 @@ export const HandleServerNetworkError = (
    error: { message: string }
 ) => {
    dispatch(setAppStatusAC({ status: 'error' }))
-   dispatch(SetAppErrorAC({ message: error.message }))
+   dispatch(SetAppNotificationAC({ notifications: { type: 'error', message: error.message } }))
 }
 type ErrorUtilsDispatcType = Dispatch<
-   ReturnType<typeof setAppStatusAC> | ReturnType<typeof SetAppErrorAC>
+   ReturnType<typeof setAppStatusAC> | ReturnType<typeof SetAppNotificationAC>
 >

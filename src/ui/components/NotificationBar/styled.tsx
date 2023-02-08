@@ -1,4 +1,6 @@
-import styled, { keyframes } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
+
+import { NotificationType } from '../../../bll/appReducer'
 
 const SlideRight = keyframes`
   from {
@@ -19,27 +21,34 @@ const SlideLeft = keyframes`
   }
 `
 
-type D = {
-   exit?: boolean
-   success?: boolean
-   error?: boolean
-}
-
-export const NotificationBarWrapper = styled.div<D>`
-   display: ${props => (props.error || props.success ? 'block' : 'none')};
-   position: fixed;
-   bottom: 10px;
-   left: 10px;
-   width: 300px;
-
+export const AlertWrapper = styled.div<Pick<NotificationType, 'type'>>`
+   display: none;
+   position: relative;
    border-radius: 15px;
    color: #fff;
-   background-color: ${props => (props.error ? '#C6271A' : '#3bc74a')};
-   animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s;
+   margin-top: 33px;
+   animation: ${SlideLeft} 0.4s;
    animation-fill-mode: forwards;
+
+   ${props => {
+      switch (props.type) {
+         case 'error':
+            return css`
+               display: block;
+               background-color: #c6271a;
+               animation: ${SlideRight} 0.4s;
+            `
+         case 'success':
+            return css`
+               display: block;
+               background-color: #3bc74a;
+               animation: ${SlideRight} 0.4s;
+            `
+      }
+   }}
 `
 
-export const NotificationBarItem = styled.div`
+export const AlertItem = styled.div`
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -53,12 +62,25 @@ export const NotificationBarItem = styled.div`
    }
 `
 
-export const ProgressBar = styled.div<D>`
-   background-color: ${props => props.error && '#65d266'} ${props => props.success && 'white'};
+export const ProgressBar = styled.div<Pick<NotificationType, 'type'>>`
    height: 5px;
+
+   ${props => {
+      switch (props.type) {
+         case 'error':
+            return css`
+               background-color: #65d266;
+            `
+         case 'success':
+            return css`
+               display: block;
+               background-color: white;
+            `
+      }
+   }}
 `
 
-export const CloseModalIcon = styled.span`
+export const CloseAlertIcon = styled.span`
    position: absolute;
    top: -20px;
    right: -20px;

@@ -10,13 +10,16 @@ type AppStatusType = 'idle' | 'load' | 'success' | 'error'
 
 export type AppThemeType = 'light' | 'dark'
 
+export type NotificationType = {
+   message: string
+   type: 'success' | 'error'
+}
 const initialState = {
    isInitialized: false as boolean,
    profileID: 0 as number,
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
-   error: '' as string,
-   success: 'fde' as string,
+   notifications: [{ type: 'success', message: 'yoyo' }] as NotificationType[],
 }
 const appSlice = createSlice({
    name: 'app',
@@ -34,11 +37,8 @@ const appSlice = createSlice({
       setAppThemeAC: (state, action: PayloadAction<{ theme: AppThemeType }>) => {
          state.theme = action.payload.theme
       },
-      SetAppErrorAC: (state, action: PayloadAction<{ message: string }>) => {
-         state.error = action.payload.message
-      },
-      SetAppSuccessAC: (state, action: PayloadAction<{ message: string }>) => {
-         state.success = action.payload.message
+      SetAppNotificationAC: (state, action: PayloadAction<{ notifications: NotificationType }>) => {
+         state.notifications.push(action.payload.notifications)
       },
    },
 })
@@ -48,8 +48,7 @@ export const {
    setProfileID,
    setAppStatusAC,
    setAppThemeAC,
-   SetAppErrorAC,
-   SetAppSuccessAC,
+   SetAppNotificationAC,
 } = appSlice.actions
 
 export const appReducer = appSlice.reducer
