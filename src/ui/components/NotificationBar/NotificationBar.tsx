@@ -22,30 +22,8 @@ export const NotificationBar = () => {
 
    return (
       <NotificationBarWrapper>
-         {/*{error && (*/}
-         {/*   <NotificationBarWrapper exit={exit} error={!!error}>*/}
-         {/*      <NotificationBarItem onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer}>*/}
-         {/*         <p>{error}</p>*/}
-         {/*         <CloseModalIcon onClick={handleClose} />*/}
-         {/*         <ProgressBar error={!!error} style={{ width: `${width}%` }} />*/}
-         {/*         <AlertIcon src={alert} alt={'alertIcon'} />*/}
-         {/*         /!*<AlertIcon src={success} alt={'alertIcon'} />*!/*/}
-         {/*      </NotificationBarItem>*/}
-         {/*   </NotificationBarWrapper>*/}
-         {/*)}*/}
-         {/*{success && (*/}
-         {/*   <NotificationBarWrapper exit={exit} success={true}>*/}
-         {/*      <NotificationBarItem onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer}>*/}
-         {/*         <p>{success}</p>*/}
-         {/*         <CloseModalIcon onClick={handleClose} />*/}
-         {/*         <ProgressBar success={true} style={{ width: `${width}%` }} />*/}
-         {/*         /!*<AlertIcon src={alert} alt={'alertIcon'} />*!/*/}
-         {/*         <AlertIcon src={successIcon} alt={'successIcon'} />*/}
-         {/*      </NotificationBarItem>*/}
-         {/*   </NotificationBarWrapper>*/}
-         {/*)}*/}
-         {notifications.map((alert, index) => {
-            return <Alert key={index} message={alert.message} type={alert.type} />
+         {notifications.map(alert => {
+            return <Alert key={alert.id} id={alert.id} message={alert.message} type={alert.type} />
          })}
       </NotificationBarWrapper>
    )

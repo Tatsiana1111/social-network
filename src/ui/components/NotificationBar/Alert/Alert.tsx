@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
-import { NotificationType } from '../../../../bll/appReducer'
+import { useAppDispatch } from '../../../../app/hooks'
+import { NotificationType, RemoveAppNotificationAC } from '../../../../bll/appReducer'
 import errorIcon from '../../../../common/icons/errorIcon.png'
 import successIcon from '../../../../common/icons/success.png'
 import { AlertIcon, AlertItem, AlertWrapper, CloseAlertIcon, ProgressBar } from '../styled'
@@ -8,6 +9,7 @@ import { AlertIcon, AlertItem, AlertWrapper, CloseAlertIcon, ProgressBar } from 
 type AlertType = NotificationType & {}
 
 export const Alert = (props: AlertType) => {
+   const dispatch = useAppDispatch()
    const [exit, setExit] = useState(false)
    const [width, setWidth] = useState(0)
    const [intervalID, setIntervalID] = useState<any>(null)
@@ -38,8 +40,7 @@ export const Alert = (props: AlertType) => {
       handlePauseTimer()
       setExit(true)
       setTimeout(() => {
-         // dispatch(SetAppErrorAC({ message: '' }))
-         // dispatch(SetAppSuccessAC({ message: '' }))
+         dispatch(RemoveAppNotificationAC({ id: props.id }))
       }, 400)
    }
 
@@ -54,13 +55,12 @@ export const Alert = (props: AlertType) => {
    }, [])
 
    const handleClose = () => {
-      // dispatch(SetAppErrorAC({ message: '' }))
-      // dispatch(SetAppSuccessAC({ message: '' }))
+      dispatch(RemoveAppNotificationAC({ id: props.id }))
       setExit(true)
    }
 
    return (
-      <AlertWrapper type={props.type}>
+      <AlertWrapper exit={exit} type={props.type}>
          <AlertItem onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer}>
             <p>{props.message}</p>
             <CloseAlertIcon onClick={handleClose} />

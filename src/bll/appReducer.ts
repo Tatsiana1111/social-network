@@ -13,13 +13,15 @@ export type AppThemeType = 'light' | 'dark'
 export type NotificationType = {
    message: string
    type: 'success' | 'error'
+   id: string
 }
 const initialState = {
    isInitialized: false as boolean,
    profileID: 0 as number,
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
-   notifications: [{ type: 'success', message: 'yoyo' }] as NotificationType[],
+   notifications: [] as NotificationType[],
+   // { type: 'error', message: 'yoyo', id: '2er' }
 }
 const appSlice = createSlice({
    name: 'app',
@@ -40,6 +42,13 @@ const appSlice = createSlice({
       SetAppNotificationAC: (state, action: PayloadAction<{ notifications: NotificationType }>) => {
          state.notifications.push(action.payload.notifications)
       },
+      RemoveAppNotificationAC: (state, action: PayloadAction<{ id: string }>) => {
+         const index = state.notifications.findIndex(index => index.id === action.payload.id)
+
+         if (index > -1) {
+            state.notifications.splice(index, 1)
+         }
+      },
    },
 })
 
@@ -49,6 +58,7 @@ export const {
    setAppStatusAC,
    setAppThemeAC,
    SetAppNotificationAC,
+   RemoveAppNotificationAC,
 } = appSlice.actions
 
 export const appReducer = appSlice.reducer

@@ -21,13 +21,13 @@ const SlideLeft = keyframes`
   }
 `
 
-export const AlertWrapper = styled.div<Pick<NotificationType, 'type'>>`
+export const AlertWrapper = styled.div<Pick<NotificationType, 'type'> & { exit: boolean }>`
    display: none;
    position: relative;
    border-radius: 15px;
    color: #fff;
    margin-top: 33px;
-   animation: ${SlideLeft} 0.4s;
+   animation: ${props => (props.exit ? SlideLeft : SlideRight)} 0.4s;
    animation-fill-mode: forwards;
 
    ${props => {
@@ -36,13 +36,11 @@ export const AlertWrapper = styled.div<Pick<NotificationType, 'type'>>`
             return css`
                display: block;
                background-color: #c6271a;
-               animation: ${SlideRight} 0.4s;
             `
          case 'success':
             return css`
                display: block;
                background-color: #3bc74a;
-               animation: ${SlideRight} 0.4s;
             `
       }
    }}
