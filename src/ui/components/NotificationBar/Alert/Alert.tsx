@@ -58,11 +58,17 @@ export const Alert = (props: AlertType) => {
       dispatch(RemoveAppNotificationAC({ id: props.id }))
       setExit(true)
    }
+   const name = props.message.split(' ')[0]
+   const restMessage = props.message.split(' ').slice(1).join(' ')
 
    return (
       <AlertWrapper exit={exit} type={props.type}>
          <AlertItem onMouseEnter={handlePauseTimer} onMouseLeave={handleStartTimer}>
-            <p>{props.message}</p>
+            <p>
+               <span>{name}</span>
+               <br />
+               {restMessage}
+            </p>
             <CloseAlertIcon onClick={handleClose} />
             <ProgressBar type={props.type} style={{ width: `${width}%` }} />
             {props.type === 'error' && <AlertIcon src={errorIcon} alt={'errorIcon'} />}

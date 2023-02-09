@@ -54,6 +54,10 @@ export const AlertItem = styled.div`
       margin: 0;
       padding: 10px;
       text-align: center;
+      span {
+         color: #447bba;
+         font-weight: bold;
+      }
    }
 `
 
