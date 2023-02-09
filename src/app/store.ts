@@ -6,6 +6,7 @@ import { authReducer } from '../bll/authReducer'
 import { commentsReducer } from '../bll/commentsReducer'
 import { profileReducer } from '../bll/profileReducer'
 import { usersReducer } from '../bll/usersReducer'
+import { loadStateApp, saveState } from '../common/Utils/localStorage'
 
 // const reHydrateStore = () => {
 //    if (localStorage.getItem('theme') !== null) {
@@ -19,11 +20,18 @@ export const store = configureStore({
       users: usersReducer,
       profile: profileReducer,
       auth: authReducer,
+
       comments: commentsReducer,
       albums: albumsReducer,
    },
+   preloadedState: {
+      app: loadStateApp(),
+   },
 })
 
+store.subscribe(() => {
+   saveState(store.getState().app.theme)
+})
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 

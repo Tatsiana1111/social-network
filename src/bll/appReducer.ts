@@ -16,17 +16,16 @@ export type NotificationType = {
    type: 'success' | 'error'
    id: string
 }
-const initialState = {
+export const appReducerInitialState = {
    isInitialized: false as boolean,
    profileID: 0 as number,
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
    notifications: [] as NotificationType[],
-   // { type: 'error', message: 'yoyo', id: '2er' }
 }
 const appSlice = createSlice({
    name: 'app',
-   initialState,
+   initialState: appReducerInitialState,
    reducers: {
       setInitializationAC: (state, action: PayloadAction<{ value: boolean }>) => {
          state.isInitialized = action.payload.value
