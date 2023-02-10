@@ -176,8 +176,23 @@ export const updatePhoto = createAsyncThunk(
 
          thunkAPI.dispatch(updatePhotoAC(res.data.data.photos))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         thunkAPI.dispatch(
+            SetAppNotificationAC({
+               notifications: {
+                  type: 'success',
+                  message: `Your photo was successfully changed`,
+               },
+            })
+         )
       } catch (e) {
-         console.log(e)
+         thunkAPI.dispatch(
+            SetAppNotificationAC({
+               notifications: {
+                  type: 'error',
+                  message: `Something went wrong, i couldn't changed it`,
+               },
+            })
+         )
       }
    }
 )
