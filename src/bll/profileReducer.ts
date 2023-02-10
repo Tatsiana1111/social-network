@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../app/store'
 import { PostDataType, profileAPI, ProfileDataType, ProfileDataTypePhotos } from '../dal/profileAPI'
 
-import { setAppStatusAC } from './appReducer'
+import { SetAppNotificationAC, setAppStatusAC } from './appReducer'
 
 export const profileSlice = createSlice({
    name: 'profile',
@@ -94,8 +94,23 @@ export const updateStatus = createAsyncThunk(
 
          thunkAPI.dispatch(setProfileStatus(status))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         thunkAPI.dispatch(
+            SetAppNotificationAC({
+               notifications: {
+                  type: 'success',
+                  message: `Your status was successfully changed`,
+               },
+            })
+         )
       } catch (e) {
-         console.log(e)
+         thunkAPI.dispatch(
+            SetAppNotificationAC({
+               notifications: {
+                  type: 'error',
+                  message: `Something went wrong, i couldn't changed it`,
+               },
+            })
+         )
       }
    }
 )
