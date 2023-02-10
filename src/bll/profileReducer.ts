@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios'
 
 import { RootState } from '../app/store'
+import { HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { PostDataType, profileAPI, ProfileDataType, ProfileDataTypePhotos } from '../dal/profileAPI'
 
 import { SetAppNotificationAC, setAppStatusAC } from './appReducer'
@@ -213,8 +215,18 @@ export const updateProfile = createAsyncThunk(
 
          thunkAPI.dispatch(setProfileDataAC(res.data))
          thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         thunkAPI.dispatch(
+            SetAppNotificationAC({
+               notifications: {
+                  type: 'success',
+                  message: `Profile data was successfully updated`,
+               },
+            })
+         )
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(thunkAPI.dispatch, error)
       }
    }
 )
