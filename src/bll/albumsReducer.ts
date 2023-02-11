@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios/index'
 
 import { RootState } from '../app/store'
+import { HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { albumsAPI, AlbumsType, PhotosType } from '../dal/albumsAPI'
 
 const initialState = {
@@ -54,7 +56,9 @@ export const getAlbumsTC = createAsyncThunk('albums/getAlbums', async (arg, thun
       thunkAPI.dispatch(setFetchAlbumsAC({ fetchAlbums: true }))
       thunkAPI.dispatch(setAlbumsCurrentPagesAC({ newCurrentPage: currentPageAlbum + 1 }))
    } catch (e) {
-      console.log(e)
+      const error = e as AxiosError | Error
+
+      HandleServerNetworkError(thunkAPI.dispatch, error)
    }
 })
 
@@ -70,7 +74,9 @@ export const getPhotosTC = createAsyncThunk(
          thunkAPI.dispatch(setPhotosAC({ photos: res.data }))
          thunkAPI.dispatch(setPhotosCurrentPagesAC({ newCurrentPage: currentPagePhotos + 1 }))
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(thunkAPI.dispatch, error)
       }
    }
 )
