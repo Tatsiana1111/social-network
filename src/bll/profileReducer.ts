@@ -64,39 +64,46 @@ export const profileReducer = profileSlice.reducer
 
 export const getProfileData = createAsyncThunk(
    'profile/data',
-   async (profileID: number, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+   async (profileID: number, { dispatch }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
       try {
          const res = await profileAPI.getProfileData(profileID)
 
-         thunkAPI.dispatch(setProfileDataAC(res.data))
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         dispatch(setProfileDataAC(res.data))
+         dispatch(setAppStatusAC({ status: 'idle' }))
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
       }
    }
 )
-export const getStatus = createAsyncThunk('profile/status', async (profileID: number, thunkAPI) => {
-   thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
-   try {
-      const res = await profileAPI.getStatus(profileID)
+export const getStatus = createAsyncThunk(
+   'profile/status',
+   async (profileID: number, { dispatch }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         const res = await profileAPI.getStatus(profileID)
 
-      thunkAPI.dispatch(setProfileStatus(res.data))
-      thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
-   } catch (e) {
-      console.log(e)
+         dispatch(setProfileStatus(res.data))
+         dispatch(setAppStatusAC({ status: 'idle' }))
+      } catch (e) {
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
+      }
    }
-})
+)
 export const updateStatus = createAsyncThunk(
    'profile/updateStatus',
-   async (status: string, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+   async (status: string, { dispatch }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
       try {
          await profileAPI.updateStatus(status)
 
-         thunkAPI.dispatch(setProfileStatus(status))
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
-         thunkAPI.dispatch(
+         dispatch(setProfileStatus(status))
+         dispatch(setAppStatusAC({ status: 'idle' }))
+         dispatch(
             SetAppNotificationAC({
                notifications: {
                   type: 'success',
@@ -105,14 +112,9 @@ export const updateStatus = createAsyncThunk(
             })
          )
       } catch (e) {
-         thunkAPI.dispatch(
-            SetAppNotificationAC({
-               notifications: {
-                  type: 'error',
-                  message: `Something went wrong, i couldn't changed it`,
-               },
-            })
-         )
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
       }
    }
 )
@@ -133,18 +135,20 @@ export const getPostsTC = createAsyncThunk(
 
          return res.data
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
       }
    }
 )
 export const addPostTC = createAsyncThunk(
    'profile/addPost',
-   async (params: PostDataType, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
+   async (params: PostDataType, { dispatch }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
       try {
          const res = await profileAPI.addPost(params)
 
-         thunkAPI.dispatch(
+         dispatch(
             addPostAC({
                newPost: {
                   id: res.data.id,
@@ -154,18 +158,20 @@ export const addPostTC = createAsyncThunk(
                },
             })
          )
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
+         dispatch(setAppStatusAC({ status: 'idle' }))
 
          return {
             newPost: {
                id: res.data.id,
                title: res.data.title,
                body: res.data.body,
-               userId: res.data.userId,
+               userId: res.data.userId, //TODO make it shorter
             },
          }
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
       }
    }
 )
@@ -187,14 +193,9 @@ export const updatePhoto = createAsyncThunk(
             })
          )
       } catch (e) {
-         thunkAPI.dispatch(
-            SetAppNotificationAC({
-               notifications: {
-                  type: 'error',
-                  message: `Something went wrong, i couldn't changed it`,
-               },
-            })
-         )
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(thunkAPI.dispatch, error)
       }
    }
 )
