@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { AxiosError } from 'axios/index'
 
 import { RootState } from '../app/store'
+import { HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { getUsersParamsType, userAPI, UserItemsType } from '../dal/usersAPI'
 
 import { SetAppNotificationAC } from './appReducer'
@@ -104,7 +106,9 @@ export const getUsersTC = createAsyncThunk('users/getUsers', async (arg, thunkAP
       thunkAPI.dispatch(setHasMoreAC({ hasMore: true }))
       thunkAPI.dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
    } catch (e) {
-      console.log(e)
+      const error = e as AxiosError | Error
+
+      HandleServerNetworkError(thunkAPI.dispatch, error)
    }
 })
 export const followUserTC = createAsyncThunk(
@@ -121,24 +125,28 @@ export const followUserTC = createAsyncThunk(
             SetAppNotificationAC({
                notifications: {
                   type: 'success',
-                  message: `${user?.name} \n was successfully followed`, //TODO line break when concatenating js https://puzzleweb.ru/javascript/5_types4.php
+                  message: `${user?.name} was successfully followed`,
                },
             })
          )
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(thunkAPI.dispatch, error)
       }
    }
 )
 export const unFollowUserTC = createAsyncThunk(
    'users/unFollowUser',
-   async (userId: number, thunkAPI) => {
+   async (userId: number, { dispatch }) => {
       try {
          await userAPI.unFollowUser(userId)
 
-         thunkAPI.dispatch(unFollowUserAC({ userID: userId }))
+         dispatch(unFollowUserAC({ userID: userId }))
       } catch (e) {
-         console.log(e)
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
       }
    }
 )
