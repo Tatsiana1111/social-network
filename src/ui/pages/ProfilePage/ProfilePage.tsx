@@ -4,8 +4,15 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
+import {
+   getPostsTC,
+   getProfileData,
+   getStatus,
+   updateProfile,
+   updateStatus,
+} from '../../../bll/profileReducer'
 import avatar from '../../../common/images/defaultUser.jpg'
+import { ProfileDataType } from '../../../dal/profileAPI'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
@@ -40,9 +47,9 @@ export const ProfilePage = () => {
    const updateUserStatus = (status: string) => {
       dispatch(updateStatus(status))
    }
-   // const updateProfileHandler = (profile: ProfileDataType) => {
-   //    dispatch(updateProfile(profile))
-   // }
+   const updateProfileHandler = (profile: ProfileDataType) => {
+      dispatch(updateProfile(profile))
+   }
    const getPostsHandler = () => {
       dispatch(getPostsTC())
    }
@@ -75,7 +82,7 @@ export const ProfilePage = () => {
             />
          </Box>
          <Box className={'profileData'}>
-            <span>{profileName}</span>
+            <EditableSpan id={profileID} text={profileName} updateText={updateProfileHandler} />
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
             <span>{userAboutMeInfo}</span>
          </Box>

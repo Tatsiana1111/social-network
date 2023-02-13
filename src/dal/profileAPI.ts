@@ -14,7 +14,7 @@ export const profileAPI = {
       return instance.put(`/profile/status`, { status })
    },
    updateProfile(profile: ProfileDataType) {
-      return instance.put(`/profile`, profile)
+      return instance.put(`/profile`, { profile })
    },
    getPosts(params: PlaceholderParamsType) {
       return placeholder.get(`/posts`, { params })

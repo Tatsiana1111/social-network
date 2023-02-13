@@ -25,7 +25,7 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
       <div>
          {!editMode && (
             <span id={props.id} onDoubleClick={activateEditMode}>
-               {props.text || 'no status'}
+               {props.text || 'no text'}
             </span>
          )}
          {editMode && (
