@@ -16,7 +16,7 @@ export const SidebarWrapper = styled.aside`
    min-width: fit-content;
    height: 100%;
 
-   @media (max-width: 768px) {
+   @media (max-width: ${props => props.theme.media.large}px) {
       display: none;
    }
 `

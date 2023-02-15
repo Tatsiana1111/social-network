@@ -15,7 +15,7 @@ export const SHeaderInner = styled.div`
       color: #3d82d9;
       background-color: inherit;
       font-family: 'Caveat', cursive;
-      @media (max-width: 768px) {
+      @media (max-width: ${props => props.theme.media.large}px) {
          display: none;
       }
    }

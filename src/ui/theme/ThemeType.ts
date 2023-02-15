@@ -19,4 +19,10 @@ export interface ITheme {
          text: string
       }
    }
+   media: {
+      extraLarge: number
+      large: number
+      medium: number
+      small: number
+   }
 }

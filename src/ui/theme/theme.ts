@@ -20,9 +20,16 @@ export const lightTheme: DefaultTheme = {
          text: '#fff',
       },
    },
+   media: {
+      extraLarge: 1140,
+      large: 960,
+      medium: 720,
+      small: 540,
+   },
 }
 
 export const darkTheme: DefaultTheme = {
+   ...lightTheme,
    type: ThemeEnum.dark,
 
    colors: {

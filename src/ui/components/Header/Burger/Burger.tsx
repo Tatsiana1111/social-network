@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 const BurgerWrapper = styled.div`
-   @media (max-width: 768px) {
-      display: none;
+   @media (min-width: ${props => props.theme.media.large}px) {
+      display: none !important; //TODO why doesnt work without important
    }
    div {
       width: 60px;
