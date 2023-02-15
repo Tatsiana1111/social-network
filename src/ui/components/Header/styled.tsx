@@ -10,22 +10,29 @@ export const SHeaderInner = styled.div`
    justify-content: space-between;
    padding: 20px 0;
    background-color: ${props => props.theme.colors.backGroundColor};
+
    h1 {
-      color: #1f3c60ff;
+      color: #3d82d9;
       background-color: inherit;
       font-family: 'Caveat', cursive;
+      @media (max-width: 768px) {
+         display: none;
+      }
    }
+
    img {
       cursor: pointer;
       background-color: inherit;
+
       :hover {
          transform: scale(1.2);
       }
    }
+
    div {
       display: flex;
       justify-content: space-between;
-      width: 200px;
+
       background-color: inherit;
 
       button {

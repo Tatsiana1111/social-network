@@ -15,6 +15,10 @@ export const SidebarWrapper = styled.aside`
    max-width: 100%;
    min-width: fit-content;
    height: 100%;
+
+   @media (max-width: 768px) {
+      display: none;
+   }
 `
 export const NavLinkStyled = styled(NavLink)`
    img {
