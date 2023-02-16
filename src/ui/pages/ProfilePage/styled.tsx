@@ -15,16 +15,10 @@ export const WrapperDiv = styled.div`
 
    .profilePhoto {
       grid-area: 1 / 1 / 2 / 2;
-      // @media (${props => props.theme.media.medium}px) {
-      //    grid-area: Photo;
-      // }
    }
 
    .profileData {
       grid-area: 1 / 2 / 2 / 3;
-      // @media (${props => props.theme.media.medium}px) {
-      //    grid-area: Data;
-      // }
    }
 
    .profilePosts {
@@ -32,9 +26,6 @@ export const WrapperDiv = styled.div`
       display: flex;
       flex-direction: column;
       gap: 15px;
-      // @media (${props => props.theme.media.medium}px) {
-      //    grid-area: Posts;
-      // }
    }
 
    .profileButtonAddPost {
@@ -46,9 +37,6 @@ export const WrapperDiv = styled.div`
       cursor: pointer;
       font-size: 20px;
 
-      // @media (${props => props.theme.media.medium}px) {
-      //    grid-area: AddPost;
-      // }
       .input {
          opacity: 0;
       }
@@ -76,6 +64,8 @@ export const WrapperDiv = styled.div`
       }
       .profilePhoto {
          grid-area: Photo;
+         justify-self: center;
       }
    }
 `
+// https://css-tricks.com/snippets/css/complete-guide-grid/

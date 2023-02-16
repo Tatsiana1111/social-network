@@ -6,9 +6,7 @@ import errorIcon from '../../../../common/icons/errorIcon.png'
 import successIcon from '../../../../common/icons/success.png'
 import { AlertIcon, AlertItem, AlertWrapper, CloseAlertIcon, ProgressBar } from '../styled'
 
-type AlertType = NotificationType & {}
-
-export const Alert = (props: AlertType) => {
+export const Alert = (props: NotificationType) => {
    const dispatch = useAppDispatch()
    const [exit, setExit] = useState(false)
    const [width, setWidth] = useState(0)

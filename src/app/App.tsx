@@ -31,7 +31,7 @@ export const App = () => {
    return (
       <>
          <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-            <NavigationForUs />
+            {/*<NavigationForUs />*/}
             <GlobalStyle />
             <Header />
             <Loader />
