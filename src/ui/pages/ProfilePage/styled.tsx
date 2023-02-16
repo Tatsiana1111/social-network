@@ -15,10 +15,16 @@ export const WrapperDiv = styled.div`
 
    .profilePhoto {
       grid-area: 1 / 1 / 2 / 2;
+      // @media (${props => props.theme.media.medium}px) {
+      //    grid-area: Photo;
+      // }
    }
 
    .profileData {
       grid-area: 1 / 2 / 2 / 3;
+      // @media (${props => props.theme.media.medium}px) {
+      //    grid-area: Data;
+      // }
    }
 
    .profilePosts {
@@ -26,6 +32,9 @@ export const WrapperDiv = styled.div`
       display: flex;
       flex-direction: column;
       gap: 15px;
+      // @media (${props => props.theme.media.medium}px) {
+      //    grid-area: Posts;
+      // }
    }
 
    .profileButtonAddPost {
@@ -37,12 +46,36 @@ export const WrapperDiv = styled.div`
       cursor: pointer;
       font-size: 20px;
 
+      // @media (${props => props.theme.media.medium}px) {
+      //    grid-area: AddPost;
+      // }
       .input {
          opacity: 0;
       }
 
       .icon {
          z-index: 100;
+      }
+   }
+   @media (max-width: ${props => props.theme.media.medium}px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      grid-template-areas:
+         'Photo'
+         'Data'
+         'AddPost'
+         'Posts';
+      .profilePosts {
+         grid-area: Posts;
+      }
+      .profileButtonAddPost {
+         grid-area: AddPost;
+      }
+      .profileData {
+         grid-area: Data;
+      }
+      .profilePhoto {
+         grid-area: Photo;
       }
    }
 `
