@@ -9,7 +9,7 @@ import 'swiper/css'
 import 'swiper/css/bundle'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getPhotosTC } from '../../../bll/albumsReducer'
-import { NavLinkStyled } from '../../components/Sidebar/Sidebar'
+import { NavLinkStyled } from '../../components/Navigation/Navigation'
 import { PATH } from '../Pages'
 
 const AlbumWrapper = styled.div`

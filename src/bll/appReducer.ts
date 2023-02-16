@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios/index'
+import { AxiosError } from 'axios'
 
 import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { GenerateId } from '../common/Utils/generateID'
@@ -22,6 +22,7 @@ export const appReducerInitialState = {
    status: 'idle' as AppStatusType,
    theme: 'light' as AppThemeType,
    notifications: [] as NotificationType[],
+   isBurgerOpen: false as boolean,
 }
 const appSlice = createSlice({
    name: 'app',
@@ -54,6 +55,9 @@ const appSlice = createSlice({
             state.notifications.splice(index, 1)
          }
       },
+      setIsBurgerOpenAC: (state, action: PayloadAction<{ value: boolean }>) => {
+         state.isBurgerOpen = action.payload.value
+      },
    },
 })
 
@@ -64,6 +68,7 @@ export const {
    setAppThemeAC,
    SetAppNotificationAC,
    RemoveAppNotificationAC,
+   setIsBurgerOpenAC,
 } = appSlice.actions
 
 export const appReducer = appSlice.reducer

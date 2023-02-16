@@ -2,7 +2,7 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { useAppSelector } from '../../../app/hooks'
 
 import { Alert } from './Alert/Alert'
 const NotificationBarWrapper = styled.div`

@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import styled from 'styled-components'
+
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { setIsBurgerOpenAC } from '../../../bll/appReducer'
 
 const BurgerWrapper = styled.div`
    @media (min-width: ${props => props.theme.media.large}px) {
@@ -92,14 +95,16 @@ const BurgerWrapper = styled.div`
 `
 
 export const Burger = () => {
-   const [open, setOpen] = useState(false)
+   const dispatch = useAppDispatch()
+   const isBurgerOpen = useAppSelector(state => state.app.isBurgerOpen)
+
    const onClickHandler = () => {
-      setOpen(!open)
+      dispatch(setIsBurgerOpenAC({ value: !isBurgerOpen }))
    }
 
    return (
       <BurgerWrapper onClick={onClickHandler}>
-         <div className={`${open ? 'open' : ''}`}>
+         <div className={`${isBurgerOpen ? 'open' : ''}`}>
             <span></span>
             <span></span>
             <span></span>

@@ -4,9 +4,9 @@ import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { LogOutTC } from '../../../bll/authReducer'
 import LogOutIcon from '../../../common/icons/LogOut.svg'
 import { Container } from '../../theme/global'
+import { Burger } from '../Burger/Burger'
 import { ThemeSwitcher } from '../ThemeSwitcher/ThemeSwitcher'
 
-import { Burger } from './Burger/Burger'
 import { SHeader, SHeaderInner } from './styled'
 
 export const Header = () => {

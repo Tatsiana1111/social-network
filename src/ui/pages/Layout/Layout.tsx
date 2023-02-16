@@ -3,6 +3,7 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 
+import { BurgerMenu } from '../../components/Burger/BurgerMenu'
 import { Sidebar } from '../../components/Sidebar/Sidebar'
 import { Container } from '../../theme/global'
 
@@ -15,6 +16,7 @@ export const Layout = () => {
    return (
       <Container>
          <ContentWrapper>
+            <BurgerMenu />
             <Sidebar />
             <Outlet />
          </ContentWrapper>
