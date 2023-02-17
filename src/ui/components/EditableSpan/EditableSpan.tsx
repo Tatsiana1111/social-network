@@ -29,14 +29,12 @@ export const EditableSpan = (props: EditableSpanPropsType) => {
             </span>
          )}
          {editMode && (
-            <div>
-               <input
-                  value={text}
-                  onChange={onStatusChange}
-                  autoFocus={true}
-                  onBlur={deactivateEditMode}
-               />
-            </div>
+            <input
+               value={text}
+               onChange={onStatusChange}
+               autoFocus={true}
+               onBlur={deactivateEditMode}
+            />
          )}
       </div>
    )

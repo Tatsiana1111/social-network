@@ -4,15 +4,8 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import {
-   getPostsTC,
-   getProfileData,
-   getStatus,
-   updateProfile,
-   updateStatus,
-} from '../../../bll/profileReducer'
+import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
 import avatar from '../../../common/images/defaultUser.jpg'
-import { ProfileDataType } from '../../../dal/profileAPI'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
@@ -20,16 +13,17 @@ import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { Loader } from '../../components/Loader/Loader'
 import { AddNewPostModal } from '../../components/Modal/AddNewPostModal/AddNewPostModal'
 import { Post } from '../../components/Post/Post'
+import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm'
 
 import { WrapperDiv } from './styled'
 
 export const ProfilePage = () => {
    const myProfileID = useAppSelector(state => state.app.profileID)
-   const profileName = useAppSelector(state => state.profile.data.fullName)
+
    const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
    const posts = useAppSelector(state => state.profile.posts)
    const userStatus = useAppSelector(state => state.profile.status)
-   const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
+
    const fetch = useAppSelector(state => state.profile.fetch)
 
    const [isModalOpen, setModalOpen] = useState(false)
@@ -47,9 +41,7 @@ export const ProfilePage = () => {
    const updateUserStatus = (status: string) => {
       dispatch(updateStatus(status))
    }
-   const updateProfileHandler = (profile: ProfileDataType) => {
-      dispatch(updateProfile(profile))
-   }
+
    const getPostsHandler = () => {
       dispatch(getPostsTC())
    }
@@ -82,9 +74,8 @@ export const ProfilePage = () => {
             />
          </Box>
          <Box className={'profileData'}>
-            <EditableSpan id={profileID} text={profileName} updateText={updateProfileHandler} />
+            <UpdateProfileForm />
             <EditableSpan text={userStatus} updateText={updateUserStatus} />
-            <span>{userAboutMeInfo}</span>
          </Box>
          {profileID
             ? myProfileID === +profileID && (
