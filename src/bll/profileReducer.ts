@@ -2,8 +2,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AxiosError } from 'axios'
 
 import { RootState } from '../app/store'
-import { HandleServerNetworkError } from '../common/Utils/errorHandler'
-import { PostDataType, profileAPI, ProfileDataType, ProfileDataTypePhotos } from '../dal/profileAPI'
+import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
+import {
+   PostDataType,
+   profileAPI,
+   ProfileDataType,
+   ProfileDataTypePhotos,
+   UpdateProfileFormType,
+} from '../dal/profileAPI'
 
 import { SetAppNotificationAC, setAppStatusAC } from './appReducer'
 
@@ -20,8 +26,7 @@ export const profileSlice = createSlice({
 
    reducers: {
       setProfileDataAC: (state, action: PayloadAction<ProfileDataType>) => {
-         state.data = { ...action.payload }
-         //TODO check spreed operator
+         state.data = action.payload
       },
       setPostsDataAC: (state, action: PayloadAction<PostDataType[]>) => {
          state.posts = [...state.posts, ...action.payload]
@@ -42,7 +47,7 @@ export const profileSlice = createSlice({
          state.posts.unshift(action.payload.newPost)
       },
       updateProfileAC: (state, action) => {
-         state.data = action.payload.data
+         state.data = action.payload
       },
       updatePhotoAC: (state, action: PayloadAction<ProfileDataTypePhotos>) => {
          state.data.photos = action.payload
@@ -199,6 +204,40 @@ export const updatePhoto = createAsyncThunk(
       }
    }
 )
+export const updateProfile = createAsyncThunk(
+   'profile/updateAboutMe',
+   async (profile: UpdateProfileFormType, { dispatch, getState }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
+      try {
+         const res = await profileAPI.updateProfile(profile)
+
+         if (res.data.resultCode === 0) {
+            const state = getState() as RootState
+            const userId = state.app.profileID
+
+            dispatch(setProfileDataAC(res.data))
+            dispatch(getProfileData(userId))
+            dispatch(setAppStatusAC({ status: 'idle' }))
+            dispatch(
+               SetAppNotificationAC({
+                  notifications: {
+                     type: 'success',
+                     message: `Profile data was successfully updated`,
+                  },
+               })
+            )
+         } else {
+            HandleServerAppError(dispatch, res.data.messages)
+         }
+
+         return res.data
+      } catch (e) {
+         const error = e as AxiosError | Error
+
+         HandleServerNetworkError(dispatch, error)
+      }
+   }
+)
 
 export const asyncProfileActions = {
    addPostTC,
@@ -207,27 +246,3 @@ export const asyncProfileActions = {
    getProfileData,
    getStatus,
 }
-export const updateProfile = createAsyncThunk(
-   'profile/updateAboutMe',
-   async (profile: ProfileDataType, thunkAPI) => {
-      thunkAPI.dispatch(setAppStatusAC({ status: 'load' }))
-      try {
-         const res = await profileAPI.updateProfile(profile)
-
-         thunkAPI.dispatch(setProfileDataAC(res.data))
-         thunkAPI.dispatch(setAppStatusAC({ status: 'idle' }))
-         thunkAPI.dispatch(
-            SetAppNotificationAC({
-               notifications: {
-                  type: 'success',
-                  message: `Profile data was successfully updated`,
-               },
-            })
-         )
-      } catch (e) {
-         const error = e as AxiosError | Error
-
-         HandleServerNetworkError(thunkAPI.dispatch, error)
-      }
-   }
-)

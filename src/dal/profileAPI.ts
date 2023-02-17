@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 
+import { PhotosType } from './albumsAPI'
 import { instance, placeholder } from './instance'
 import { getUsersParamsType } from './usersAPI'
 
@@ -13,8 +14,8 @@ export const profileAPI = {
    updateStatus(status: string) {
       return instance.put(`/profile/status`, { status })
    },
-   updateProfile(profile: ProfileDataType) {
-      return instance.put(`/profile`, profile)
+   updateProfile(data: UpdateProfileFormType) {
+      return instance.put(`/profile`, data)
    },
    getPosts(params: PlaceholderParamsType) {
       return placeholder.get(`/posts`, { params })
@@ -39,6 +40,11 @@ export const profileAPI = {
    },
 }
 
+export type UpdateProfileFormType = {
+   fullName: string
+   aboutMe: string
+   lookingForAJobDescription: string
+}
 export type ProfileDataType = {
    aboutMe: string
    lookingForAJob: boolean
