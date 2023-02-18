@@ -75,7 +75,6 @@ export const ProfilePage = () => {
                </motion.div>
             )}
          </AnimatePresence>
-
          <Box className={'profilePhoto'}>
             {profileID ? myProfileID === +profileID && <CameraIcon /> : ''}
             <img

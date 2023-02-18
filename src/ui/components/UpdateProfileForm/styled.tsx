@@ -4,8 +4,8 @@ export const UpdateProfileWrapper = styled.div`
    display: grid;
    grid-template-columns: repeat(2, 1fr);
    grid-template-rows: repeat(3, 1fr);
-   grid-column-gap: 20px;
-   grid-row-gap: 20px;
+   grid-column-gap: 5px;
+   grid-row-gap: 5px;
 
    .name {
       grid-area: 1 / 1 / 2 / 2;
