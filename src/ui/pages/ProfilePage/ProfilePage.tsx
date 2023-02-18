@@ -20,7 +20,6 @@ import { WrapperDiv } from './styled'
 
 export const ProfilePage = () => {
    const myProfileID = useAppSelector(state => state.app.profileID)
-
    const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
    const posts = useAppSelector(state => state.profile.posts)
    const userStatus = useAppSelector(state => state.profile.status)
@@ -87,7 +86,9 @@ export const ProfilePage = () => {
          </Box>
          <Box className={'profileData'}>
             <UpdateProfileForm />
-            <EditableSpan text={userStatus} updateText={updateUserStatus} />
+            <span className="span">
+               <EditableSpan text={userStatus} updateText={updateUserStatus} />
+            </span>
          </Box>
          {profileID
             ? myProfileID === +profileID && (

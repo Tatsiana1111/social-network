@@ -5,55 +5,72 @@ import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { updateProfile } from '../../../bll/profileReducer'
-import { ProfileDataType, UpdateProfileFormType } from '../../../dal/profileAPI'
-import { EditableSpan } from '../EditableSpan/EditableSpan'
+import settingsIcon from '../../../common/icons/icons8-gears-50.png'
+import { UpdateProfileFormType } from '../../../dal/profileAPI'
 
-interface IFormInput {
-   firstName: String
-}
+import { UpdateProfileWrapper } from './styled'
 
 export const UpdateProfileForm = () => {
-   const { register, handleSubmit } = useForm<UpdateProfileFormType>()
+   const myProfileID = useAppSelector(state => state.app.profileID)
+   const dispatch = useAppDispatch()
+   const { profileID } = useParams()
+   const profileName = useAppSelector(state => state.profile.data.fullName)
+   const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
+   const skills = useAppSelector(state => state.profile.data.lookingForAJobDescription)
+
+   const defaultValues = {
+      fullName: profileName,
+      aboutMe: userAboutMeInfo,
+      lookingForAJobDescription: skills,
+   }
+
+   const { register, handleSubmit } = useForm<UpdateProfileFormType>({ defaultValues })
    const [editMode, setEditMode] = useState(false)
    const onSubmit: SubmitHandler<UpdateProfileFormType> = data => {
       dispatch(updateProfile(data))
       setEditMode(false)
    }
 
-   const dispatch = useAppDispatch()
-   const profileName = useAppSelector(state => state.profile.data.fullName)
-   const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
-   const skills = useAppSelector(state => state.profile.data.lookingForAJobDescription)
    const updateProfileHandler = () => {
       setEditMode(true)
    }
 
    return (
-      <>
+      <UpdateProfileWrapper>
          {!editMode && (
             <>
-               <div>{profileName}</div>
-               <div>{userAboutMeInfo}</div>
-               <div>{skills}</div>
+               <div className="name">{profileName}</div>
+               <div className="aboutMe">{userAboutMeInfo}</div>
+               <div className="skills">{skills}</div>
             </>
          )}
          {editMode && (
             <form onSubmit={handleSubmit(onSubmit)}>
                <div>
-                  <input {...register('fullName')} />
+                  <input defaultValue={defaultValues.fullName} {...register('fullName')} />
                </div>
                <div>
-                  <input {...register('aboutMe')} />
+                  <input defaultValue={defaultValues.aboutMe} {...register('aboutMe')} />
                </div>
                <div>
-                  <input {...register('lookingForAJobDescription')} />
+                  <input
+                     defaultValue={defaultValues.lookingForAJobDescription}
+                     {...register('lookingForAJobDescription')}
+                  />
                </div>
                <div>
                   <input type="submit" name="Save" />
                </div>
             </form>
          )}
-         <button onClick={updateProfileHandler}>Edit mode</button>
-      </>
+         {profileID
+            ? myProfileID === +profileID && (
+                 <>
+                    <button className="button" onClick={updateProfileHandler}></button>
+                    <img src={settingsIcon} alt="setting" />
+                 </>
+              )
+            : ''}
+      </UpdateProfileWrapper>
    )
 }

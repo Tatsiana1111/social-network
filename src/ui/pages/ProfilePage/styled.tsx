@@ -17,6 +17,10 @@ export const WrapperDiv = styled.div`
       grid-area: 1 / 1 / 2 / 2;
    }
 
+   .span {
+      font-style: italic;
+   }
+
    .profileData {
       grid-area: 1 / 2 / 2 / 3;
    }
@@ -45,6 +49,7 @@ export const WrapperDiv = styled.div`
          z-index: 100;
       }
    }
+
    @media (max-width: ${props => props.theme.media.medium}px) {
       grid-template-columns: 1fr;
       grid-template-rows: auto;
@@ -56,12 +61,15 @@ export const WrapperDiv = styled.div`
       .profilePosts {
          grid-area: Posts;
       }
+
       .profileButtonAddPost {
          grid-area: AddPost;
       }
+
       .profileData {
          grid-area: Data;
       }
+
       .profilePhoto {
          grid-area: Photo;
          justify-self: center;
