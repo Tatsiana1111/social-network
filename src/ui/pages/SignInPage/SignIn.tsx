@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import { AnimatePresence } from 'framer-motion'
+
 import { Modal } from '../../components/Modal/BaseModal/Modal'
 import { RegistrationModal } from '../../components/Modal/RegistrationModal/RegistrationModal'
 import { Container } from '../../theme/global'
@@ -19,9 +21,11 @@ export const SignIn = () => {
 
    return (
       <section>
-         <Modal closeModal={handleModalClose} title={'Registration'} isOpen={isModalOpen}>
-            <RegistrationModal />
-         </Modal>
+         <AnimatePresence>
+            <Modal closeModal={handleModalClose} title={'Registration'} isOpen={isModalOpen}>
+               <RegistrationModal />
+            </Modal>
+         </AnimatePresence>
          <Container>
             <SSignInWrapper>
                <SSignInLeft>

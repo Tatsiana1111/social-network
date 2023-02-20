@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react'
+import React from 'react'
 
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
@@ -29,7 +29,7 @@ export const AddNewPostModal = (props: AddModalPropsType) => {
    const dispatch = useAppDispatch()
    const userId = useAppSelector(state => state.profile.data.userId)
 
-   const { register, handleSubmit, reset, setValue } = useForm<FormData>({
+   const { register, handleSubmit, reset } = useForm<FormData>({
       defaultValues: {
          title: '',
          body: '',

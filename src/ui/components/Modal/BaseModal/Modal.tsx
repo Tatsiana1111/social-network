@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 
+import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import exitIcon from './exit-icon.svg'
@@ -68,14 +69,26 @@ export const Modal = (props: ModalPropsType) => {
    }
 
    return (
-      <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>
-         <ModalContent className={props.isOpen ? 'open' : ''} onClick={modalClickHandler}>
-            <div className={'header'}>
-               <h2>{props.title}</h2>
-               <img src={exitIcon} alt={'exit-icon'} onClick={handleClose} />
-            </div>
-            {props.children}
-         </ModalContent>
-      </ModalWrapper>
+      <motion.div
+         initial={{ opacity: 0 }}
+         animate={{ opacity: 1, zIndex: '44' }}
+         exit={{ opacity: 0 }}
+      >
+         <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>
+            <motion.div
+               initial={{ scale: 0.5 }}
+               animate={{ scale: 1 }}
+               transition={{ ease: 'easeOut', duration: 0.5 }}
+            >
+               <ModalContent className={props.isOpen ? 'open' : ''} onClick={modalClickHandler}>
+                  <div className={'header'}>
+                     <h2>{props.title}</h2>
+                     <img src={exitIcon} alt={'exit-icon'} onClick={handleClose} />
+                  </div>
+                  {props.children}
+               </ModalContent>
+            </motion.div>
+         </ModalWrapper>
+      </motion.div>
    )
 }

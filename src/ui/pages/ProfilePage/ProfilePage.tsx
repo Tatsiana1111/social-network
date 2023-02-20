@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence } from 'framer-motion'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
 
@@ -65,16 +65,7 @@ export const ProfilePage = () => {
       <WrapperDiv>
          <AnimatePresence>
             {isModalOpen && (
-               <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1, zIndex: '44' }}
-                  exit={{ opacity: 0 }}
-               >
-                  <AddNewPostModal
-                     isModalOpen={isModalOpen}
-                     handleModalClose={handleModalClose}
-                  ></AddNewPostModal>
-               </motion.div>
+               <AddNewPostModal isModalOpen={isModalOpen} handleModalClose={handleModalClose} />
             )}
          </AnimatePresence>
          <Box className={'profilePhoto'}>
