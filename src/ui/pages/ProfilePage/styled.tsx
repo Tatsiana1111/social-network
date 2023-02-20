@@ -21,6 +21,10 @@ export const WrapperDiv = styled.div`
       font-style: italic;
    }
 
+   .searchJob {
+      position: absolute;
+   }
+
    .profileData {
       grid-area: 1 / 2 / 2 / 3;
    }

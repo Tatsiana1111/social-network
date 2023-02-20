@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
+import searchJob from '../../../common/icons/searchJob.png'
 import avatar from '../../../common/images/defaultUser.jpg'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
@@ -20,6 +21,7 @@ import { WrapperDiv } from './styled'
 
 export const ProfilePage = () => {
    const myProfileID = useAppSelector(state => state.app.profileID)
+   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
    const posts = useAppSelector(state => state.profile.posts)
    const userStatus = useAppSelector(state => state.profile.status)
@@ -76,6 +78,7 @@ export const ProfilePage = () => {
             )}
          </AnimatePresence>
          <Box className={'profilePhoto'}>
+            {lookingForAJob && <img className="searchJob" src={searchJob} alt="search job" />}
             {profileID ? myProfileID === +profileID && <CameraIcon /> : ''}
             <img
                alt="user avatar"

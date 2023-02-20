@@ -44,6 +44,7 @@ export type UpdateProfileFormType = {
    fullName: string
    aboutMe: string
    lookingForAJobDescription: string
+   lookingForAJob: boolean
 }
 export type ProfileDataType = {
    aboutMe: string

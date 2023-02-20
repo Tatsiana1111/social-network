@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
@@ -15,16 +15,18 @@ export const UpdateProfileForm = () => {
    const dispatch = useAppDispatch()
    const { profileID } = useParams()
    const profileName = useAppSelector(state => state.profile.data.fullName)
+   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    const userAboutMeInfo = useAppSelector(state => state.profile.data.aboutMe)
    const skills = useAppSelector(state => state.profile.data.lookingForAJobDescription)
 
    const defaultValues = {
       fullName: profileName,
       aboutMe: userAboutMeInfo,
+      lookingForAJob: lookingForAJob,
       lookingForAJobDescription: skills,
    }
 
-   const { register, handleSubmit } = useForm<UpdateProfileFormType>({ defaultValues })
+   const { register, handleSubmit, control } = useForm<UpdateProfileFormType>({ defaultValues })
    const [editMode, setEditMode] = useState(false)
    const onSubmit: SubmitHandler<UpdateProfileFormType> = data => {
       dispatch(updateProfile(data))
@@ -51,6 +53,23 @@ export const UpdateProfileForm = () => {
                </div>
                <div>
                   <input defaultValue={defaultValues.aboutMe} {...register('aboutMe')} />
+               </div>
+               <div>
+                  Looking for a Job{' '}
+                  <Controller
+                     control={control}
+                     name="lookingForAJob"
+                     render={({ field: { onChange, onBlur, value, ref, name } }) => (
+                        <input
+                           name={name}
+                           type="checkbox"
+                           onBlur={onBlur}
+                           onChange={onChange}
+                           checked={value}
+                           ref={ref}
+                        />
+                     )}
+                  />
                </div>
                <div>
                   <input
