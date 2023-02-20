@@ -4,6 +4,8 @@ import { AxiosError } from 'axios'
 import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { authAPI, LoginRequestDataType } from '../dal/authAPI'
 
+import { setAppStatusAC } from './appReducer'
+
 const initialState = {
    isLoggedIn: false as boolean,
 }
@@ -25,11 +27,13 @@ export const authReducer = authSlice.reducer
 export const LoginTC = createAsyncThunk(
    'auth/login',
    async (data: LoginRequestDataType, { dispatch }) => {
+      dispatch(setAppStatusAC({ status: 'load' }))
       try {
          const res = await authAPI.login(data)
 
          if (res.data.resultCode === 0) {
             dispatch(setLoggedIn({ value: true }))
+            dispatch(setAppStatusAC({ status: 'success' }))
          } else {
             HandleServerAppError(dispatch, res.data)
          }

@@ -1,18 +1,14 @@
 import React from 'react'
 
 import { useForm } from 'react-hook-form'
-import styled from 'styled-components'
 
-import { useAppDispatch } from '../../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
 import { LoginTC } from '../../../../bll/authReducer'
 import { LoginRequestDataType } from '../../../../dal/authAPI'
 import { SButton, SButtonGreen } from '../../../components/Button/SButton'
+import { ErrorMessage } from '../../../components/ErrorMessage/ErrorMessage'
 import { SForm, SInput } from '../../../components/Input/Input'
 import { SSignInRight } from '../styled'
-
-const ErrorMessage = styled.p`
-   color: red;
-`
 
 type PropsType = {
    openModal: (value: boolean) => void
@@ -24,6 +20,7 @@ type FormInputs = {
 
 export const SignInForm = (props: PropsType) => {
    const dispatch = useAppDispatch()
+   const loading = useAppSelector(state => state.app.status)
 
    const {
       register,
@@ -47,7 +44,7 @@ export const SignInForm = (props: PropsType) => {
                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
                      message: 'Invalid email address',
                   },
-                  required: 'this field is required!!',
+                  required: 'This field is required !!!',
                })}
             />
             {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
@@ -67,9 +64,13 @@ export const SignInForm = (props: PropsType) => {
             />
             {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
 
-            <SButton type="submit">Sign In</SButton>
+            <SButton disabled={loading === 'load'} type="submit">
+               Sign In
+            </SButton>
          </SForm>
-         <SButtonGreen onClick={handleModalOpen}>Create new account</SButtonGreen>
+         <SButtonGreen disabled={loading === 'load'} onClick={handleModalOpen}>
+            Create new account
+         </SButtonGreen>
       </SSignInRight>
    )
 }
