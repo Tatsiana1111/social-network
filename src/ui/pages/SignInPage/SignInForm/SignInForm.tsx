@@ -12,9 +12,19 @@ import { SSignInRight } from '../styled'
 type PropsType = {
    openModal: (value: boolean) => void
 }
+type FormInputs = {
+   email: string
+   password: string
+}
+
 export const SignInForm = (props: PropsType) => {
    const dispatch = useAppDispatch()
-   const { register, handleSubmit } = useForm()
+
+   const {
+      register,
+      handleSubmit,
+      formState: { errors },
+   } = useForm<FormInputs>()
 
    const handleModalOpen = () => {
       props.openModal(true)
@@ -24,15 +34,32 @@ export const SignInForm = (props: PropsType) => {
       <SSignInRight>
          <SForm onSubmit={handleSubmit(data => dispatch(LoginTC(data as LoginRequestDataType)))}>
             <SInputWrapper>
-               <SInput {...register('email')} required type="email" placeholder={'Email'} />
+               <SInput
+                  type="email"
+                  placeholder={'Email'}
+                  {...register('email', {
+                     pattern: {
+                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                        message: 'Invalid email address',
+                     },
+                  })}
+               />
+               {errors.email && <p>{errors.email.message}</p>}
             </SInputWrapper>
             <SInputWrapper>
                <SInput
-                  {...register('password')}
                   required
                   type="password"
                   placeholder={'Password'}
+                  min={7}
+                  {...register('password', {
+                     min: {
+                        value: 7,
+                        message: 'Password Must be 7 characters or more',
+                     },
+                  })}
                />
+               {errors.password && <p>{errors.password.message}</p>}
             </SInputWrapper>
             <SButton type="submit">Sign In</SButton>
          </SForm>
