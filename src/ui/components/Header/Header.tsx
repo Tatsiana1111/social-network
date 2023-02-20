@@ -13,17 +13,21 @@ export const Header = () => {
    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
    const dispatch = useAppDispatch()
 
+   const LogOutHandler = () => {
+      dispatch(LogOutTC())
+   }
+
    return (
       <SHeader>
          <Container>
             <SHeaderInner>
-               <Burger />
+               {isLoggedIn && <Burger />}
                <h1>lightels</h1>
                <ThemeSwitcher />
                {isLoggedIn ? (
-                  <img alt={LogOutIcon} src={LogOutIcon} onClick={() => dispatch(LogOutTC())} />
+                  <img alt={LogOutIcon} src={LogOutIcon} onClick={LogOutHandler} />
                ) : (
-                  <div>
+                  <div className={'headerBtns'}>
                      <button>Sign in</button>
                      <button>Registration</button>
                   </div>

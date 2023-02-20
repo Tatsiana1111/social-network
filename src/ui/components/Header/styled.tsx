@@ -15,7 +15,7 @@ export const SHeaderInner = styled.div`
       color: #3d82d9;
       background-color: inherit;
       font-family: 'Caveat', cursive;
-      @media (max-width: ${props => props.theme.media.large}px) {
+      @media (max-width: ${props => props.theme.media.small}px) {
          display: none;
       }
    }
@@ -29,7 +29,7 @@ export const SHeaderInner = styled.div`
       }
    }
 
-   div {
+   .headerBtns {
       display: flex;
       justify-content: space-between;
 
@@ -41,6 +41,12 @@ export const SHeaderInner = styled.div`
          font-size: 18px;
          padding: 5px 7px;
          background-color: inherit;
+      }
+   }
+   @media (max-width: ${props => props.theme.media.small}px) {
+      justify-content: center;
+      .headerBtns {
+         display: none;
       }
    }
 `

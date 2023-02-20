@@ -7,8 +7,15 @@
 
     width: 100px;
     height: 50px;
-    
 }
+
+    @media only screen and  (max-width: 580px) {
+        .ThemeSwitcher {
+            margin-right: 40px;
+        }
+    }
+
+
 
 .toggleWrapper {
     position: absolute;

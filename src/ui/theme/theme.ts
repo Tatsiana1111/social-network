@@ -9,6 +9,7 @@ export const lightTheme: DefaultTheme = {
       backGroundColor: '#E5E5E5',
       backGroundColor2: '#E5E5E5',
       primary: '#000',
+      secondary: '#0e0eb6',
    },
    button: {
       default: {
@@ -24,7 +25,7 @@ export const lightTheme: DefaultTheme = {
       extraLarge: 1140,
       large: 960,
       medium: 720,
-      small: 540,
+      small: 580,
    },
 }
 
@@ -33,9 +34,10 @@ export const darkTheme: DefaultTheme = {
    type: ThemeEnum.dark,
 
    colors: {
-      primary: '#E8F3D6',
       backGroundColor: '#00425A',
       backGroundColor2: '#567189',
+      primary: '#E8F3D6',
+      secondary: '#06f5d9',
    },
    button: {
       default: {

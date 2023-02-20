@@ -44,7 +44,7 @@ export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
 `
 export const Container = styled.div`
    margin: 0 auto;
-   padding: 0 10px;
+   padding: 0 15px;
    max-width: 1200px;
    background-color: inherit;
    color: ${props => props.theme.colors.primary};

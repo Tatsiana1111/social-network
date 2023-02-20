@@ -8,6 +8,7 @@ export interface ITheme {
       backGroundColor: string
       backGroundColor2: string
       primary: string
+      secondary: string
    }
    button: {
       default: {
