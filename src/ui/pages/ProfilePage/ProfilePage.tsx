@@ -21,6 +21,7 @@ import { Loader } from '../../components/Loader/Loader'
 import { LookingForAJob } from '../../components/lookingForAJob/lookingForAJob'
 import { AddNewPostModal } from '../../components/Modal/AddNewPostModal/AddNewPostModal'
 import { Post } from '../../components/Post/Post'
+import { UpdateProfile } from '../../components/UpdateProfile/UpdateProfile'
 import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm'
 
 import { WrapperDiv } from './styled'
@@ -84,10 +85,11 @@ export const ProfilePage = () => {
             />
          </Box>
          <Box className={'profileData'}>
-            <UpdateProfileForm />
-            <span className="span">
-               <EditableSpan text={userStatus} updateText={updateUserStatus} />
-            </span>
+            {/*<UpdateProfileForm />*/}
+            {/*<span className="span">*/}
+            {/*   <EditableSpan text={userStatus} updateText={updateUserStatus} />*/}
+            {/*</span>*/}
+            <UpdateProfile />
          </Box>
          {profileID
             ? myProfileID === +profileID && (
