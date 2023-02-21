@@ -11,6 +11,7 @@ import twitterIcon from '../../../common/icons/social/twitter.png'
 import vkIcon from '../../../common/icons/social/vk.png'
 import websiteIcon from '../../../common/icons/social/website.png'
 import youtubeIcon from '../../../common/icons/social/youtube.png'
+import { LookingForAJobSwitcher } from '../lookingForAJob/LookingForAJobSwitcher'
 
 import { ContactInput } from './ContactInput'
 
@@ -22,29 +23,24 @@ const ContactsWrapper = styled.div`
 `
 const UpdateProfileWrapper = styled.form``
 
-type FormData = {
-   facebook?: string
-   github?: string
-   instagram?: string
-   twitter?: string
-   vk?: string
-   youtube?: string
-   mainLink?: string
-   website?: string
-}
 export const UpdateProfile = () => {
-   const {
-      register,
-      setValue,
-
-      handleSubmit,
-      formState: { errors },
-   } = useForm<FormData>()
+   const defaultValues = {
+      facebook: null as string | null,
+      github: null as string | null,
+      instagram: null as string | null,
+      twitter: null as string | null,
+      vk: null as string | null,
+      youtube: null as string | null,
+      mainLink: null as string | null,
+      website: null as string | null,
+   }
+   const { register, handleSubmit } = useForm({ defaultValues })
 
    const onSubmit = handleSubmit(data => alert(data))
 
    return (
       <UpdateProfileWrapper onSubmit={onSubmit}>
+         <LookingForAJobSwitcher />
          Contacts:
          <ContactsWrapper>
             <ContactInput inputProps={{ ...register('facebook') }} img={facebookIcon} />

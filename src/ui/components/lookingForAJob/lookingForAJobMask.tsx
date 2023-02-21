@@ -18,7 +18,7 @@ const LookingForAJobWrapper = styled.div`
    }
 `
 
-export const LookingForAJob = () => {
+export const LookingForAJobMask = () => {
    return (
       <LookingForAJobWrapper>
          <img src={openToWork} alt="openToWork icon" />

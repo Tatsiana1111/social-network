@@ -18,7 +18,7 @@ import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { Loader } from '../../components/Loader/Loader'
-import { LookingForAJob } from '../../components/lookingForAJob/lookingForAJob'
+import { LookingForAJobMask } from '../../components/lookingForAJob/lookingForAJobMask'
 import { AddNewPostModal } from '../../components/Modal/AddNewPostModal/AddNewPostModal'
 import { Post } from '../../components/Post/Post'
 import { UpdateProfile } from '../../components/UpdateProfile/UpdateProfile'
@@ -76,7 +76,7 @@ export const ProfilePage = () => {
             )}
          </AnimatePresence>
          <Box className={'profilePhoto'}>
-            {lookingForAJob && <LookingForAJob />}
+            {lookingForAJob && <LookingForAJobMask />}
             {profileID ? myProfileID === +profileID && <CameraIcon /> : ''}
             <img
                alt="user avatar"
