@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { useAppSelector } from '../../../app/hooks'
 import users from '../../../common/icons/friends.png'
 import message from '../../../common/icons/gallery.png'
+import myFriend from '../../../common/icons/myFriend.png'
 import profile from '../../../common/icons/user.png'
 import { PATH } from '../../pages/Pages'
 
@@ -50,6 +51,10 @@ export const Navigation = () => {
          <NavLinkStyled to={PATH.albums}>
             <img alt="albums icon" src={message} />
             Albums
+         </NavLinkStyled>
+         <NavLinkStyled to={`${PATH.users}?friend=true`}>
+            <img alt="myFriend icon" src={myFriend} />
+            My Friends
          </NavLinkStyled>
       </nav>
    )

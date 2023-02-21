@@ -24,6 +24,7 @@ export const UsersPage = () => {
 
    const termURL = searchParams.get('term') ? searchParams.get('term') + '' : ''
    const pageURL = searchParams.get('page') ? searchParams.get('page') + '' : '1'
+   const friend = searchParams.get('friend') ? searchParams.get('friend') + '' : 'false'
 
    const [term, setTerm] = useState<string>(termURL ? termURL : '')
 
@@ -32,6 +33,7 @@ export const UsersPage = () => {
    const urlParamsFilter = filterAllParams({
       page: pageURL,
       term: termURL,
+      friend,
    })
 
    useEffect(() => {
@@ -40,6 +42,7 @@ export const UsersPage = () => {
             ...paramsSearchState,
             term,
             page: pageURL,
+            friend,
          }),
       })
    }, [debouncedValue])
@@ -64,6 +67,7 @@ export const UsersPage = () => {
             ...paramsSearchState,
             page,
             term: termURL,
+            friend,
          }),
       })
    }
@@ -87,12 +91,13 @@ export const UsersPage = () => {
             ...paramsSearchState,
             page: '1',
             term: termURL,
+            friend,
          }),
       })
    }
    const resetFilterHandler = () => {
-      dispatch(updateUrlParamsAC({ query: { page: '1', term: '' } }))
-      setSearchParams({ page: '1' })
+      dispatch(updateUrlParamsAC({ query: { page: '1', term: '', friend } }))
+      setSearchParams({ page: '1', friend })
       setTerm('')
    }
 

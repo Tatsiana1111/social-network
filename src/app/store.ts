@@ -14,7 +14,6 @@ export const store = configureStore({
       users: usersReducer,
       profile: profileReducer,
       auth: authReducer,
-
       comments: commentsReducer,
       albums: albumsReducer,
    },
