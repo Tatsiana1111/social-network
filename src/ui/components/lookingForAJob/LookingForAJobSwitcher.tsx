@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { forwardRef, InputHTMLAttributes, LegacyRef } from 'react'
 
 import styled from 'styled-components'
 
@@ -101,17 +101,13 @@ const Wrapper = styled.div`
    }
 `
 
-export const LookingForAJobSwitcher = () => {
-   const [checked, setChecked] = useState(false)
-
-   const onClickHandler = () => {
-      setChecked(!checked)
+export const LookingForAJobSwitcher = forwardRef(
+   (props: InputHTMLAttributes<HTMLInputElement>, ref: LegacyRef<HTMLInputElement>) => {
+      return (
+         <Wrapper>
+            <input {...props} id={'cb5'} type="checkbox" ref={ref} />
+            <label htmlFor="cb5"></label>
+         </Wrapper>
+      )
    }
-
-   return (
-      <Wrapper>
-         <input checked={checked} id={'cb5'} type="checkbox" />
-         <label htmlFor="cb5" onClick={onClickHandler}></label>
-      </Wrapper>
-   )
-}
+)

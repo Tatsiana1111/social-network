@@ -21,12 +21,7 @@ const RegistrationModalWrapper = styled.form`
 `
 
 export const RegistrationModal = () => {
-   const {
-      register,
-      handleSubmit,
-      setError,
-      formState: { errors },
-   } = useForm({
+   const { register, handleSubmit } = useForm({
       defaultValues: {
          name: '' as string,
          surname: '' as string,

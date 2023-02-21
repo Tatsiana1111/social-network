@@ -23,18 +23,22 @@ const ContactInputWrapper = styled.span`
       border: none;
       width: 100%;
       height: 80%;
-      padding: 2px 5px;
+      padding: 5px 10px;
       background-color: darkcyan;
       color: white;
    }
 
    input::placeholder {
       color: #afaaaa;
+      text-align: center;
+   }
+   input:focus {
+      border: 2px solid springgreen;
    }
 `
 
 type ContactInputType = {
-   img: string
+   img?: string
    inputProps: InputHTMLAttributes<HTMLInputElement>
 }
 export const ContactInput = (props: ContactInputType) => {
@@ -43,7 +47,7 @@ export const ContactInput = (props: ContactInputType) => {
          <span>
             <img src={props.img} alt={props.img} />
          </span>
-         <input type="url" {...props.inputProps} placeholder={props.inputProps.name} />
+         <input type="url" {...props.inputProps} placeholder={props.inputProps.name?.slice(9)} />
       </ContactInputWrapper>
    )
 }
