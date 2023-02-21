@@ -7,6 +7,7 @@ const ContactInputWrapper = styled.span`
    align-items: center;
    gap: 5px;
    height: 40px;
+   width: 100%;
 
    span {
       width: 30px;
@@ -23,17 +24,18 @@ const ContactInputWrapper = styled.span`
       border: none;
       width: 100%;
       height: 80%;
+      font-weight: bold;
       padding: 5px 10px;
-      background-color: darkcyan;
-      color: white;
+      background-color: ${props => props.theme.input.bg};
+      color: ${props => props.theme.input.text};
    }
 
    input::placeholder {
-      color: #afaaaa;
+      color: ${props => props.theme.input.placeholder};
       text-align: center;
    }
    input:focus {
-      border: 2px solid springgreen;
+      border: 2px solid ${props => props.theme.input.focus};
    }
 `
 
@@ -44,9 +46,11 @@ type ContactInputType = {
 export const ContactInput = (props: ContactInputType) => {
    return (
       <ContactInputWrapper>
-         <span>
-            <img src={props.img} alt={props.img} />
-         </span>
+         {props.img && (
+            <span>
+               <img src={props.img} alt={props.img} />
+            </span>
+         )}
          <input type="url" {...props.inputProps} placeholder={props.inputProps.name?.slice(9)} />
       </ContactInputWrapper>
    )

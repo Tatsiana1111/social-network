@@ -13,6 +13,7 @@ import vkIcon from '../../../common/icons/social/vk.png'
 import websiteIcon from '../../../common/icons/social/website.png'
 import youtubeIcon from '../../../common/icons/social/youtube.png'
 import { ProfileDataType } from '../../../dal/profileAPI'
+import { SButtonGreen } from '../Button/SButton'
 import { LookingForAJobSwitcher } from '../lookingForAJob/LookingForAJobSwitcher'
 
 import { ContactInput } from './ContactInput'
@@ -22,18 +23,25 @@ const ContactsWrapper = styled.label`
 
    grid-template-columns: 1fr 1fr;
    gap: 10px;
+   margin-bottom: 10px;
 `
-const UpdateProfileWrapper = styled.form``
+const UpdateProfileWrapper = styled.form`
+   text-align: center;
+`
 const Wrapper = styled.div`
    display: flex;
    align-items: center;
    gap: 10px;
+   margin-bottom: 10px;
 `
 
 export const UpdateProfile = () => {
    const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
+   const fullName = useAppSelector(state => state.profile.data.fullName)
+   const aboutMe = useAppSelector(state => state.profile.data.aboutMe)
+   const JobDescription = useAppSelector(state => state.profile.data.lookingForAJobDescription)
 
-   const defaultValues = { lookingForAJob }
+   const defaultValues = { lookingForAJob, fullName, aboutMe, JobDescription }
    const { register, handleSubmit } = useForm<ProfileDataType>({ defaultValues })
 
    const onSubmitHandler: SubmitHandler<ProfileDataType> = data =>
@@ -42,8 +50,16 @@ export const UpdateProfile = () => {
    return (
       <UpdateProfileWrapper onSubmit={handleSubmit(onSubmitHandler)}>
          <Wrapper>
-            fullName:
+            FullName:
             <ContactInput inputProps={{ ...register('fullName'), type: 'text' }} />
+         </Wrapper>
+         <Wrapper>
+            JobDescription:
+            <ContactInput inputProps={{ ...register('lookingForAJobDescription'), type: 'text' }} />
+         </Wrapper>
+         <Wrapper>
+            AboutMe:
+            <ContactInput inputProps={{ ...register('aboutMe'), type: 'text' }} />
          </Wrapper>
          <Wrapper>
             Looking for a job:
@@ -60,7 +76,7 @@ export const UpdateProfile = () => {
             <ContactInput inputProps={{ ...register('contacts.mainLink') }} img={mainLinkIcon} />
             <ContactInput inputProps={{ ...register('contacts.website') }} img={websiteIcon} />
          </ContactsWrapper>
-         <button>submit</button>
+         <SButtonGreen>Save Changes</SButtonGreen>
       </UpdateProfileWrapper>
    )
 }

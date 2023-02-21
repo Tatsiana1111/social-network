@@ -11,6 +11,12 @@ export const lightTheme: DefaultTheme = {
       primary: '#000',
       secondary: '#0e0eb6',
    },
+   input: {
+      bg: '#fff',
+      text: '#000',
+      placeholder: '#afaaaa',
+      focus: '#749dd6',
+   },
    button: {
       default: {
          bg: '#1877F2',
@@ -38,6 +44,12 @@ export const darkTheme: DefaultTheme = {
       backGroundColor2: '#567189',
       primary: '#E8F3D6',
       secondary: '#06f5d9',
+   },
+   input: {
+      bg: '#008B8BFF',
+      text: '#fff',
+      placeholder: '#7da6a4',
+      focus: '#74d693',
    },
    button: {
       default: {

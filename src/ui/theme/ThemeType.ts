@@ -10,6 +10,12 @@ export interface ITheme {
       primary: string
       secondary: string
    }
+   input: {
+      bg: string
+      text: string
+      placeholder: string
+      focus: string
+   }
    button: {
       default: {
          bg: string
