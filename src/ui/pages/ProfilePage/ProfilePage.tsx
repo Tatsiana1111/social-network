@@ -5,14 +5,20 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getPostsTC, getProfileData, getStatus, updateStatus } from '../../../bll/profileReducer'
-import searchJob from '../../../common/icons/searchJob.png'
+import {
+   getMorePostsTC,
+   getPostsTC,
+   getProfileData,
+   getStatus,
+   updateStatus,
+} from '../../../bll/profileReducer'
 import avatar from '../../../common/images/defaultUser.jpg'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
 import { EditableSpan } from '../../components/EditableSpan/EditableSpan'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
 import { Loader } from '../../components/Loader/Loader'
+import { LookingForAJob } from '../../components/lookingForAJob/lookingForAJob'
 import { AddNewPostModal } from '../../components/Modal/AddNewPostModal/AddNewPostModal'
 import { Post } from '../../components/Post/Post'
 import { UpdateProfileForm } from '../../components/UpdateProfileForm/UpdateProfileForm'
@@ -36,7 +42,7 @@ export const ProfilePage = () => {
       if (profileID) {
          dispatch(getProfileData(+profileID))
          dispatch(getStatus(+profileID))
-         getPostsHandler()
+         dispatch(getPostsTC())
       }
    }, [profileID])
 
@@ -45,7 +51,7 @@ export const ProfilePage = () => {
    }
 
    const getPostsHandler = () => {
-      dispatch(getPostsTC())
+      dispatch(getMorePostsTC())
    }
 
    const handleModalOpen = () => {
@@ -69,7 +75,7 @@ export const ProfilePage = () => {
             )}
          </AnimatePresence>
          <Box className={'profilePhoto'}>
-            {lookingForAJob && <img className="searchJob" src={searchJob} alt="search job" />}
+            {lookingForAJob && <LookingForAJob />}
             {profileID ? myProfileID === +profileID && <CameraIcon /> : ''}
             <img
                alt="user avatar"

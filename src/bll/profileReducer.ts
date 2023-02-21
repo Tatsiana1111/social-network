@@ -29,6 +29,9 @@ export const profileSlice = createSlice({
          state.data = action.payload
       },
       setPostsDataAC: (state, action: PayloadAction<PostDataType[]>) => {
+         state.posts = [...action.payload]
+      },
+      setMorePostsAC: (state, action: PayloadAction<PostDataType[]>) => {
          state.posts = [...state.posts, ...action.payload]
       },
       setProfileStatus: (state, action: PayloadAction<string>) => {
@@ -64,6 +67,7 @@ export const {
    setTotalCountAC,
    addPostAC,
    updatePhotoAC,
+   setMorePostsAC,
 } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
 
@@ -123,8 +127,25 @@ export const updateStatus = createAsyncThunk(
       }
    }
 )
-export const getPostsTC = createAsyncThunk(
-   'profile/getPosts',
+export const getPostsTC = createAsyncThunk('profile/getPosts', async (arg, { dispatch }) => {
+   dispatch(setAppStatusAC({ status: 'load' }))
+   try {
+      const res = await profileAPI.getPosts({ _page: 1, _limit: 2 })
+
+      dispatch(setPostsDataAC(res.data))
+      dispatch(setFetchingAC({ fetch: true }))
+      dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
+      dispatch(setAppStatusAC({ status: 'idle' }))
+
+      return res.data
+   } catch (e) {
+      const error = e as AxiosError | Error
+
+      HandleServerNetworkError(dispatch, error)
+   }
+})
+export const getMorePostsTC = createAsyncThunk(
+   'profile/getMorePosts',
    async (arg, { dispatch, getState }) => {
       dispatch(setAppStatusAC({ status: 'load' }))
       try {
@@ -133,7 +154,7 @@ export const getPostsTC = createAsyncThunk(
          const res = await profileAPI.getPosts({ _page: currentPage, _limit: 2 })
 
          dispatch(setCurrentPagesAC({ newCurrentPage: currentPage + 1 }))
-         dispatch(setPostsDataAC(res.data))
+         dispatch(setMorePostsAC(res.data))
          dispatch(setFetchingAC({ fetch: true }))
          dispatch(setTotalCountAC({ totalCount: res.data.totalCount }))
          dispatch(setAppStatusAC({ status: 'idle' }))

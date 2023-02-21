@@ -8,10 +8,11 @@ import camera from '../../../common/icons/camera.png'
 
 const CameraIconWrapper = styled.div`
    position: absolute;
-   bottom: 30px;
-   right: 30px;
+   bottom: 25px;
+   right: 25px;
    height: 50px;
    width: 50px;
+   z-index: 3;
 
    label {
       cursor: pointer;

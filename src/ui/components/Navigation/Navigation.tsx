@@ -33,6 +33,7 @@ export const NavLinkStyled = styled(NavLink)`
    :active {
       color: #526884;
    }
+  :
 `
 
 export const Navigation = () => {

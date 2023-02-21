@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios/index'
+import { AxiosError } from 'axios'
 
 import { RootState } from '../app/store'
 import { HandleServerNetworkError } from '../common/Utils/errorHandler'
@@ -12,7 +12,7 @@ const initialState = {
    usersSearch: [] as UserItemsType[],
    totalCount: 0 as number,
    hasMore: false as boolean,
-   queryParams: { page: '1', term: '' } as getUsersParamsType,
+   queryParams: { page: '1', term: '', friend: 'false' } as getUsersParamsType,
 }
 
 const usersSlice = createSlice({
