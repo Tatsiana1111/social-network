@@ -72,6 +72,7 @@ export const Modal = (props: ModalPropsType) => {
       <motion.div
          initial={{ opacity: 0 }}
          animate={{ opacity: 1, zIndex: '44' }}
+         transition={{ duration: 0.5 }}
          exit={{ opacity: 0 }}
       >
          <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>

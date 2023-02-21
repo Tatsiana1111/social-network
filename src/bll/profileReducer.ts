@@ -3,13 +3,7 @@ import { AxiosError } from 'axios'
 
 import { RootState } from '../app/store'
 import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
-import {
-   PostDataType,
-   profileAPI,
-   ProfileDataType,
-   ProfileDataTypePhotos,
-   UpdateProfileFormType,
-} from '../dal/profileAPI'
+import { PostDataType, profileAPI, ProfileDataType, ProfileDataTypePhotos } from '../dal/profileAPI'
 
 import { SetAppNotificationAC, setAppStatusAC } from './appReducer'
 
@@ -49,8 +43,8 @@ export const profileSlice = createSlice({
       addPostAC: (state, action: PayloadAction<{ newPost: PostDataType }>) => {
          state.posts.unshift(action.payload.newPost)
       },
-      updateProfileAC: (state, action) => {
-         state.data = action.payload
+      updateProfileAC: (state, action: PayloadAction<{ data: ProfileDataType }>) => {
+         state.data = action.payload.data
       },
       updatePhotoAC: (state, action: PayloadAction<ProfileDataTypePhotos>) => {
          state.data.photos = action.payload
@@ -227,10 +221,10 @@ export const updatePhoto = createAsyncThunk(
 )
 export const updateProfile = createAsyncThunk(
    'profile/updateAboutMe',
-   async (profile: UpdateProfileFormType, { dispatch, getState }) => {
+   async (data: ProfileDataType, { dispatch, getState }) => {
       dispatch(setAppStatusAC({ status: 'load' }))
       try {
-         const res = await profileAPI.updateProfile(profile)
+         const res = await profileAPI.updateProfile(data)
 
          if (res.data.resultCode === 0) {
             const state = getState() as RootState

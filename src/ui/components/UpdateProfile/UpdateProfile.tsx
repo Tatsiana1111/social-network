@@ -3,7 +3,8 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 
-import { useAppSelector } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
+import { updateProfile } from '../../../bll/profileReducer'
 import facebookIcon from '../../../common/icons/social/facebook.png'
 import githubIcon from '../../../common/icons/social/github.png'
 import instagramIcon from '../../../common/icons/social/instagram.png'
@@ -15,6 +16,8 @@ import youtubeIcon from '../../../common/icons/social/youtube.png'
 import { ProfileDataType } from '../../../dal/profileAPI'
 import { SButtonGreen } from '../Button/SButton'
 import { LookingForAJobSwitcher } from '../lookingForAJob/LookingForAJobSwitcher'
+import { ModalPropsType } from '../Modal/AddNewPostModal/AddNewPostModal'
+import { Modal } from '../Modal/BaseModal/Modal'
 
 import { ContactInput } from './ContactInput'
 
@@ -35,48 +38,60 @@ const Wrapper = styled.div`
    margin-bottom: 10px;
 `
 
-export const UpdateProfile = () => {
-   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
-   const fullName = useAppSelector(state => state.profile.data.fullName)
-   const aboutMe = useAppSelector(state => state.profile.data.aboutMe)
-   const JobDescription = useAppSelector(state => state.profile.data.lookingForAJobDescription)
+export const UpdateProfile = (props: ModalPropsType) => {
+   const dispatch = useAppDispatch()
+   const data = useAppSelector(state => state.profile.data)
 
-   const defaultValues = { lookingForAJob, fullName, aboutMe, JobDescription }
-   const { register, handleSubmit } = useForm<ProfileDataType>({ defaultValues })
+   const { register, handleSubmit, reset } = useForm<ProfileDataType>({ defaultValues: data })
 
-   const onSubmitHandler: SubmitHandler<ProfileDataType> = data =>
-      alert(JSON.stringify(data, null, 2))
+   debugger
+   const onSubmitHandler: SubmitHandler<ProfileDataType> = data => {
+      dispatch(updateProfile(data))
+      reset()
+      props.handleModalClose()
+   }
 
    return (
-      <UpdateProfileWrapper onSubmit={handleSubmit(onSubmitHandler)}>
-         <Wrapper>
-            FullName:
-            <ContactInput inputProps={{ ...register('fullName'), type: 'text' }} />
-         </Wrapper>
-         <Wrapper>
-            JobDescription:
-            <ContactInput inputProps={{ ...register('lookingForAJobDescription'), type: 'text' }} />
-         </Wrapper>
-         <Wrapper>
-            AboutMe:
-            <ContactInput inputProps={{ ...register('aboutMe'), type: 'text' }} />
-         </Wrapper>
-         <Wrapper>
-            Looking for a job:
-            <LookingForAJobSwitcher {...register('lookingForAJob')} />
-         </Wrapper>
-         <h4>Contacts:</h4>
-         <ContactsWrapper>
-            <ContactInput inputProps={{ ...register('contacts.facebook') }} img={facebookIcon} />
-            <ContactInput inputProps={{ ...register('contacts.github') }} img={githubIcon} />
-            <ContactInput inputProps={{ ...register('contacts.instagram') }} img={instagramIcon} />
-            <ContactInput inputProps={{ ...register('contacts.twitter') }} img={twitterIcon} />
-            <ContactInput inputProps={{ ...register('contacts.vk') }} img={vkIcon} />
-            <ContactInput inputProps={{ ...register('contacts.youtube') }} img={youtubeIcon} />
-            <ContactInput inputProps={{ ...register('contacts.mainLink') }} img={mainLinkIcon} />
-            <ContactInput inputProps={{ ...register('contacts.website') }} img={websiteIcon} />
-         </ContactsWrapper>
-         <SButtonGreen>Save Changes</SButtonGreen>
-      </UpdateProfileWrapper>
+      <Modal
+         title={'Change Profile Data'}
+         isOpen={props.isModalOpen}
+         closeModal={props.handleModalClose}
+      >
+         <UpdateProfileWrapper onSubmit={handleSubmit(onSubmitHandler)}>
+            <Wrapper>
+               FullName:
+               <ContactInput inputProps={{ ...register('fullName'), type: 'text' }} />
+            </Wrapper>
+            <Wrapper>
+               JobDescription:
+               <ContactInput
+                  inputProps={{ ...register('lookingForAJobDescription'), type: 'text' }}
+               />
+            </Wrapper>
+            <Wrapper>
+               AboutMe:
+               <ContactInput inputProps={{ ...register('aboutMe'), type: 'text' }} />
+            </Wrapper>
+            <Wrapper>
+               Looking for a job:
+               <LookingForAJobSwitcher {...register('lookingForAJob')} />
+            </Wrapper>
+            <h4>Contacts:</h4>
+            <ContactsWrapper>
+               <ContactInput inputProps={{ ...register('contacts.facebook') }} img={facebookIcon} />
+               <ContactInput inputProps={{ ...register('contacts.github') }} img={githubIcon} />
+               <ContactInput
+                  inputProps={{ ...register('contacts.instagram') }}
+                  img={instagramIcon}
+               />
+               <ContactInput inputProps={{ ...register('contacts.twitter') }} img={twitterIcon} />
+               <ContactInput inputProps={{ ...register('contacts.vk') }} img={vkIcon} />
+               <ContactInput inputProps={{ ...register('contacts.youtube') }} img={youtubeIcon} />
+               <ContactInput inputProps={{ ...register('contacts.mainLink') }} img={mainLinkIcon} />
+               <ContactInput inputProps={{ ...register('contacts.website') }} img={websiteIcon} />
+            </ContactsWrapper>
+            <SButtonGreen>Save Changes</SButtonGreen>
+         </UpdateProfileWrapper>
+      </Modal>
    )
 }

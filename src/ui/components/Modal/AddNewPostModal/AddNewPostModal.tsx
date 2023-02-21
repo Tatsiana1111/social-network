@@ -9,7 +9,7 @@ import { SButtonGreen } from '../../Button/SButton'
 import { SInput } from '../../Input/Input'
 import { Modal } from '../BaseModal/Modal'
 
-type AddModalPropsType = {
+export type ModalPropsType = {
    isModalOpen: boolean
    handleModalClose: () => void
 }
@@ -25,7 +25,7 @@ const WrapperDiv = styled.div`
    gap: 10px;
 `
 
-export const AddNewPostModal = (props: AddModalPropsType) => {
+export const AddNewPostModal = (props: ModalPropsType) => {
    const dispatch = useAppDispatch()
    const userId = useAppSelector(state => state.profile.data.userId)
 
