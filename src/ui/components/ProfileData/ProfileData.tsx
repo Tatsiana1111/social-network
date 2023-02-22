@@ -4,8 +4,10 @@ import styled from 'styled-components'
 
 import { useAppSelector } from '../../../app/hooks'
 import { EditButton } from '../Button/EditButton/EditButton'
+import { LookingForAJobFlag } from '../lookingForAJob/lookingForAJobFlag'
 
 import { ContactsList } from './ContactsList'
+import { ProfileDataItem } from './ProfileDataItem'
 
 const ProfileDataWrapper = styled.div`
    display: flex;
@@ -13,12 +15,16 @@ const ProfileDataWrapper = styled.div`
    justify-content: space-between;
    gap: 10px;
    height: 100%;
+   width: 100%;
+
+   .EditButton {
+      justify-self: center;
+   }
 `
 
 export const ProfileData = (props: { open: () => void }) => {
    const fullName = useAppSelector(state => state.profile.data.fullName)
    const aboutMe = useAppSelector(state => state.profile.data.aboutMe)
-   const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    const lookingForAJobDescription = useAppSelector(
       state => state.profile.data.lookingForAJobDescription
    )
@@ -28,13 +34,14 @@ export const ProfileData = (props: { open: () => void }) => {
 
    return (
       <ProfileDataWrapper>
-         <h4>Name: {fullName}</h4>
-         {aboutMe && <h4>AboutMe: {aboutMe}</h4>}
-         {lookingForAJob && <h4>lookingForAJob: {lookingForAJob}</h4>}
-         {lookingForAJobDescription && <h4>JobDescription: {lookingForAJobDescription}</h4>}
-
+         <ProfileDataItem name={'Name:'} content={fullName} />
+         {aboutMe && <ProfileDataItem name={'AboutMe:'} content={aboutMe} />}
+         <LookingForAJobFlag />
+         {lookingForAJobDescription && (
+            <ProfileDataItem name={'JobDescription:'} content={lookingForAJobDescription} />
+         )}
          <ContactsList />
-         <EditButton onClick={handleModalOpen} name={'Change'} />
+         <EditButton onClick={handleModalOpen} name={'Change'} className={'EditButton'} />
       </ProfileDataWrapper>
    )
 }

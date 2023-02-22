@@ -5,8 +5,7 @@ export const EditButtonWrapper = styled.div`
    display: flex;
    flex-wrap: wrap;
    justify-content: space-around;
-
-   width: 200px;
+  
    z-index: 2;
 
    div {
@@ -37,8 +36,8 @@ export const EditButtonWrapper = styled.div`
       height: 100%;
       padding: 10px;
 
-      font-weight: 400;
-      color: #fff;
+      font-weight: 700;
+      color: ${props => props.theme.colors.primary}
       text-decoration: none;
       letter-spacing: 1px;
 
@@ -88,7 +87,7 @@ export const EditButtonWrapper = styled.div`
       border-radius: 10px;
 
       transition: 0.5s;
-      transition-delay: 0.5s;
+      transition-delay: 0.5ms;
    }
    div:hover::before {
       bottom: 0;
@@ -114,7 +113,7 @@ export const EditButtonWrapper = styled.div`
       border-radius: 10px;
 
       transition: 0.5s;
-      transition-delay: 0.5s;
+      transition-delay: 0.5ms;
    }
    div:hover::after {
       top: 0;
@@ -127,6 +126,6 @@ export const EditButtonWrapper = styled.div`
    div::before,
    div::after {
       background: #2db2ff;
-      box-shadow: 0 0 5px #2db2ff, 0 0 15px #2db2ff, 0 0 30px #2db2ff, 0 0 60px #2db2ff;
+      box-shadow: 0 0 5px #2db2ff, 0 0 10px #2db2ff, 0 0 30px #2db2ff, 0 0 60px #2db2ff;
    }
 `

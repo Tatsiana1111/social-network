@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { HTMLAttributes } from 'react'
 
 import { EditButtonWrapper } from './style'
-type PropsType = {
+
+type PropsType = HTMLAttributes<HTMLDivElement> & {
    onClick: () => void
    name: string
 }
