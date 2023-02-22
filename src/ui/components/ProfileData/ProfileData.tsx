@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 
 import { useAppSelector } from '../../../app/hooks'
@@ -10,24 +11,27 @@ import { ContactsList } from './ContactsList'
 import { ProfileDataItem } from './ProfileDataItem'
 
 const ProfileDataWrapper = styled.div`
+   position: relative;
    display: flex;
    flex-direction: column;
-   justify-content: space-between;
+   justify-content: flex-start;
    gap: 10px;
    height: 100%;
-   width: 100%;
 
    .EditButton {
-      justify-self: center;
+      position: absolute;
+      bottom: 0;
    }
 `
 
 export const ProfileData = (props: { open: () => void }) => {
+   const myProfileID = useAppSelector(state => state.app.profileID)
    const fullName = useAppSelector(state => state.profile.data.fullName)
    const aboutMe = useAppSelector(state => state.profile.data.aboutMe)
    const lookingForAJobDescription = useAppSelector(
       state => state.profile.data.lookingForAJobDescription
    )
+   const { profileID } = useParams()
    const handleModalOpen = () => {
       props.open()
    }
@@ -41,7 +45,10 @@ export const ProfileData = (props: { open: () => void }) => {
             <ProfileDataItem name={'JobDescription:'} content={lookingForAJobDescription} />
          )}
          <ContactsList />
-         <EditButton onClick={handleModalOpen} name={'Change'} className={'EditButton'} />
+
+         {profileID && myProfileID === +profileID && (
+            <EditButton onClick={handleModalOpen} name={'Change'} className={'EditButton'} />
+         )}
       </ProfileDataWrapper>
    )
 }

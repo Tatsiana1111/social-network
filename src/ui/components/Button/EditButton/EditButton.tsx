@@ -12,9 +12,9 @@ export const EditButton = (props: PropsType) => {
    }
 
    return (
-      <EditButtonWrapper onClick={handleClick}>
+      <EditButtonWrapper>
          <div>
-            <span>{props.name}</span>
+            <span onClick={handleClick}>{props.name}</span>
          </div>
       </EditButtonWrapper>
    )

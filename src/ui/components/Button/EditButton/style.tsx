@@ -1,13 +1,8 @@
 import styled from 'styled-components'
 
 export const EditButtonWrapper = styled.div`
-   cursor: pointer;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: space-around;
-  
-   z-index: 2;
-
+  display: flex;
+  justify-content: center;
    div {
       position: relative;
       top: 0;
@@ -22,6 +17,7 @@ export const EditButtonWrapper = styled.div`
       margin: 0;
    }
    div span {
+      cursor: pointer;
       position: absolute;
       z-index: 1;
       top: 0;

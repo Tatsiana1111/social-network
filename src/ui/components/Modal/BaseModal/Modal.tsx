@@ -72,15 +72,10 @@ export const Modal = (props: ModalPropsType) => {
       <motion.div
          initial={{ opacity: 0 }}
          animate={{ opacity: 1, zIndex: '44' }}
-         transition={{ duration: 0.5 }}
          exit={{ opacity: 0 }}
       >
          <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>
-            <motion.div
-               initial={{ scale: 0.5 }}
-               animate={{ scale: 1 }}
-               transition={{ ease: 'easeOut', duration: 0.5 }}
-            >
+            <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }}>
                <ModalContent className={props.isOpen ? 'open' : ''} onClick={modalClickHandler}>
                   <div className={'header'}>
                      <h2>{props.title}</h2>

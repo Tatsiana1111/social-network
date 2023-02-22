@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react'
 
+import { AnimatePresence } from 'framer-motion'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import {
-   getMorePostsTC,
-   getPostsTC,
-   getProfileData,
-   getStatus,
-   updateStatus,
-} from '../../../bll/profileReducer'
+import { getMorePostsTC, getPostsTC, getProfileData, getStatus } from '../../../bll/profileReducer'
 import avatar from '../../../common/images/defaultUser.jpg'
 import { Box } from '../../components/Box/Box'
 import { CameraIcon } from '../../components/CameraIcon/CameraIcon'
@@ -29,7 +24,6 @@ export const ProfilePage = () => {
    const lookingForAJob = useAppSelector(state => state.profile.data.lookingForAJob)
    const userLargeAvatar = useAppSelector(state => state.profile.data.photos?.large)
    const posts = useAppSelector(state => state.profile.posts)
-   const userStatus = useAppSelector(state => state.profile.status)
 
    const fetch = useAppSelector(state => state.profile.fetch)
 
@@ -46,10 +40,6 @@ export const ProfilePage = () => {
          dispatch(getPostsTC())
       }
    }, [profileID])
-
-   const updateUserStatus = (status: string) => {
-      dispatch(updateStatus(status))
-   }
 
    const getPostsHandler = () => {
       dispatch(getMorePostsTC())
@@ -77,15 +67,17 @@ export const ProfilePage = () => {
 
    return (
       <WrapperDiv>
-         {isModalOpen && (
-            <AddNewPostModal isModalOpen={isModalOpen} handleModalClose={handleModalClose} />
-         )}
-         {updateProfileOpen && (
-            <UpdateProfile
-               isModalOpen={updateProfileOpen}
-               handleModalClose={handleUpdateProfileClose}
-            />
-         )}
+         <AnimatePresence>
+            {isModalOpen && (
+               <AddNewPostModal isModalOpen={isModalOpen} handleModalClose={handleModalClose} />
+            )}
+            {updateProfileOpen && (
+               <UpdateProfile
+                  isModalOpen={updateProfileOpen}
+                  handleModalClose={handleUpdateProfileClose}
+               />
+            )}
+         </AnimatePresence>
          <Box className={'profilePhoto'}>
             {lookingForAJob && <LookingForAJobMask />}
             {profileID ? myProfileID === +profileID && <CameraIcon /> : ''}
@@ -98,13 +90,11 @@ export const ProfilePage = () => {
          <Box className={'profileData'}>
             <ProfileData open={handleUpdateProfileOpen} />
          </Box>
-         {profileID
-            ? myProfileID === +profileID && (
-                 <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
-                    <span>Add new post</span>
-                 </Box>
-              )
-            : ''}
+         {profileID && myProfileID === +profileID && (
+            <Box onClick={handleModalOpen} className={'profileButtonAddPost'}>
+               <span>Add new post</span>
+            </Box>
+         )}
          <div className={'profilePosts'}>
             <InfiniteScroll
                dataLength={posts.length}
