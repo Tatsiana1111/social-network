@@ -46,7 +46,7 @@ export const darkTheme: DefaultTheme = {
       secondary: '#06f5d9',
    },
    input: {
-      bg: '#008B8BFF',
+      bg: '#02a1a1',
       text: '#fff',
       placeholder: '#7da6a4',
       focus: '#74d693',

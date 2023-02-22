@@ -25,7 +25,7 @@ const ModalWrapper = styled.div`
 const ModalContent = styled.div`
    padding: 20px;
    border-radius: 12px;
-   background-color: white;
+   background-color: ${props => props.theme.colors.backGroundColor2};
    width: 400px;
    overflow: auto;
    box-shadow: 0 0 70px 10px #000;

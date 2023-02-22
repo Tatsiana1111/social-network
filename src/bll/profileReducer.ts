@@ -237,7 +237,7 @@ export const updateProfile = createAsyncThunk(
                SetAppNotificationAC({
                   notifications: {
                      type: 'success',
-                     message: `Profile data was successfully updated`,
+                     message: `Profile was successfully updated`,
                   },
                })
             )
