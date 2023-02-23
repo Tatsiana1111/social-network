@@ -3,6 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { setModalOpenAC } from '../../../../bll/appReducer'
 import { LoginTC } from '../../../../bll/authReducer'
 import { LoginRequestDataType } from '../../../../dal/authAPI'
 import { SButton, SButtonGreen } from '../../../components/Button/SButton'
@@ -10,15 +11,12 @@ import { ErrorMessage } from '../../../components/ErrorMessage/ErrorMessage'
 import { SForm, SInput } from '../../../components/Input/Input'
 import { SSignInRight } from '../styled'
 
-type PropsType = {
-   openModal: (value: boolean) => void
-}
 type FormInputs = {
    email: string
    password: string
 }
 
-export const SignInForm = (props: PropsType) => {
+export const SignInForm = () => {
    const dispatch = useAppDispatch()
    const loading = useAppSelector(state => state.app.status)
 
@@ -29,7 +27,7 @@ export const SignInForm = (props: PropsType) => {
    } = useForm<FormInputs>()
 
    const handleModalOpen = () => {
-      props.openModal(true)
+      dispatch(setModalOpenAC({ value: 'registrationModal' }))
    }
 
    return (

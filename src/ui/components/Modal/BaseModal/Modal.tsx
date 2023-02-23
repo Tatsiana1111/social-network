@@ -3,7 +3,12 @@ import React, { ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
 
-import exitIcon from './exit-icon.svg'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { setModalOpenAC } from '../../../../bll/appReducer'
+import exitIcon from '../../../../common/icons/exit-icon.svg'
+import { AddNewPostModal } from '../AddNewPostModal/AddNewPostModal'
+import { RegistrationModal } from '../RegistrationModal/RegistrationModal'
+import { UpdateProfileModal } from '../UpdateProfileModal/UpdateProfileModal'
 
 const ModalWrapper = styled.div`
    display: none;
@@ -58,14 +63,14 @@ type ModalPropsType = {
    children: ReactNode
    title: string
    isOpen: boolean
-   closeModal: () => void
 }
 export const Modal = (props: ModalPropsType) => {
+   const dispatch = useAppDispatch()
    const modalClickHandler = (event: React.MouseEvent<HTMLElement>) => {
       event.stopPropagation()
    }
    const handleClose = () => {
-      props.closeModal()
+      dispatch(setModalOpenAC({ value: 'close' }))
    }
 
    return (
@@ -87,4 +92,22 @@ export const Modal = (props: ModalPropsType) => {
          </ModalWrapper>
       </motion.div>
    )
+}
+export const ShowModal = () => {
+   const modalOpenIs = useAppSelector(state => state.app.modalOpenIs)
+
+   const showModalHelper = () => {
+      switch (modalOpenIs) {
+         case 'addPostModal':
+            return <AddNewPostModal />
+         case 'registrationModal':
+            return <RegistrationModal />
+         case 'updateProfileModal':
+            return <UpdateProfileModal />
+         default:
+            return <></>
+      }
+   }
+
+   return <div>{showModalHelper()}</div>
 }

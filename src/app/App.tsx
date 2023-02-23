@@ -6,7 +6,7 @@ import { initializeAppTC } from '../bll/appReducer'
 import { Header } from '../ui/components/Header/Header'
 import { Initialization } from '../ui/components/Loader/Initialization'
 import { Loader } from '../ui/components/Loader/Loader'
-import { NavigationForUs } from '../ui/components/NavigationForUs/NavigationForUs'
+import { ShowModal } from '../ui/components/Modal/BaseModal/Modal'
 import { NotificationBar } from '../ui/components/NotificationBar/NotificationBar'
 import { Pages } from '../ui/pages/Pages'
 import { GlobalStyle } from '../ui/theme/global'
@@ -31,7 +31,7 @@ export const App = () => {
    return (
       <>
          <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-            {/*<NavigationForUs />*/}
+            <ShowModal />
             <GlobalStyle />
             <Header />
             <Loader />

@@ -3,21 +3,21 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import styled from 'styled-components'
 
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { updateProfile } from '../../../bll/profileReducer'
-import facebookIcon from '../../../common/icons/social/facebook.png'
-import githubIcon from '../../../common/icons/social/github.png'
-import instagramIcon from '../../../common/icons/social/instagram.png'
-import mainLinkIcon from '../../../common/icons/social/mainLink.png'
-import twitterIcon from '../../../common/icons/social/twitter.png'
-import vkIcon from '../../../common/icons/social/vk.png'
-import websiteIcon from '../../../common/icons/social/website.png'
-import youtubeIcon from '../../../common/icons/social/youtube.png'
-import { ProfileDataType } from '../../../dal/profileAPI'
-import { SButtonGreen } from '../Button/SButton'
-import { LookingForAJobSwitcher } from '../lookingForAJob/LookingForAJobSwitcher'
-import { ModalPropsType } from '../Modal/AddNewPostModal/AddNewPostModal'
-import { Modal } from '../Modal/BaseModal/Modal'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { setModalOpenAC } from '../../../../bll/appReducer'
+import { updateProfile } from '../../../../bll/profileReducer'
+import facebookIcon from '../../../../common/icons/social/facebook.png'
+import githubIcon from '../../../../common/icons/social/github.png'
+import instagramIcon from '../../../../common/icons/social/instagram.png'
+import mainLinkIcon from '../../../../common/icons/social/mainLink.png'
+import twitterIcon from '../../../../common/icons/social/twitter.png'
+import vkIcon from '../../../../common/icons/social/vk.png'
+import websiteIcon from '../../../../common/icons/social/website.png'
+import youtubeIcon from '../../../../common/icons/social/youtube.png'
+import { ProfileDataType } from '../../../../dal/profileAPI'
+import { SButtonGreen } from '../../Button/SButton'
+import { LookingForAJobSwitcher } from '../../lookingForAJob/LookingForAJobSwitcher'
+import { Modal } from '../BaseModal/Modal'
 
 import { ContactInput } from './ContactInput'
 
@@ -37,8 +37,9 @@ const Wrapper = styled.div`
    margin-bottom: 10px;
 `
 
-export const UpdateProfile = (props: ModalPropsType) => {
+export const UpdateProfileModal = () => {
    const dispatch = useAppDispatch()
+   const modalOpenIs = useAppSelector(state => state.app.modalOpenIs)
    const data = useAppSelector(state => state.profile.data)
 
    const { register, handleSubmit, reset } = useForm<ProfileDataType>({ defaultValues: data })
@@ -46,15 +47,11 @@ export const UpdateProfile = (props: ModalPropsType) => {
    const onSubmitHandler: SubmitHandler<ProfileDataType> = data => {
       dispatch(updateProfile(data))
       reset()
-      props.handleModalClose()
+      dispatch(setModalOpenAC({ value: 'close' }))
    }
 
    return (
-      <Modal
-         title={'Change Profile Data'}
-         isOpen={props.isModalOpen}
-         closeModal={props.handleModalClose}
-      >
+      <Modal title={'Change Profile Data'} isOpen={modalOpenIs === 'updateProfileModal'}>
          <UpdateProfileWrapper onSubmit={handleSubmit(onSubmitHandler)}>
             <Wrapper>
                FullName:

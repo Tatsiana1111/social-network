@@ -4,15 +4,11 @@ import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
+import { setModalOpenAC } from '../../../../bll/appReducer'
 import { addPostTC } from '../../../../bll/profileReducer'
 import { SButtonGreen } from '../../Button/SButton'
 import { SInput } from '../../Input/Input'
 import { Modal } from '../BaseModal/Modal'
-
-export type ModalPropsType = {
-   isModalOpen: boolean
-   handleModalClose: () => void
-}
 
 type FormData = {
    title: string
@@ -25,9 +21,10 @@ const WrapperDiv = styled.div`
    gap: 10px;
 `
 
-export const AddNewPostModal = (props: ModalPropsType) => {
+export const AddNewPostModal = () => {
    const dispatch = useAppDispatch()
    const userId = useAppSelector(state => state.profile.data.userId)
+   const modalOpenIs = useAppSelector(state => state.app.modalOpenIs)
 
    const { register, handleSubmit, reset } = useForm<FormData>({
       defaultValues: {
@@ -42,11 +39,11 @@ export const AddNewPostModal = (props: ModalPropsType) => {
 
       dispatch(addPostTC({ userId, title: data.title, body: data.body, id }))
       reset()
-      props.handleModalClose()
+      dispatch(setModalOpenAC({ value: 'close' }))
    })
 
    return (
-      <Modal title={'Add new post'} isOpen={props.isModalOpen} closeModal={props.handleModalClose}>
+      <Modal title={'Add new post'} isOpen={modalOpenIs === 'addPostModal'}>
          <form onSubmit={onSubmit}>
             <WrapperDiv>
                <SInput type="text" placeholder="Title" {...register('title')} />

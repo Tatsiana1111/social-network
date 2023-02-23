@@ -24,7 +24,7 @@ const ProfileDataWrapper = styled.div`
    }
 `
 
-export const ProfileData = (props: { open: () => void }) => {
+export const ProfileData = () => {
    const myProfileID = useAppSelector(state => state.app.profileID)
    const fullName = useAppSelector(state => state.profile.data.fullName)
    const aboutMe = useAppSelector(state => state.profile.data.aboutMe)
@@ -32,9 +32,6 @@ export const ProfileData = (props: { open: () => void }) => {
       state => state.profile.data.lookingForAJobDescription
    )
    const { profileID } = useParams()
-   const handleModalOpen = () => {
-      props.open()
-   }
 
    return (
       <ProfileDataWrapper>
@@ -47,7 +44,7 @@ export const ProfileData = (props: { open: () => void }) => {
          <ContactsList />
 
          {profileID && myProfileID === +profileID && (
-            <EditButton onClick={handleModalOpen} name={'Change'} className={'EditButton'} />
+            <EditButton name={'Change'} className={'EditButton'} />
          )}
       </ProfileDataWrapper>
    )

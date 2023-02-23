@@ -11,6 +11,8 @@ type AppStatusType = 'idle' | 'load' | 'success' | 'error'
 
 export type AppThemeType = 'light' | 'dark'
 
+export type AppModalType = 'close' | 'addPostModal' | 'updateProfileModal' | 'registrationModal'
+
 export type NotificationType = {
    message: string
    type: 'success' | 'error'
@@ -23,6 +25,7 @@ export const appReducerInitialState = {
    theme: 'light' as AppThemeType,
    notifications: [] as NotificationType[],
    isBurgerOpen: false as boolean,
+   modalOpenIs: 'close' as AppModalType,
 }
 const appSlice = createSlice({
    name: 'app',
@@ -58,6 +61,9 @@ const appSlice = createSlice({
       setIsBurgerOpenAC: (state, action: PayloadAction<{ value: boolean }>) => {
          state.isBurgerOpen = action.payload.value
       },
+      setModalOpenAC: (state, action: PayloadAction<{ value: AppModalType }>) => {
+         state.modalOpenIs = action.payload.value
+      },
    },
 })
 
@@ -69,6 +75,7 @@ export const {
    SetAppNotificationAC,
    RemoveAppNotificationAC,
    setIsBurgerOpenAC,
+   setModalOpenAC,
 } = appSlice.actions
 
 export const appReducer = appSlice.reducer
