@@ -41,6 +41,9 @@ export const GlobalStyle = createGlobalStyle<{ theme: DefaultTheme }>`
   //background-color: #f6f8f4;
   //}
  }
+ body.modalIsOpen {
+   overflow: hidden;
+ }
 `
 export const Container = styled.div`
    margin: 0 auto;

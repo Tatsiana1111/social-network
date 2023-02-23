@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import React, { ReactNode, useEffect } from 'react'
 
 import { motion } from 'framer-motion'
 import styled from 'styled-components'
@@ -71,7 +71,14 @@ export const Modal = (props: ModalPropsType) => {
    }
    const handleClose = () => {
       dispatch(setModalOpenAC({ value: 'close' }))
+      // removing class from body element
+      document.body.classList.remove('modalIsOpen')
    }
+
+   useEffect(() => {
+      // add class to body element (prevent scrolling)
+      document.body.classList.add('modalIsOpen')
+   }, [])
 
    return (
       <motion.div

@@ -15,7 +15,7 @@ export const SHeaderInner = styled.div`
       color: #3d82d9;
       background-color: inherit;
       font-family: 'Caveat', cursive;
-      @media (max-width: ${props => props.theme.media.small}px) {
+      @media (max-width: ${props => props.theme.media.medium}px) {
          display: none;
       }
    }
@@ -44,7 +44,6 @@ export const SHeaderInner = styled.div`
       }
    }
    @media (max-width: ${props => props.theme.media.small}px) {
-      justify-content: center;
       .headerBtns {
          display: none;
       }
