@@ -15,6 +15,7 @@ export const WrapperDiv = styled.div`
 
    .profilePhoto {
       grid-area: 1 / 1 / 2 / 2;
+      height: fit-content;
    }
 
    .span {
