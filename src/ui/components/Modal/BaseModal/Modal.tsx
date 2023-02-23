@@ -1,6 +1,6 @@
 import React, { ReactNode, useEffect } from 'react'
 
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import styled from 'styled-components'
 
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks'
@@ -19,12 +19,11 @@ const ModalWrapper = styled.div`
    width: 100vw;
    z-index: 999;
 
-   transition: 0.5s;
    &.open {
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: darkcyan;
+      background-color: rgba(0, 0, 0, 0.7);
    }
 `
 const ModalContent = styled.div`
@@ -36,7 +35,7 @@ const ModalContent = styled.div`
    box-shadow: 0 0 70px 10px #000;
    border: 8px solid #fff;
    transform: scale(0.5);
-   transition: 0.4s all;
+
    &.open {
       transform: scale(1);
    }
@@ -81,23 +80,26 @@ export const Modal = (props: ModalPropsType) => {
    }, [])
 
    return (
-      <motion.div
-         initial={{ opacity: 0 }}
-         animate={{ opacity: 1, zIndex: '44' }}
-         exit={{ opacity: 0 }}
-      >
-         <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>
-            <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }}>
-               <ModalContent className={props.isOpen ? 'open' : ''} onClick={modalClickHandler}>
-                  <div className={'header'}>
-                     <h2>{props.title}</h2>
-                     <img src={exitIcon} alt={'exit-icon'} onClick={handleClose} />
-                  </div>
-                  {props.children}
-               </ModalContent>
-            </motion.div>
-         </ModalWrapper>
-      </motion.div>
+      <AnimatePresence>
+         <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ ease: 'linear', duration: 0 }}
+            // exit={{ y: -1000, transition: { duration: 3, when: 'afterChildren' } }}
+         >
+            <ModalWrapper className={props.isOpen ? 'open' : ''} onClick={handleClose}>
+               <motion.div initial={{ scale: 0.5 }} animate={{ scale: 1 }}>
+                  <ModalContent className={props.isOpen ? 'open' : ''} onClick={modalClickHandler}>
+                     <div className={'header'}>
+                        <h2>{props.title}</h2>
+                        <img src={exitIcon} alt={'exit-icon'} onClick={handleClose} />
+                     </div>
+                     {props.children}
+                  </ModalContent>
+               </motion.div>
+            </ModalWrapper>
+         </motion.div>
+      </AnimatePresence>
    )
 }
 export const ShowModal = () => {
