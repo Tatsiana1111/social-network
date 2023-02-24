@@ -50,12 +50,12 @@ export const SignInForm = () => {
             <SInput
                type="password"
                placeholder={'Password'}
-               min={7}
+               min={4}
                style={errors.password && { border: '1px solid red' }}
                {...register('password', {
                   minLength: {
-                     value: 7,
-                     message: 'Password Must be 7 characters or more',
+                     value: 4,
+                     message: 'Password Must be 4 characters or more',
                   },
                   required: 'this field is required!!',
                })}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 
 import InfiniteScroll from 'react-infinite-scroll-component'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { setModalOpenAC } from '../../../bll/appReducer'
@@ -14,6 +14,7 @@ import { Loader } from '../../components/Loader/Loader'
 import { LookingForAJobMask } from '../../components/lookingForAJob/lookingForAJobMask'
 import { Post } from '../../components/Post/Post'
 import { ProfileData } from '../../components/ProfileData/ProfileData'
+import { PATH } from '../Pages'
 
 import { WrapperDiv } from './styled'
 
@@ -28,7 +29,7 @@ export const ProfilePage = () => {
    const dispatch = useAppDispatch()
 
    useEffect(() => {
-      if (profileID) {
+      if (profileID && +profileID) {
          dispatch(getProfileData(+profileID))
          dispatch(getStatus(+profileID))
          dispatch(getPostsTC())
@@ -45,6 +46,10 @@ export const ProfilePage = () => {
       return posts.map((post, index) => {
          return <Post post={post} key={index} />
       })
+   }
+
+   if (profileID === '0') {
+      return <Navigate to={`${PATH.profile}/${myProfileID}`} />
    }
 
    return (

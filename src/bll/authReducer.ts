@@ -4,7 +4,7 @@ import { AxiosError } from 'axios'
 import { HandleServerAppError, HandleServerNetworkError } from '../common/Utils/errorHandler'
 import { authAPI, LoginRequestDataType } from '../dal/authAPI'
 
-import { setAppStatusAC } from './appReducer'
+import { initializeAppTC, setAppStatusAC } from './appReducer'
 
 const initialState = {
    isLoggedIn: false as boolean,
@@ -34,6 +34,7 @@ export const LoginTC = createAsyncThunk(
          if (res.data.resultCode === 0) {
             dispatch(setLoggedIn({ value: true }))
             dispatch(setAppStatusAC({ status: 'success' }))
+            dispatch(initializeAppTC())
          } else {
             HandleServerAppError(dispatch, res.data)
          }
