@@ -24,7 +24,7 @@ export const SignInForm = () => {
       register,
       handleSubmit,
       formState: { errors },
-   } = useForm<FormInputs>()
+   } = useForm<FormInputs>({ defaultValues: { email: 'free@samuraijs.com', password: 'free' } })
 
    const handleModalOpen = () => {
       dispatch(setModalOpenAC({ value: 'registrationModal' }))
