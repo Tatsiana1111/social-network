@@ -1,5 +1,6 @@
 # Social Network
 
+## [Just try it!](https://Tatsiana1111.github.io/social-network)
 ## The project is under development, some features are unavailable.
 
 ### Lightels is a social network for communication, sharing contacts and browsing posts by interests. 
