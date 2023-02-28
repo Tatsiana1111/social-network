@@ -36,7 +36,9 @@ const usersSlice = createSlice({
             state.usersSearch = []
          }
       },
-
+      resetUsersState: state => {
+         state.users = []
+      },
       setTotalCountAC: (state, action: PayloadAction<{ totalCount: number }>) => {
          state.totalCount = action.payload.totalCount
       },
@@ -88,6 +90,7 @@ export const {
    unFollowUserAC,
    updateUrlParamsAC,
    setUsersSearchAC,
+   resetUsersState,
 } = usersSlice.actions
 
 export const getUsersTC = createAsyncThunk('users/getUsers', async (arg, thunkAPI) => {

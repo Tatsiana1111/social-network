@@ -62,6 +62,8 @@ type ModalPropsType = {
    children: ReactNode
    title: string
    isOpen: boolean
+
+   // close: () => void
 }
 export const Modal = (props: ModalPropsType) => {
    const dispatch = useAppDispatch()
@@ -70,6 +72,7 @@ export const Modal = (props: ModalPropsType) => {
    }
    const handleClose = () => {
       dispatch(setModalOpenAC({ value: 'close' }))
+      // props.close()
       // removing class from body element
       document.body.classList.remove('modalIsOpen')
    }

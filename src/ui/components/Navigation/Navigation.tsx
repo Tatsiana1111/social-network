@@ -45,7 +45,7 @@ export const Navigation = () => {
             <img alt="profile icon" src={profile} />
             My Profile
          </NavLinkStyled>
-         <NavLinkStyled to={PATH.users}>
+         <NavLinkStyled to={`${PATH.users}?friend=false`}>
             <img alt="users icon" src={users} />
             Find Friends
          </NavLinkStyled>

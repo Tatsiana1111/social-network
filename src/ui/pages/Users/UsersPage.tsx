@@ -4,7 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 import { useSearchParams } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { getUsersTC, updateUrlParamsAC } from '../../../bll/usersReducer'
+import { getUsersTC, resetUsersState, updateUrlParamsAC } from '../../../bll/usersReducer'
 import { filterAllParams } from '../../../common/Utils/filterAllParams'
 import useDebounce from '../../../common/Utils/useDebounce'
 import { GoToTopButton } from '../../components/GoToTopButton/GoToTopButton'
@@ -37,6 +37,11 @@ export const UsersPage = () => {
    })
 
    useEffect(() => {
+      dispatch(resetUsersState())
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+   }, [friend])
+
+   useEffect(() => {
       setSearchParams({
          ...filterAllParams({
             ...paramsSearchState,
@@ -58,7 +63,6 @@ export const UsersPage = () => {
          dispatch(getUsersTC())
       }
    }, [dispatch, paramsSearchState])
-
    const fetchDataHandler = () => {
       const page = (Number(pageURL) + 1).toString()
 
