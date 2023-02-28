@@ -14,11 +14,13 @@ import { SSignInRight } from '../styled'
 type FormInputs = {
    email: string
    password: string
+   captcha: null | string
 }
 
 export const SignInForm = () => {
    const dispatch = useAppDispatch()
    const loading = useAppSelector(state => state.app.status)
+   const captcha = useAppSelector(state => state.auth.captcha)
 
    const {
       register,
@@ -60,6 +62,16 @@ export const SignInForm = () => {
                   required: 'this field is required!!',
                })}
             />
+            {captcha && <img src={captcha} />}
+            {captcha && (
+               <SInput
+                  type="captcha"
+                  placeholder={'captcha'}
+                  {...register('captcha', {
+                     required: 'This field is required !!!',
+                  })}
+               />
+            )}
             {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
 
             <SButton disabled={loading === 'load'} type="submit">

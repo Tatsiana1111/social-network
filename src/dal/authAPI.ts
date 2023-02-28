@@ -10,6 +10,9 @@ export const authAPI = {
    me() {
       return instance.get<ResponseType<{ id: number; email: string; login: string }>>('/auth/me')
    },
+   captcha() {
+      return instance.get<{ url: string | null }>('/security/get-captcha-url')
+   },
 }
 
 export type LoginRequestDataType = {
