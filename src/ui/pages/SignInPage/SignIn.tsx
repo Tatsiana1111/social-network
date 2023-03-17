@@ -2,18 +2,16 @@ import React from 'react'
 
 import { Container } from '../../theme/global'
 
+import { SignInBrand } from './SignInBrand/SignInBrand'
 import { SignInForm } from './SignInForm/SignInForm'
-import { SSignInLeft, SSignInWrapper } from './styled'
+import { SSignInWrapper } from './styled'
 
 export const SignIn = () => {
    return (
       <section>
          <Container>
             <SSignInWrapper>
-               <SSignInLeft>
-                  <h1>Lightels</h1>
-                  <p>Social Network</p>
-               </SSignInLeft>
+               <SignInBrand />
                <SignInForm />
             </SSignInWrapper>
          </Container>

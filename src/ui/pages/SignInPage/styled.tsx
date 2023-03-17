@@ -12,18 +12,7 @@ export const SSignInWrapper = styled.div`
       padding-top: 2rem;
    }
 `
-export const SSignInLeft = styled.div`
-   h1 {
-      font-family: Signika sans-serif;
-      font-size: 64px;
-      font-weight: 400;
-      color: ${props => props.theme.colors.secondary};
-   }
-   p {
-      font-weight: 400;
-      font-size: 48px;
-   }
-`
+
 export const SSignInRight = styled.div`
    display: flex;
    flex-direction: column;

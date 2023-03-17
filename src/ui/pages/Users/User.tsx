@@ -24,7 +24,11 @@ export const User = (props: UserType) => {
    }
 
    return (
-      <UserWrapper>
+      <UserWrapper
+         onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'smooth' })
+         }}
+      >
          <Link to={`${PATH.profile}/${props.user.id}`}>
             <img
                src={props.user.photos.small ? props.user.photos.small : defaultUserImage}
