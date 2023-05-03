@@ -39,19 +39,23 @@ const ModalContent = styled.div`
    &.open {
       transform: scale(1);
    }
+
    .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       background-color: inherit;
       margin-bottom: 20px;
+
       h2 {
          color: white;
          text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
       }
+
       img {
          cursor: pointer;
       }
+
       img:hover {
          transform: scale(1.1);
       }
@@ -72,14 +76,14 @@ export const Modal = (props: ModalPropsType) => {
    }
    const handleClose = () => {
       dispatch(setModalOpenAC({ value: 'close' }))
-      // props.close()
-      // removing class from body element
-      document.body.classList.remove('modalIsOpen')
    }
 
    useEffect(() => {
       // add class to body element (prevent scrolling)
       document.body.classList.add('modalIsOpen')
+
+      // removing class from body element
+      return document.body.classList.remove('modalIsOpen')
    }, [])
 
    return (
